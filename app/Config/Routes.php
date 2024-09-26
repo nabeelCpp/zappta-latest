@@ -2,6 +2,17 @@
 
 use CodeIgniter\Router\RouteCollection;
 
+if(file_exists('../routes/Api.php')) {
+    require '../routes/Api.php';
+}
+
+$routes->setDefaultNamespace('App\Controllers');
+$routes->setDefaultController('Home');
+$routes->setDefaultMethod('index');
+$routes->setTranslateURIDashes(false);
+$routes->set404Override();
+$routes->setAutoRoute(true);
+
 /**
  * @var RouteCollection $routes
  */
