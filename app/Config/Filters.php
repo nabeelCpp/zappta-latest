@@ -34,6 +34,10 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+        'vendor'        => \App\Filters\Vendor::class,
+        'customer'      => \App\Filters\Customer::class,
+        'admin'         => \App\Filters\Admin::class,
+        'api.customer' => \App\Filters\JWTAuthFilter::class,
     ];
 
     /**
@@ -70,7 +74,26 @@ class Filters extends BaseFilters
     public array $globals = [
         'before' => [
             // 'honeypot',
-            // 'csrf',
+            'csrf' => [
+                'except' => [
+                    'vendors/media/upload',
+                    'vendors/design/upload',
+                    'vendors/design/status',
+                    'cart/add',
+                    'cart/delete_item_cart',
+                    'cart/update_cart',
+                    'admincp/categories/getajaxbrand',
+                    'admincp/categories/getajaxattributes',
+                    'admincp/compain/emailsent',
+                    'cron',
+                    'payments/success',
+                    'payments/cancel',
+                    'compaign/playresult',
+                    'compaign/latestresult',
+                    'page-feedback',
+                    'api/*'
+                ]
+            ],
             // 'invalidchars',
         ],
         'after' => [
@@ -103,5 +126,49 @@ class Filters extends BaseFilters
      *
      * @var array<string, array<string, list<string>>>
      */
-    public array $filters = [];
+    public array $filters = [
+        'admin' => [
+            // 'except' => [
+            //                 '/admincp/login',
+            //                 '/admincp/login/*',
+            //             ],
+            'before' => [
+                'admincp',
+                'admincp/attributes',
+                'admincp/attributes/*',
+                'admincp/blogs',
+                'admincp/blogs/*',
+                'admincp/categories',
+                'admincp/categories/*',
+                'admincp/city',
+                'admincp/city/*',
+                'admincp/country',
+                'admincp/country/*',
+                'admincp/customers',
+                'admincp/customers/*',
+                'admincp/newsletter',
+                'admincp/newsletter/*',
+                'admincp/orders',
+                'admincp/orders/*',
+                'admincp/pages',
+                'admincp/pages/*',
+                'admincp/products',
+                'admincp/products/*',
+                'admincp/profiles',
+                'admincp/profiles/*',
+                'admincp/settings',
+                'admincp/settings/*',
+                'admincp/sliders',
+                'admincp/sliders/*',
+                'admincp/socials',
+                'admincp/socials/*',
+                'admincp/states',
+                'admincp/states/*',
+                'admincp/users',
+                'admincp/users/*',
+            ]
+        ],
+        'vendor' => ['before' => ['vendors', 'vendors/*']],
+        'customer' => ['before' => ['dashboard', 'dashboard/*']]
+    ];
 }

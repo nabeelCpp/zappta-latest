@@ -124,3 +124,7 @@ nb-configuration.xml
 
 /results/
 /phpunit*.xml
+/public/theme/audio/
+/public/theme/videos/
+/public/theme/image/
+/public/upload/

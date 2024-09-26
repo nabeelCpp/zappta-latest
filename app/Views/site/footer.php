@@ -1,0 +1,1 @@
+<?= view('site/newLanding/footer', ['globalSettings' => $globalSettings]) ?>

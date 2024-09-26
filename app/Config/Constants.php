@@ -14,6 +14,9 @@
  | existing namespaces of App\* namespaced-classes.
  */
 defined('APP_NAMESPACE') || define('APP_NAMESPACE', 'App');
+defined('ADMINVIEW') || define('ADMINVIEW', 'admin/');
+defined('ADMIN') || define('ADMIN', '/admin_theme');
+defined('ADMINURL') || define('ADMINURL', '/admincp/');
 
 /*
  | --------------------------------------------------------------------------

@@ -1,0 +1,393 @@
+@media only screen and (max-width: 1200px) {
+  .comp-img-card {
+    margin: 5px 15px !important;
+    border-radius: 20px;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .page-content {
+    width: 100%;
+    /*margin-left: 17rem;*/
+    transition: all 0.4s;
+    padding: 10px !important;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .footer-widget h3 {
+    background: #1f3541 !important;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .homepage .footer-widget .footer-links {
+    display: none !important;
+  }
+  .homepage .footer-widget:hover .footer-links {
+    display: block !important;
+  }
+  .footer-inner-divs div {
+    max-width: 100% !important;
+  }
+
+  .hlivetext p {
+    font-size: 15px;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  header .topheadlink ul {
+    padding-right: 10px !important;
+    width: 100vw !important;
+    justify-content: space-between !important;
+    margin-bottom: 0px !important;
+  }
+  .headersearchbtn {
+    padding: 0 !important;
+  }
+  .alert-secondary {
+    font-size: 12px;
+  }
+  .cart-block-text {
+    width: 100%;
+    display: block;
+    margin-top: 2px;
+    display: flex;
+    flex-direction: column !important;
+    max-width: 81px;
+    position: absolute;
+    right: 0;
+    align-items: end;
+  }
+  .cart-block-text p {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 483px) {
+  .comp-img-card {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .slider {
+    width: 99%;
+    max-width: 99%;
+    height: 35.438rem;
+    border-radius: 30px;
+    background-size: auto auto;
+  }
+  .slider .wheel-animation {
+    left: 35%;
+  }
+  .slider .wheel-animation img {
+    width: 11.188rem;
+    height: 16rem;
+    display: block;
+  }
+  .slide-text {
+    width: 100%;
+    display: block;
+    padding: 40px 20px;
+    margin-top: 12rem;
+  }
+  .slide-text h3 {
+    font-size: 2rem;
+    line-height: 3rem;
+  }
+  .slide-text h4 {
+    font-size: 1.2rem;
+    line-height: 2rem;
+  }
+
+  .slide-points {
+    padding: 0rem 5rem;
+    margin: 0.5rem auto;
+  }
+  .slide-points p {
+    background-size: 30px 30px;
+    font-size: 1rem;
+  }
+
+  .slider-email {
+    margin-top: 2rem;
+    margin-left: 0rem;
+  }
+  .slider-email .form-row {
+    width: 100%;
+  }
+  .slider-email .form-row input {
+    padding: 0 10px 0 20px;
+    font-size: 1.5rem;
+  }
+  .slider-email .form-row .email-btn {
+    width: 100px;
+    line-height: 1;
+    font-size: 1.5rem;
+  }
+
+  .slider-email p {
+    text-align: left;
+    font-size: 1rem;
+    line-height: 1.75rem;
+    margin-top: 0.5rem;
+  }
+  .livebtn {
+    width: 100%;
+    height: 50px;
+    background: url("../image/livebtnbg.png");
+    background-repeat: no-repeat;
+    background-size: 30% 100%;
+    max-width: 250px;
+    min-width: 250px;
+  }
+  .livetext p {
+    font-size: 4rem;
+    line-height: 4.813rem;
+  }
+  .stars-left .stars {
+    width: 1rem;
+    height: 0.9rem;
+  }
+  .bottom-heading::after {
+    width: 70%;
+    left: 15%;
+  }
+  .emailform .form-row input {
+    width: 100%;
+    font-size: 1.5rem;
+  }
+  .emailform .form-row .email-btn {
+    width: 100px;
+    line-height: 1;
+    font-size: 1.5rem;
+  }
+  .emailform p {
+    font-size: 1.063rem;
+    line-height: 1.5;
+  }
+  .logo-block .mb-4 {
+    margin-bottom: 0.2rem !important;
+  }
+  .logo-block .logo-img {
+    padding: 0;
+  }
+  .logo-block .logo-img img {
+    height: 5.438rem;
+  }
+  .text-about-second .text-heading {
+    padding: 0 2.575rem;
+  }
+  .text-about-second .text-heading p {
+    font-size: 3.25rem;
+    line-height: 3.5rem;
+  }
+  .text-about-second .text-heading-small {
+    padding: 2rem 1rem 0 1rem;
+  }
+  .cat-block img {
+    height: 2.5rem;
+  }
+  .cat-block p {
+    font-size: 0.9rem;
+  }
+  .testi-section {
+    padding: 40px 40px;
+  }
+  .testi-section .heading h1,
+  .win-section .heading h1 {
+    font-size: 4.5rem;
+  }
+  .experience-block .slide-text {
+    padding: 0;
+    margin-top: 2rem;
+  }
+  .how-detail {
+    margin-bottom: 0;
+  }
+  .footer-right ul {
+    text-align: center;
+  }
+  .how-can-block .text-heading h2 {
+    font-size: 5.438rem;
+    line-height: 7.125rem;
+  }
+  .foot-left-text p {
+    font-size: 1rem;
+  }
+  .product-block .card img.card-img-middle {
+    width: 100%;
+  }
+  .pad-0 {
+    padding: 1rem 0.1rem;
+  }
+  .testidetail {
+    padding-right: 0;
+  }
+  .testidetail p {
+    font-size: 0.9rem;
+  }
+  .stars-right h3 {
+    font-size: 1.1rem;
+    line-height: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .slider {
+    width: 99%;
+    max-width: 99%;
+    height: 35.438rem;
+    border-radius: 30px;
+    background-size: auto auto;
+  }
+  .slider .wheel-animation {
+    left: 17vh;
+  }
+  .slider .wheel-animation img {
+    width: 11.188rem;
+    height: 16rem;
+    display: block;
+  }
+  .slide-text {
+    width: 100%;
+    display: block;
+    padding: 40px 20px;
+    margin-top: 12rem;
+  }
+  .slide-text h3 {
+    font-size: 2rem;
+    line-height: 3rem;
+  }
+  .slide-text h4 {
+    font-size: 1.2rem;
+    line-height: 2rem;
+  }
+
+  .slide-points {
+    padding: 0rem 5rem;
+    margin: 0.5rem auto;
+  }
+  .slide-points p {
+    background-size: 30px 30px;
+    font-size: 1rem;
+  }
+
+  .slider-email {
+    margin-top: 2rem;
+    margin-left: 0rem;
+  }
+  .slider-email .form-row {
+    width: 100%;
+  }
+  .slider-email .form-row input {
+    padding: 0 10px 0 20px;
+    font-size: 1.5rem;
+  }
+  .slider-email .form-row .email-btn {
+    width: 100px;
+    line-height: 1;
+    font-size: 1.5rem;
+  }
+
+  .livebtn {
+    width: 100%;
+    height: 50px;
+    background: url("../image/livebtnbg.png");
+    background-repeat: no-repeat;
+    background-size: 40% 100%;
+    max-width: 250px;
+    min-width: 250px;
+  }
+  .livetext p {
+    font-size: 4rem;
+    line-height: 4.813rem;
+  }
+  .stars-left .stars {
+    width: 0.8rem;
+    height: 0.9rem;
+  }
+  .bottom-heading::after {
+    width: 70%;
+    left: 15%;
+  }
+  .emailform .form-row input {
+    width: 100%;
+    font-size: 1.5rem;
+  }
+  .emailform .form-row .email-btn {
+    width: 100px;
+    line-height: 1;
+    font-size: 1.5rem;
+  }
+  .emailform p {
+    font-size: 1.063rem;
+    line-height: 1.5;
+  }
+  .logo-block .mb-4 {
+    margin-bottom: 0.2rem !important;
+  }
+  .logo-block .logo-img {
+    padding: 0;
+  }
+  .logo-block .logo-img img {
+    height: 5.438rem;
+  }
+  .text-about-second .text-heading {
+    padding: 0 2.575rem;
+  }
+  .text-about-second .text-heading p {
+    font-size: 3.25rem;
+    line-height: 3.5rem;
+  }
+  .text-about-second .text-heading-small {
+    padding: 2rem 1rem 0 1rem;
+  }
+  .cat-block img {
+    height: 2.5rem;
+  }
+  .cat-block p {
+    font-size: 0.9rem;
+  }
+  .testi-section {
+    padding: 40px 40px;
+  }
+  .testi-section .heading h1,
+  .win-section .heading h1 {
+    font-size: 4.5rem;
+  }
+  .experience-block .slide-text {
+    padding: 0;
+    margin-top: 2rem;
+  }
+  .how-detail {
+    margin-bottom: 0;
+  }
+  .footer-right ul {
+    text-align: center;
+  }
+  .how-can-block .text-heading h2 {
+    font-size: 5.438rem;
+    line-height: 7.125rem;
+  }
+  .foot-left-text p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 412px) {
+  .slider .wheel-animation {
+    left: 25%;
+  }
+}
+
+@media (max-width: 360px) {
+  .slider .wheel-animation {
+    left: 25%;
+  }
+}

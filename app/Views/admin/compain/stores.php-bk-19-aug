@@ -1,0 +1,65 @@
+<?php print view('admin/header');?>
+	
+        <div class="row">
+          <div class="col"><?php print show_message();?></div>
+        </div>
+
+        <div class="row">
+              <div class="col">
+                <div class="card card-small mb-4">
+                  <div class="card-header border-bottom">
+                    <h6 class="m-0 float-start" style="padding-top: 8px;">Compain Stores</h6>
+                	<div class="clearfix"></div>
+                  </div>
+                  <div class="card-body p-0">
+                  
+                  		<table class="table table-striped">
+                  			<thead>
+                  				<tr>
+                  					   <th width="50"><input type="checkbox" name="checkAll"></th>
+		                            <th>Name</th>
+		                            <th>Email</th>
+                  				</tr>
+                  			</thead>
+                  			<tbody id="customerListTable">
+                  			<?php 
+                  				if(is_array($sql)){
+                  					$sr = 1;
+                  					foreach($sql as $row){
+                  			?>
+                  				<tr>
+                  							<td><input type="checkbox" name="check"></td>
+                            		<td><?php print $row['store_name'];?></td>
+		                            <td><?php print $row['email'];?></td>
+                  				</tr>
+                  			<?php
+                  						$sr++;
+                  					}
+                  				}
+                  			?>	
+                  			</tbody>
+                  		</table>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+<?php print view('admin/footer');?>
+<script type="text/javascript">
+  $('[name="checkAll"]').click(function(){
+    let checkall = $(this);
+    let checks = $('[name="check"]');
+    checks.each(function(){
+      if($(this).is(':checked') && checkall.is(':checked')){
+        $(this).prop('checked', false);
+      }
+
+      if(!$(this).is(':checked') && !checkall.is(':checked')){
+        $(this).prop('checked', true);
+      }
+      $(this).click();
+    })
+  });
+ 
+</script>
