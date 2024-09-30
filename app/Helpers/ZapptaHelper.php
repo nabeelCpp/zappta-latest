@@ -79,7 +79,7 @@ class ZapptaHelper {
      * @author M nabeel Arshad
      */
     public static function loadAssetsUrl() : string {
-        return base_url() . 'new-landing/assets';
+        return base_url('/new-landing/assets');
     }
 
     /**
