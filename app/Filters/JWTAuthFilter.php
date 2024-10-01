@@ -22,8 +22,8 @@ class JWTAuthFilter implements FilterInterface
 
         // The Authorization header will contain "Bearer token"
         $token = null;
-        if (preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
-            $token = $matches[1];
+        if (strpos($authHeader, 'Bearer ') === 0) {
+            $token = substr($authHeader, 7); // Remove 'Bearer ' from the token
         }
 
         if (!$token) {
@@ -32,10 +32,9 @@ class JWTAuthFilter implements FilterInterface
 
         try {
             $decoded = ZapptaHelper::decodeJwtToken($token);
-            echo json_encode($decoded);exit;
-            $request->customer = $decoded; // Set customer info to request
+            $request->customer = $decoded->customer; // Set customer info to request
         } catch (\Exception $e) {
-            return Services::response()->setJSON(['message' => 'Unauthorized'])->setStatusCode(401);
+            return Services::response()->setJSON(['message' => $e->getMessage()])->setStatusCode(401);
         }
     }
 

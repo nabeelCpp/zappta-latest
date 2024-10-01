@@ -31,43 +31,25 @@ class Register extends BaseController
 
     public function add()
     {
-            if ($this->request->isAJAX()) {
-          
+        if ($this->request->isAJAX()) {
+
             $vEmail = filtreData($this->request->getVar('userSignEmail'));
             $userSignusername = filtreData($this->request->getVar('userSignusername'));
             $vPassword = filtreData($this->request->getVar('userSignPassword'));
             $user_refer_token = filtreData($this->request->getVar('_user_refer_token'));
             $check_email_already_exists = (new RegisterModel())->findByEmail($vEmail);
-            if($check_email_already_exists){
-                $data = [ 'code' => (int)1 , 'msg' => 'Email already Exist!' , 'token' => csrf_hash() ];
+            if ($check_email_already_exists) {
+                $data = ['code' => (int)1, 'msg' => 'Email already Exist!', 'token' => csrf_hash()];
                 return json_encode($data);
             }
-            if ( $vEmail == "" || $userSignusername == "" || $vPassword == "" ) {
-                $data = [ 'code' => (int)1 , 'msg' => 'Please fill all fields ( * )' , 'token' => csrf_hash() ];
+            if ($vEmail == "" || $userSignusername == "" || $vPassword == "") {
+                $data = ['code' => (int)1, 'msg' => 'Please fill all fields ( * )', 'token' => csrf_hash()];
                 return json_encode($data);
-            } elseif ( !valid_email($vEmail) ) {
-                $data = [ 'code' => (int)1 , 'msg' => 'Please enter valid email.' , 'token' => csrf_hash() ];
+            } elseif (!valid_email($vEmail)) {
+                $data = ['code' => (int)1, 'msg' => 'Please enter valid email.', 'token' => csrf_hash()];
                 return json_encode($data);
             } else {
-                $ids = (new RegisterModel())->add(['email' => $vEmail, 'username' => $userSignusername , 'password' => $vPassword ]);
-                if ( $ids > 0 ) {
-                    (new RegisterModel())->login_verify($vEmail,$vPassword);
-                    if( session()->get('userIsLoggedIn') ) {
-                        (new Setting())->insertDollor('ZAPPTA_REGISTER','Register',3);
-                        if ( $user_refer_token !== 0 ) {
-                            $user_token = decodeToken($user_refer_token);
-                            (new \App\Models\Setting())->insertDollorFriend($user_token,'ZAPPTA_INVITE_JOIN');
-                        }
-                        $data = [ 'code' => (int)2 , 'msg' => 'Signup Successfully' , 'token' => csrf_hash() ];
-                        return json_encode($data);
-                    } else {
-                        $data = [ 'code' => (int)1 , 'msg' => 'Invalid Email / Password' , 'token' => csrf_hash() ];
-                        return json_encode($data);
-                    }
-                } else {
-                        $data = [ 'code' => (int)1 , 'msg' => 'There is some problem on creating account, please try again later.' , 'token' => csrf_hash() ];
-                        return json_encode($data);
-                }
+                return response()->setJSON(UserTrait::customerRegisterTrait($vEmail, $userSignusername, $vPassword, $user_refer_token));
             }
         } else {
             return redirect()->to('/');
@@ -76,54 +58,54 @@ class Register extends BaseController
 
     public function vendor()
     {
-        if ( getUserId() != 0 ) {
-            return redirect()->to(base_url()); 
+        if (getUserId() != 0) {
+            return redirect()->to(base_url());
         }
         $data['pagetitle'] = 'Vendor Registration';
-        return view('site/register/vendor',$data);
+        return view('site/register/vendor', $data);
     }
-    
+
     public function vendorlogin()
     {
-        if ( getUserId() != 0 ) {
-            return redirect()->to(base_url()); 
+        if (getUserId() != 0) {
+            return redirect()->to(base_url());
         }
         $data['pagetitle'] = 'Vendor Login';
-        return view('site/register/vendorlogin',$data);
+        return view('site/register/vendorlogin', $data);
     }
-    
+
     public function vendoradd()
     {
         if ($this->request->isAJAX()) {
-            
+
             $vEmail = filtreData($this->request->getVar('vEmail'));
             $vStoreName = filtreData($this->request->getVar('vStoreName'));
             $vStoreLink = filtreData($this->request->getVar('vStoreLink'));
             $vPassword = filtreData($this->request->getVar('vPassword'));
             $vConfirmPassword = filtreData($this->request->getVar('vConfirmPassword'));
-            
-            if ( $vEmail == "" || $vStoreName == "" || $vPassword == "" || $vConfirmPassword == "" ) {
-                $data = [ 'code' => (int)1 , 'msg' => 'Please fill all fields ( * )' , 'token' => csrf_hash() ];
+
+            if ($vEmail == "" || $vStoreName == "" || $vPassword == "" || $vConfirmPassword == "") {
+                $data = ['code' => (int)1, 'msg' => 'Please fill all fields ( * )', 'token' => csrf_hash()];
                 return json_encode($data);
-            } elseif ( !valid_email($vEmail) ) {
-                $data = [ 'code' => (int)1 , 'msg' => 'Please enter valid email.' , 'token' => csrf_hash() ];
+            } elseif (!valid_email($vEmail)) {
+                $data = ['code' => (int)1, 'msg' => 'Please enter valid email.', 'token' => csrf_hash()];
                 return json_encode($data);
-            } elseif ( $vPassword !== $vConfirmPassword ) {
-                $data = [ 'code' => (int)1 , 'msg' => 'Password & Confirm Password is not equal.' , 'token' => csrf_hash() ];
+            } elseif ($vPassword !== $vConfirmPassword) {
+                $data = ['code' => (int)1, 'msg' => 'Password & Confirm Password is not equal.', 'token' => csrf_hash()];
                 return json_encode($data);
-            } elseif ( (new VendorModel())->findByEmail($vEmail) > 0 ) {
-                $data = [ 'code' => (int)1 , 'msg' => 'Email already exists, Please choose another email.' , 'token' => csrf_hash() ];
+            } elseif ((new VendorModel())->findByEmail($vEmail) > 0) {
+                $data = ['code' => (int)1, 'msg' => 'Email already exists, Please choose another email.', 'token' => csrf_hash()];
                 return json_encode($data);
             } else {
                 $data = [
-                            'email' => $vEmail,
-                            'store_name' => $vStoreName,
-                            'store_slug' => (new VendorModel())->addStoreSlug(url_title($vStoreName, '-', true)),
-                            'store_link' => $vStoreLink,
-                            'password' => $vPassword
-                        ];
+                    'email' => $vEmail,
+                    'store_name' => $vStoreName,
+                    'store_slug' => (new VendorModel())->addStoreSlug(url_title($vStoreName, '-', true)),
+                    'store_link' => $vStoreLink,
+                    'password' => $vPassword
+                ];
                 (new VendorModel())->add($data);
-                $data = [ 'code' => (int)2 , 'msg' => 'Thanks for Registering!' , 'token' => csrf_hash() ];
+                $data = ['code' => (int)2, 'msg' => 'Thanks for Registering!', 'token' => csrf_hash()];
                 return json_encode($data);
             }
         } else {
@@ -134,23 +116,23 @@ class Register extends BaseController
     public function vendorverify()
     {
         if ($this->request->isAJAX()) {
-            
+
             $vEmail = filtreData($this->request->getVar('userEmail'));
             $vPassword = filtreData($this->request->getVar('userPassword'));
-            
-            if ( $vEmail == "" || $vPassword == "" ) {
-                $data = [ 'code' => (int)1 , 'msg' => 'Please fill all fields ( * )' , 'token' => csrf_hash() ];
+
+            if ($vEmail == "" || $vPassword == "") {
+                $data = ['code' => (int)1, 'msg' => 'Please fill all fields ( * )', 'token' => csrf_hash()];
                 return json_encode($data);
-            } elseif ( !valid_email($vEmail) ) {
-                $data = [ 'code' => (int)1 , 'msg' => 'Please enter valid email.' , 'token' => csrf_hash() ];
+            } elseif (!valid_email($vEmail)) {
+                $data = ['code' => (int)1, 'msg' => 'Please enter valid email.', 'token' => csrf_hash()];
                 return json_encode($data);
             } else {
-                (new VendorModel())->login_verify($vEmail,$vPassword);
-                if( session()->get('vendorIsLoggedIn') ) {
-                    $data = [ 'code' => (int)2 , 'msg' => 'Login Successfully' , 'token' => csrf_hash() ];
+                (new VendorModel())->login_verify($vEmail, $vPassword);
+                if (session()->get('vendorIsLoggedIn')) {
+                    $data = ['code' => (int)2, 'msg' => 'Login Successfully', 'token' => csrf_hash()];
                     return json_encode($data);
                 } else {
-                    $data = [ 'code' => (int)1 , 'msg' => 'Invalid Email / Password' , 'token' => csrf_hash() ];
+                    $data = ['code' => (int)1, 'msg' => 'Invalid Email / Password', 'token' => csrf_hash()];
                     return json_encode($data);
                 }
             }
@@ -163,54 +145,53 @@ class Register extends BaseController
     {
         $code = filtreData($this->request->getVar('code'));
         $refer = filtreData($this->request->getVar('refer'));
-        if (isset( $code ) ) {
+        if (isset($code)) {
             $access_token = getFbAccessToken($code);
-            if (isset( $access_token ) ) {
+            if (isset($access_token)) {
                 $user = getResponseFB(filtreData($access_token));
-                if ( !empty($user) ) {
+                if (!empty($user)) {
                     $name = $user['name'];
-                    if ( $refer !== 0 ) {
+                    if ($refer !== 0) {
                         $user_token = decodeToken($refer);
-                        (new \App\Models\Setting())->insertDollorFriend($user_token,'ZAPPTA_INVITE_JOIN');
+                        (new \App\Models\Setting())->insertDollorFriend($user_token, 'ZAPPTA_INVITE_JOIN');
                     }
-                    (new RegisterModel())->checkSocialAccountWeb($user['email'] , $name, 'FB');
+                    (new RegisterModel())->checkSocialAccountWeb($user['email'], $name, 'FB');
                     return redirect()->to('/dashboard');
                 } else {
                     $this->session->setFlashdata('error', 'Invalid Email / Password.');
-                    return redirect()->to('/?facebook=false&code='.$code);
+                    return redirect()->to('/?facebook=false&code=' . $code);
                 }
             } else {
                 $this->session->setFlashdata('error', 'Invalid access token.');
-                return redirect()->to('/?facebook=false&code='.$code);
+                return redirect()->to('/?facebook=false&code=' . $code);
             }
         } else {
             $this->session->setFlashdata('error', 'Invalid Code.');
-            return redirect()->to('/?facebook=false&code='.$code);
+            return redirect()->to('/?facebook=false&code=' . $code);
         }
-
     }
 
     public function google()
     {
         $code = filtreData($this->request->getVar('code'));
         $refer = filtreData($this->request->getVar('refer'));
-        if (isset( $code ) ) {
+        if (isset($code)) {
             $login = google_login_response($code);
-            if ( !empty($login['email']) ) {
+            if (!empty($login['email'])) {
                 $name = $login['givenName'] . ' ' . $login['familyName'];
-                if ( $refer !== 0 ) {
+                if ($refer !== 0) {
                     $user_token = decodeToken($refer);
-                    (new \App\Models\Setting())->insertDollorFriend($user_token,'ZAPPTA_INVITE_JOIN');
+                    (new \App\Models\Setting())->insertDollorFriend($user_token, 'ZAPPTA_INVITE_JOIN');
                 }
-                (new RegisterModel())->checkSocialAccountWeb($login['email'] , $name, 'GO');
+                (new RegisterModel())->checkSocialAccountWeb($login['email'], $name, 'GO');
                 return redirect()->to('/dashboard');
             } else {
                 $this->session->setFlashdata('error', 'Invalid Email / Password.');
-                return redirect()->to('/?google=false&code='.$code);
+                return redirect()->to('/?google=false&code=' . $code);
             }
         } else {
-                $this->session->setFlashdata('error', 'Invalid Email / Password.');
-                return redirect()->to('/?google=false&code='.$code);
+            $this->session->setFlashdata('error', 'Invalid Email / Password.');
+            return redirect()->to('/?google=false&code=' . $code);
         }
     }
 
@@ -218,30 +199,30 @@ class Register extends BaseController
     public function refer()
     {
         if ($this->request->isAJAX()) {
-            
+
             $friendEmail = filtreData($this->request->getVar('friendEmail'));
             $friendMsg = filtreData($this->request->getVar('friendMsg'));
             $friendName = filtreData($this->request->getVar('friendName'));
-            
-            if ( $friendEmail == "" || $friendMsg == "" || $friendName == "" ) {
-                $data = [ 'code' => (int)1 , 'msg' => 'Please fill all fields ( * )' , 'token' => csrf_hash() ];
+
+            if ($friendEmail == "" || $friendMsg == "" || $friendName == "") {
+                $data = ['code' => (int)1, 'msg' => 'Please fill all fields ( * )', 'token' => csrf_hash()];
                 return json_encode($data);
-            } elseif ( !valid_email($friendEmail) ) {
-                $data = [ 'code' => (int)1 , 'msg' => 'Please enter valid email.' , 'token' => csrf_hash() ];
+            } elseif (!valid_email($friendEmail)) {
+                $data = ['code' => (int)1, 'msg' => 'Please enter valid email.', 'token' => csrf_hash()];
                 return json_encode($data);
             } else {
-                if ( getUserId() > 0 ) {
+                if (getUserId() > 0) {
                     $data['user_data'] = [
-                                            'user_id' => generateToken(getUserId()),
-                                            'friendName' => $friendName,
-                                            'friendMsg' => $friendMsg,
-                                        ];
-                    (new \App\Models\EmailModel())->sendMail($friendEmail,'Refer A Friend','referemail',$data);
-                    (new \App\Models\Setting())->insertDollorFriend(getUserId(),'ZAPPTA_INVITE_FRIEND');
-                    $data = [ 'code' => (int)2 , 'msg' => 'Email successfully Sent' , 'token' => csrf_hash() ];
+                        'user_id' => generateToken(getUserId()),
+                        'friendName' => $friendName,
+                        'friendMsg' => $friendMsg,
+                    ];
+                    (new \App\Models\EmailModel())->sendMail($friendEmail, 'Refer A Friend', 'referemail', $data);
+                    (new \App\Models\Setting())->insertDollorFriend(getUserId(), 'ZAPPTA_INVITE_FRIEND');
+                    $data = ['code' => (int)2, 'msg' => 'Email successfully Sent', 'token' => csrf_hash()];
                     return json_encode($data);
                 } else {
-                    $data = [ 'code' => (int)1 , 'msg' => 'Invalid Email / Password' , 'token' => csrf_hash() ];
+                    $data = ['code' => (int)1, 'msg' => 'Invalid Email / Password', 'token' => csrf_hash()];
                     return json_encode($data);
                 }
             }
@@ -252,15 +233,15 @@ class Register extends BaseController
 
     public function loginViaReferral($id)
     {
-        if(getUserId()){
+        if (getUserId()) {
             return redirect()->to('/');
         }
         $id = my_decrypt($id);
-        if(is_numeric($id)){
+        if (is_numeric($id)) {
             $data['id'] = $id;
             $user = (new RegisterModel())->where(['id' => $id])->get()->getResult();
             $data['username'] = $user[0]->username;
-            return view('site/register/referall-signup',$data);
+            return view('site/register/referall-signup', $data);
         }
 
         return redirect()->to('/');
@@ -274,24 +255,24 @@ class Register extends BaseController
         $referred_by = filtreData($this->request->getVar('user_refer'));
         $referred_by = my_decrypt($referred_by);
         $check_email_already_exists = (new RegisterModel())->findByEmail($vEmail);
-        if($check_email_already_exists){
+        if ($check_email_already_exists) {
             $this->session->setFlashdata('error', 'Email already Exist!');
-            return redirect()->back()->withInput(); 
+            return redirect()->back()->withInput();
         }
-        if ( $vEmail == "" || $userSignusername == "" || $vPassword == "" ) {
+        if ($vEmail == "" || $userSignusername == "" || $vPassword == "") {
             $this->session->setFlashdata('error', 'Please fill all fields ( * )');
-            return redirect()->back()->withInput(); 
-        } elseif ( !valid_email($vEmail) ) {
+            return redirect()->back()->withInput();
+        } elseif (!valid_email($vEmail)) {
             $this->session->setFlashdata('error', 'Please enter valid email.');
             return redirect()->back()->withInput();
         } else {
-            $ids = (new RegisterModel())->add(['email' => $vEmail, 'username' => $userSignusername , 'password' => $vPassword, 'referred_by' => $referred_by]);
+            $ids = (new RegisterModel())->add(['email' => $vEmail, 'username' => $userSignusername, 'password' => $vPassword, 'referred_by' => $referred_by]);
             // Give 100Z to referred by user.
             $this->giveBalanceToReferredByUser($referred_by);
-            if ( $ids > 0 ) {
-                (new RegisterModel())->login_verify($vEmail,$vPassword);
-                if( session()->get('userIsLoggedIn') ) {
-                    (new Setting())->insertDollor('ZAPPTA_REGISTER','Regsiter',3);
+            if ($ids > 0) {
+                (new RegisterModel())->login_verify($vEmail, $vPassword);
+                if (session()->get('userIsLoggedIn')) {
+                    (new Setting())->insertDollor('ZAPPTA_REGISTER', 'Regsiter', 3);
                     // if ( $user_refer_token !== 0 ) {
                     //     $user_token = decodeToken($user_refer_token);
                     //     (new \App\Models\Setting())->insertDollorFriend($user_token,'ZAPPTA_INVITE_JOIN');
@@ -306,10 +287,10 @@ class Register extends BaseController
                     // return json_encode($data);
                 }
             } else {
-                    $this->session->setFlashdata('error', 'There is some problem on creating account, please try again later.');
-                    return redirect()->back()->withInput();
-                    // $data = [ 'code' => (int)1 , 'msg' => 'There is some problem on creating account, please try again later.' , 'token' => csrf_hash() ];
-                    // return json_encode($data);
+                $this->session->setFlashdata('error', 'There is some problem on creating account, please try again later.');
+                return redirect()->back()->withInput();
+                // $data = [ 'code' => (int)1 , 'msg' => 'There is some problem on creating account, please try again later.' , 'token' => csrf_hash() ];
+                // return json_encode($data);
             }
         }
     }
@@ -317,9 +298,7 @@ class Register extends BaseController
     public function giveBalanceToReferredByUser($id)
     {
         $total_zap = (new Setting())->insertDollorFriend($id, 'ZAPPTA_INVITE_FRIEND');
-        $link = base_url().'/dashboard/wallet';
+        $link = base_url() . '/dashboard/wallet';
         (new UsersModel())->saveNotification("You won {$total_zap} Zappta dollars bonus via your Referal link signup", $id, $link, 'referral');
     }
-
-
 }

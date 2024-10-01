@@ -124,8 +124,7 @@ class ZapptaHelper {
         $jwtPayload = [
             'iat' => time(), // Issued at
             'exp' => time() + 3600, // Token expiration time (1 hour)
-            'customer_id' => $user['id'],
-            'email' => $user['email'],
+            'customer' => $user
         ];
         $jwtToken = self::encodeJwtToken($jwtPayload);
         return $jwtToken;
@@ -147,7 +146,7 @@ class ZapptaHelper {
      * @author M Nabeel Arshad
      * @method decodeJwtToken
      * @param string $token
-     * @return array
+     * @return object
      */
     public static function decodeJwtToken($token) : object {
         return JWT::decode($token, new Key(getenv('JWT_SECRET_KEY'), self::HASHING_ALGO));
