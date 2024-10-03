@@ -10,6 +10,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class Store extends BaseController
 {
+    protected const GET_VARIABLES_ENCRYPT = ['p'];
     use ZapptaTrait;
     /**
      * Get all stores!
@@ -28,7 +29,7 @@ class Store extends BaseController
      * 
      */
     public function single($slug) {
-        ZapptaHelper::makeSelectedGetParamsEncrypt();
+        ZapptaHelper::makeSelectedGetParamsEncrypt($this::GET_VARIABLES_ENCRYPT);
         $data = $this->storesTrait($slug);
         if(!$data) {
             $response = ZapptaHelper::response('Store not found!', $data, 404);

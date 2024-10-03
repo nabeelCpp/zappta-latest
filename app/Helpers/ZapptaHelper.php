@@ -7,7 +7,7 @@ use Firebase\JWT\Key;
 
 class ZapptaHelper {
 
-    const GET_VARIABLES_ENCRYPT = ['dimension', 'color', 'size'];
+    
 
     const HASHING_ALGO = 'HS256';
 
@@ -52,8 +52,8 @@ class ZapptaHelper {
      * @author M Nabeel Arshad
      * @return void
      */
-    public static function makeSelectedGetParamsEncrypt() : void {
-        foreach (self::GET_VARIABLES_ENCRYPT as $key => $g) {
+    public static function makeSelectedGetParamsEncrypt($variables) : void {
+        foreach ($variables as $key => $g) {
             if(isset($_GET[$g])) {
                 $arr = [];
                 foreach(explode(',', $_GET[$g]) as $f ) {

@@ -8,6 +8,11 @@ use App\Traits\ZapptaTrait;
 class Category extends BaseController {
     use ZapptaTrait;
 
+    /**
+     * This constant is mainly for api, either to encrypt get parameter or not
+     */
+    protected const GET_VARIABLES_ENCRYPT = ['dimension', 'color', 'size'];
+
     public function __construct() {
         
     }
@@ -27,7 +32,7 @@ class Category extends BaseController {
      * 
      */
     public function single($slug) {
-        ZapptaHelper::makeSelectedGetParamsEncrypt();
+        ZapptaHelper::makeSelectedGetParamsEncrypt($this::GET_VARIABLES_ENCRYPT);
         $data = $this->categoryTrait($slug);
         $meta = $data['meta'] ?? null;
         if(isset($data['meta'])) {
