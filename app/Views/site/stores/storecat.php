@@ -1,7 +1,7 @@
 
 <?= view('site/newLanding/header', ['globalSettings' => $globalSettings, 'css' => $css]); ?>
 <?php 
-	if( !empty($store_id) ) {
+	if( !empty($store) ) {
 ?>
 	<?php 
 		if ( $vendor_design > 0 && !empty($vendor_design['header_banner']) ) {
@@ -22,10 +22,10 @@
 							</li>
 							<li>/</li>
 							<li>
-								<a href="<?php print base_url().'/stores/'.strtolower($store_id['store_slug']);?>">Stores</a>
+								<a href="<?php print base_url().'/stores/'.strtolower($store['store_slug']);?>">Stores</a>
 							</li>
 							<li>/</li>
-							<li><?php print $store_id['store_name'];?></li>
+							<li><?php print $store['store_name'];?></li>
 						</ul>
 					</div>
 				</div>
@@ -40,10 +40,10 @@
 					<div class="navs d-flex">
 						<div class="followbtn">
 							<!-- btns animate -->
-							<button type="button" class="btns animate" onclick="window.location.href='<?php print '/stores/'.$store_id['store_slug'];?>'" style="color: #fb5000;background: #ffffff;">Home</button>
+							<button type="button" class="btns animate" onclick="window.location.href='<?php print '/stores/'.$store['store_slug'];?>'" style="color: #fb5000;background: #ffffff;">Home</button>
 						</div>
 						<div class="links">
-							<?php print StoreCatTree( buildTree($categories),'/stores/'.$store_id['store_slug'] );?>
+							<?php print StoreCatTree( buildTree($categories),'/stores/'.$store['store_slug'] );?>
 						</div>
 						<div class="searchStore">
 							<div class="input-field position-relative">
@@ -75,7 +75,7 @@
 		</div>
 	</section>
 	<script>
-		currentUrl = "<?php print base_url().'/stores/'.$store_id['store_slug'];?>";
+		currentUrl = "<?php print base_url().'/stores/'.$store['store_slug'];?>";
 	</script>
 <?php } else { ?>
 	<?php print view('site/404');?>
