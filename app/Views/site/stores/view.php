@@ -1,7 +1,7 @@
 <?php $globalSettings = (new \App\Models\Setting())->orderBy('id', 'ASC')->GetValues(['company_name', 'frontend_logo']); ?>
 <?= view('site/newLanding/header', ['globalSettings' => $globalSettings, 'css' => $css]); ?>
 <?php 
-	if( !empty($store_id) ) {
+	if( !empty($store) ) {
 ?>
 	<?php 
 		if ( $vendor_design > 0 && !empty($vendor_design['header_banner']) ) {
@@ -24,10 +24,10 @@
 							</li>
 							<li>/</li>
 							<li>
-								<a href="<?php print base_url().'/stores/'.strtolower($store_id['store_slug'])?>">Stores</a>
+								<a href="<?php print base_url().'/stores/'.strtolower($store['store_slug'])?>">Stores</a>
 							</li>
 							<li>/</li>
-							<li><?php print $store_id['store_name'];?></li>
+							<li><?php print $store['store_name'];?></li>
 						</ul>
 					</div>
 				</div>
@@ -41,10 +41,10 @@
 				<div class="col-12">
 					<div class="navs d-flex">
 						<div class="followbtn">
-							<button type="button" class="btns animate" onclick="window.location.href='<?php print '/stores/'.$store_id['store_slug'];?>'">Home</button>
+							<button type="button" class="btns animate" onclick="window.location.href='<?php print '/stores/'.$store['store_slug'];?>'">Home</button>
 						</div>
 						<div class="links">
-							<?php print StoreCatTree( buildTree($categories),'/stores/'.$store_id['store_slug'] );?>
+							<?php print StoreCatTree( buildTree($categories),'/stores/'.$store['store_slug'] );?>
 						</div>
 						
 					</div>
@@ -68,15 +68,15 @@
 									$store_cat_slug = '';
 								}
 						?>
-						<a href="<?php print base_url().'/stores/'.$store_id['store_slug'].$store_cat_slug;?>">
+						<a href="<?php print base_url().'/stores/'.$store['store_slug'].$store_cat_slug;?>">
 							<div class="store-cat-banner animate" style="background-image:url('<?php print base_url().'/images/media/'.$img_ext[0].'/'.$img_ext[1].'/600';?>');">
 								<div class="cat-logos">
 								<?php if ( !empty($vendor_design['category_title_first']) ) {?>
 									<div class="catname"></div>
 								<?php } else { ?>
 									<?php 
-										if ( !empty($store_id['store_logo']) ) { 
-											$img_ext = explode('.',$store_id['store_logo']);
+										if ( !empty($store['store_logo']) ) { 
+											$img_ext = explode('.',$store['store_logo']);
 									?>
 										<img src="<?php print base_url().'/images/media/'.$img_ext[0].'/'.$img_ext[1].'/250';?>" alt="">
 									<?php } else {?>
@@ -92,8 +92,8 @@
 						<div class="store-cat-banner animate">
 							<div class="cat-logos">
 							<?php 
-								if ( !empty($store_id['store_logo']) ) { 
-									$img_ext = explode('.',$store_id['store_logo']);
+								if ( !empty($store['store_logo']) ) { 
+									$img_ext = explode('.',$store['store_logo']);
 							?>
 								<img src="<?php print base_url().'/images/media/'.$img_ext[0].'/'.$img_ext[1].'/250';?>" alt="">
 							<?php } else {?>
@@ -115,7 +115,7 @@
 											$store_cat_slug = '';
 										}
 								?>
-								<a href="<?php print base_url().'/stores/'.$store_id['store_slug'].$store_cat_slug;?>">
+								<a href="<?php print base_url().'/stores/'.$store['store_slug'].$store_cat_slug;?>">
 									<div class="store-cat-banner-left" style="background-image:url('<?php print base_url().'/images/media/'.$img_ext[0].'/'.$img_ext[1].'/600';?>');">
 										<div class="catname"></div>
 										<?php if ( !empty($vendor_design['category_link_second']) ) {?>
@@ -142,7 +142,7 @@
 											$store_cat_slug = '';
 										}
 								?>
-								<a href="<?php print base_url().'/stores/'.$store_id['store_slug'].$store_cat_slug;?>">
+								<a href="<?php print base_url().'/stores/'.$store['store_slug'].$store_cat_slug;?>">
 									<div class="store-cat-banner-bottom" style="background-image:url('<?php print base_url().'/images/media/'.$img_ext[0].'/'.$img_ext[1].'/600';?>');">
 										<div class="catname"></div>
 										<?php if ( !empty($vendor_design['category_link_third']) ) {?>
@@ -166,7 +166,7 @@
 											$store_cat_slug = '';
 										}
 								?>
-								<a href="<?php print base_url().'/stores/'.$store_id['store_slug'].$store_cat_slug;?>">
+								<a href="<?php print base_url().'/stores/'.$store['store_slug'].$store_cat_slug;?>">
 								<div class="store-cat-banner-bottom" style="background-image:url('<?php print base_url().'/images/media/'.$img_ext[0].'/'.$img_ext[1].'/600';?>');">
 									<div class="catname"></div>
 									<?php if ( !empty($vendor_design['category_link_fourth']) ) {?>
@@ -202,7 +202,7 @@
 					<h2 class="text-center" id="storesProList">Top Trending</h2>
 				</div>
 				<div class="row flex-wrap justify-content-center">
-					<?php print view('site/stores/prolist',['count' => $products, 'store'=>$store_id]);?>
+					<?php print view('site/stores/prolist',['count' => $products, 'store'=>$store]);?>
 				</div>
 				<!-- <div class="row align-items-center justify-content-center marg-cst-50">
 					<div class="col-12">
