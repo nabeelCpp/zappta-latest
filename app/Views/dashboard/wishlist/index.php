@@ -81,9 +81,9 @@
 							</div>
 						<?php } ?>
 						</div>
-						<?php if ( $total_list > 10 ) { ?>
+						<?php if ( $total_list > $per_page ) { ?>
 						<div class="pagenation mt-4">
-							<?php print $pager->makeLinks(1, 10, $total_list,'front_full') ?>
+							<?php print $pager->makeLinks($page, $per_page, $total_list,'front_full') ?>
 						</div>
 						<?php } ?>
 					</div>

@@ -19,7 +19,12 @@ $routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes) 
         $routes->post('login', 'Login::index');
         $routes->post('register', 'Login::register');
         $routes->group('', ['filter' => 'api.customer'], function($routes) {
-            $routes->get('index', 'Home::index');
+            $routes->get('dashboard', 'Home::index');
+            $routes->group('wishlist', function($routes) {
+                $routes->get('', 'Home::wishList'); //"http://localhost:8080/api/customer/wishlist?limit=1&page=2"
+                $routes->delete('remove/(:any)', 'Home::removeWishlist/$1'); //"http://localhost:8080/api/customer/wishlist/remove/{id}"
+                $routes->post('add', 'Home::addToWishlist'); //"http://localhost:8080/api/customer/wishlist/add"
+            });
         });
     });
 });

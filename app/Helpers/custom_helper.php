@@ -165,6 +165,8 @@ function getUserId()
     if(session()->get('userIsLoggedIn')){
         $session = session()->get('userIsLoggedIn');
         return $session['user_id'];
+    } else if($customer = \App\Traits\CustomerTrait::getLoggedInApiCustomer()) {
+        return $customer->id;
     } else {
         return 0;
     }

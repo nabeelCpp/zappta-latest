@@ -58,15 +58,14 @@ class WishlistModel extends Model
     }
 
 
-    public function getUserOrderList($limit=1)
+    public function getUserOrderList($page=1, $limit = PER_PAGE)
     {
-        $limits = 10;
         $result_limit = 0;
-        if ( $limit > 1 ) {
-            $result_limit = $limits * ( $limit - 1 );
+        if ( $page > 1 ) {
+            $result_limit = $limit * ( $page - 1 );
         }
         $result = [];
-        $sql = $this->db->query('SELECT cms_wishlist.product_id,cms_wishlist.id as wid,cms_products.name,cms_products.url,cms_products.sd_row,cms_products.pds,cms_products.pc,cms_products.cover,cms_products.short FROM (SELECT * FROM cms_wishlist WHERE user_id='.getUserId().'  LIMIT '.$limits.' OFFSET '.$result_limit.' ) `cms_wishlist` INNER JOIN cms_products on cms_products.id=cms_wishlist.product_id ORDER BY cms_wishlist.id DESC')
+        $sql = $this->db->query('SELECT cms_wishlist.product_id,cms_wishlist.id as wid,cms_products.name,cms_products.url,cms_products.sd_row,cms_products.pds,cms_products.pc,cms_products.cover,cms_products.short FROM (SELECT * FROM cms_wishlist WHERE user_id='.getUserId().'  LIMIT '.$limit.' OFFSET '.$result_limit.' ) `cms_wishlist` INNER JOIN cms_products on cms_products.id=cms_wishlist.product_id ORDER BY cms_wishlist.id DESC')
                         ->getResultArray();
         if ( is_array($sql) && count($sql) > 0 ) {
             foreach ( $sql as $q => $val ) {

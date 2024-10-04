@@ -3,9 +3,11 @@
 namespace App\Controllers;
 
 use App\Models\WishlistModel;
+use App\Traits\CustomerTrait;
 
 class Wishlist extends BaseController
 {
+    use CustomerTrait;
     public function index()
     {
         // $data['homeslider'] = (new SliderModel())->getAllResult();
@@ -29,14 +31,8 @@ class Wishlist extends BaseController
                 }
                 // print_r($wishlist->checkWishList( $store_id,my_decrypt($post['dd']),getUserId() ));
                 // die();
-                if ( $wishlist->checkWishList( $store_id,my_decrypt($post['dd']),getUserId() ) == false ) {
-                    $wishlist->add(['product_id' => my_decrypt($post['dd']),'store_id' => $store_id,'user_id' => getUserId() , 'created_at' => date('Y-m-d H:i:s')]);
-                    $data = ['error' => 2, 'msg' => 'Product successfully added in your wishlist', '_cc' => csrf_hash()];
-                    return json_encode($data);
-                } else {
-                    $data = ['error' => 3, 'msg' => 'Product already Added in your wishlist', '_cc' => csrf_hash()];
-                    return json_encode($data);
-                }
+                $product_id = my_decrypt($post['dd']);
+                return json_encode(CustomerTrait::addItemToWishList($store_id, $product_id));
             }
         } else {
             return redirect()->to('/');
