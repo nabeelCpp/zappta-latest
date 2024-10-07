@@ -582,7 +582,7 @@ class ProductsModel extends Model
     {
         $result = [];
         $sql = $this->db->table('product_attribute')
-            ->select('attributes.name_en as pattr_name,attributes.opt as opt, product_attribute.attr_id as pattr_id, product_attribute.value_id as pvalue_id')
+            ->select('attributes.name_en as pattr_name,attributes.opt as opt, product_attribute.attr_id as pattr_id')
             ->join('attributes', 'attributes.id=product_attribute.attr_id')
             ->where('product_attribute.product_id', $product_id)
             ->groupBy('product_attribute.attr_id')

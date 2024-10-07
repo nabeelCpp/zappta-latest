@@ -9,6 +9,7 @@ use App\Models\CategoriesModel;
 use App\Models\VendorModel;
 use App\Models\Setting;
 use App\Models\ProductsModel;
+use App\Models\ReviewModel;
 use App\Models\VendorDesignModel;
 use Config\Pager;
 
@@ -122,4 +123,32 @@ trait ZapptaTrait
 
         return $data;
     }
+    
+
+    /**
+     * Product trait
+     * @author M Nabeel Arshad
+     * @param
+     * @return array
+     */
+    public static function productTrait($url, $pc, $sd_row, $pds) : array {
+        $request = request();
+        $ReviewModel = new ReviewModel;
+        $complete_link = implode('/',$request->getUri()->getSegments()).'?'.http_build_query($_GET);
+        if ( getUserId() > 0 ) {
+            (new Setting())->insertDollor('ZAPPTA_PRODUCT_VIEW',$complete_link,1);
+        }
+        $data['single'] = (new ProductsModel())->getProductByUrl($url,$pc,$sd_row,$pds);
+        if ( !empty($data['single']) ) {
+            $data['proids'] = (new CategoriesModel())->getRelatedCategories($data['single']['product_category'],$data['single']['id']);
+            $data['related_products'] = (new ProductsModel())->getRelatedProduct($data['proids']);
+            // $data['store'] = $this->db->table('vendor')->where('id', $data['single']['store_id'])->get()->first();
+            $data['store'] = (new VendorModel())->findStoreById($data['single']['store_id']);
+
+        }
+        $data['overal_ratings'] = $ReviewModel->select('AVG(rates) as average_ratings, COUNT(id) as total_reviews')->where(['product_id' => $data['single']['product_id']])->groupBy('product_id')->get()->getRow();
+        $data['reviews'] = $ReviewModel->where(['product_id' => $data['single']['product_id']])->limit(5)->orderBy('id', 'DESC')->get()->getResult();
+        return $data;
+    }
+
 }

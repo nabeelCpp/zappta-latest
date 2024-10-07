@@ -9,9 +9,11 @@ use App\Models\NotificationModel;
 use App\Models\ReviewModel;
 use App\Models\CategoriesModel;
 use App\Models\VendorModel;
+use App\Traits\ZapptaTrait;
 
 class Products extends BaseController
 {
+    use ZapptaTrait;
 
     /*
     *   Get Single product
@@ -19,27 +21,14 @@ class Products extends BaseController
     */
     public function index()
     {
+        $request = request();
         $data['sticky_header'] = true;
-        $ReviewModel = new ReviewModel;
-        $complete_link = implode('/',$this->request->getUri()->getSegments()).'?'.http_build_query($_GET);
-        if ( getUserId() > 0 ) {
-            (new Setting())->insertDollor('ZAPPTA_PRODUCT_VIEW',$complete_link,1);
-        }
-        $url = filtreData($this->request->getUri()->getSegment(2));
-        $pc = filtreData($this->request->getUri()->getSegment(4));
-        $sd_row = filtreData($this->request->getVar('sd_row'));
-        $pds = filtreData($this->request->getVar('pds'));
-        $data['single'] = (new ProductsModel())->getProductByUrl($url,$pc,$sd_row,$pds);
-        if ( !empty($data['single']) ) {
-            $data['proids'] = (new CategoriesModel())->getRelatedCategories($data['single']['product_category'],$data['single']['id']);
-            $data['related_products'] = (new ProductsModel())->getRelatedProduct($data['proids']);
-            // $data['store'] = $this->db->table('vendor')->where('id', $data['single']['store_id'])->get()->first();
-            $data['store'] = (new VendorModel())->findStoreById($data['single']['store_id']);
-
-        }
+        $url = filtreData($request->getUri()->getSegment(2));
+        $pc = filtreData($request->getUri()->getSegment(4));
+        $sd_row = filtreData($request->getVar('sd_row'));
+        $pds = filtreData($request->getVar('pds'));
+        $data = ZapptaTrait::productTrait($url, $pc, $sd_row, $pds);
         $data['pagetitle'] = 'Adidas';
-        $data['overal_ratings'] = $ReviewModel->select('AVG(rates) as average_ratings, COUNT(id) as total_reviews')->where(['product_id' => $data['single']['product_id']])->groupBy('product_id')->get()->getRow();
-        $data['reviews'] = $ReviewModel->where(['product_id' => $data['single']['product_id']])->limit(5)->orderBy('id', 'DESC')->get()->getResult();
         // dd($data);
         // for new design
         $data['assets_url'] = ZapptaHelper::loadAssetsUrl();

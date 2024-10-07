@@ -8,6 +8,7 @@ $routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes) 
         $routes->get('', 'Category::index');
         $routes->get('(:any)', 'Category::single/$1');
     });
+    $routes->get('products/(:any)/p/(:any)/', 'Home::product/$1/$2');
     /**
      * Stores API
      */
