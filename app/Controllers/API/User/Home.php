@@ -7,8 +7,7 @@ use App\Helpers\ZapptaHelper;
 use App\Traits\UserTrait;
 use App\Traits\CustomerTrait;
 use CodeIgniter\API\ResponseTrait;
-use CodeIgniter\HTTP\ResponseInterface;
-
+use App\Models\Address;
 class Home extends BaseController
 {
     use UserTrait, ResponseTrait, CustomerTrait;
@@ -72,6 +71,40 @@ class Home extends BaseController
         $product_id = $post->product_id;
         $data = CustomerTrait::addItemToWishList($store_id, $product_id);
         $response = ZapptaHelper::response($data['msg']);
+        return response()->setJSON($response);
+    }
+    
+    /**
+     * Get wallet details of customer
+     * @return json
+     * @author M Nabeel Arshad
+     */
+    public function wallet() {
+        $data['earned_zappta'] = userTotalZappta();
+        $data['spent_zappta'] = (float)(new \App\Models\CompainModel())->getZapptaSpent();
+        $data['total_zappta'] = $data['earned_zappta'] - $data['spent_zappta'];
+        $response = ZapptaHelper::response('Wallet fetched successfully!', $data, 200);
+        return response()->setJSON($response);
+    }
+
+    /**
+     * Get customer's addresses
+     * @return json
+     */
+    public function addresses() {
+        $data = (new Address())->getAllResultByUser(getUserId(),20,2);
+        $response = ZapptaHelper::response('Addresses fetched successfully!', $data, 200);
+        return response()->setJSON($response);
+    }
+
+    /**
+     * Remove address
+     * @param string|integer $id
+     * @return json
+     */
+    public function removeAddress($id) {
+        (new Address())->deleteRecord($id);
+        $response = ZapptaHelper::response('Address successfully deleted!', null, 200);
         return response()->setJSON($response);
     }
 }

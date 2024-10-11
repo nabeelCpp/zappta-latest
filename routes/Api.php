@@ -16,6 +16,10 @@ $routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes) 
         $routes->get('', 'Store::index');
         $routes->get('(:any)', 'Store::single/$1');
     });
+    $routes->group('cart', function($routes) {
+        $routes->get('', 'Cart::index');
+    });
+
     $routes->group('customer', ['namespace' => 'App\Controllers\API\User'], function($routes) {
         $routes->post('login', 'Login::index');
         $routes->post('register', 'Login::register');
@@ -26,6 +30,9 @@ $routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes) 
                 $routes->delete('remove/(:any)', 'Home::removeWishlist/$1'); //"http://localhost:8080/api/customer/wishlist/remove/{id}"
                 $routes->post('add', 'Home::addToWishlist'); //"http://localhost:8080/api/customer/wishlist/add"
             });
+            $routes->get('wallet', 'Home::wallet');
+            $routes->get('addresses', 'Home::addresses');
+            $routes->delete('addresses/(:num)', 'Home::removeAddress/$1');
         });
     });
 });
