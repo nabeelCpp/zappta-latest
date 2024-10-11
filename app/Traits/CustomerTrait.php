@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Helpers\ZapptaHelper;
+use App\Models\RegisterModel;
 use App\Models\WishlistModel;
 use CodeIgniter\HTTP\Response;
 
@@ -60,6 +61,28 @@ trait CustomerTrait {
             $data = ['error' => 2, 'msg' => 'Product successfully added in your wishlist'];
         } else {
             $data = ['error' => 3, 'msg' => 'Product already Added in your wishlist'];
+        }
+        $data['_cc'] = csrf_hash();
+        return $data;
+    }
+
+    /**
+     * Update customer password
+     * @param object $request
+     * @return array
+     * @author M Nabeel Arshad
+     */
+    public static function updatePasswordTrait($current_pass, $new_pass, $confirm_pass) : array {
+        $db = \Config\Database::connect();
+        $user = $db->table('register')->where('id', getUserId())->get()->getResultArray();
+        if(!password_verify($current_pass , $user[0]['password'] )){
+            $data = ['success' => false, 'msg' => 'Invalid current password provided!'];
+        }else if($new_pass !== $confirm_pass){
+            $data = ['success' => false, 'msg' => 'New password and confirm password does not match!'];
+
+        } else {
+            (new RegisterModel())->add(['id' => getUserId() , 'password' => $confirm_pass]);
+            $data = ['success' => true, 'msg' => 'Password successfully updated'];
         }
         $data['_cc'] = csrf_hash();
         return $data;

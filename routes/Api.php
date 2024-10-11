@@ -33,6 +33,10 @@ $routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes) 
             $routes->get('wallet', 'Home::wallet');
             $routes->get('addresses', 'Home::addresses');
             $routes->delete('addresses/(:num)', 'Home::removeAddress/$1');
+            $routes->group('profile', function($routes) {
+                $routes->get('', 'Profile::index');
+                $routes->post('password', 'Profile::updatePassword');
+            });
         });
     });
 });

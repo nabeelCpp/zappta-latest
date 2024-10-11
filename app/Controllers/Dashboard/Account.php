@@ -6,9 +6,11 @@ use App\Controllers\BaseController;
 
 use App\Models\RegisterModel;
 use App\Models\EmailModel;
+use App\Traits\CustomerTrait;
 
 class Account extends BaseController
 {
+    use CustomerTrait;
     
     public function index()
     {
@@ -91,14 +93,10 @@ class Account extends BaseController
 
     public function updatePassword()
     {
-        $db = \Config\Database::connect();
-        $user = $db->table('register')->where('id', getUserId())->get()->getResultArray();
-       if(!password_verify( $this->request->getPost('current_pass') , $user[0]['password'] )){
-            $data = ['success' => false, 'msg' => 'Invalid current password provided!', '_cc' => csrf_hash()];
-        }else {
-            (new RegisterModel())->add(['id' => getUserId() , 'password' => $this->request->getPost('confirm_pass')]);
-            $data = ['success' => true, 'msg' => 'Password successfully updated', '_cc' => csrf_hash()];
-        }
+        $current_pass = $this->request->getPost('current_pass');
+        $new_pass = $this->request->getPost('new_pass');
+        $confirm_pass = $this->request->getPost('confirm_pass');
+        $data = CustomerTrait::updatePasswordTrait($current_pass, $new_pass, $confirm_pass);
         return json_encode($data);
     }
 
