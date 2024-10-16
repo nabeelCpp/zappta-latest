@@ -31,6 +31,7 @@ class Category extends BaseController
         $data = $this->categoryTrait($slug);
         $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
         $data['css'] = ZapptaHelper::loadModifiedThemeCss();
+        $data['exclude_attr'] = ['Color'];
         return view('site/category/index',$data);
         // dd($data['products']);
         // print '<pre>';

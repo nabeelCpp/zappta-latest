@@ -28,6 +28,7 @@ $total_list = (new App\Models\WishlistModel)->getUserTotalList();
     <link rel="stylesheet" href="<?= $assets_url ?>/css/swiper.min.css" />
     <link rel="stylesheet" href="<?= $assets_url ?>/css/main.css" />
     <link rel="stylesheet" href="<?= $assets_url ?>/css/zappta.css" />
+    <link rel="stylesheet" href="<?= $assets_url ?>/css/inner-pages.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <?= $css ?? null ?>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
@@ -127,7 +128,25 @@ $total_list = (new App\Models\WishlistModel)->getUserTotalList();
                                         <a type="button" onclick="showLogin('singin');" class="zappta-shaded-btn newLandingAccountModel" data-id="#signup-tab">Sign Up</a>
                                     </li>
                                 <?php } else { ?>
-                                    <!-- Need design for accounts and notification -->
+                                    <li>
+                                        <span class="notify"><img src="<?= $assets_url ?>/images/notification-bing.svg" alt="" />
+                                            <em>12</em>
+                                        </span>
+                                    </li>
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <img src="<?= $assets_url ?>/images/accountIcon.svg" alt="" /><span>My Account</span>
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <li><span>Welcome back!</span></li>
+                                            <li><a class="dropdown-item" href="<?php print base_url() . '/dashboard'; ?>"> <img src="<?= $assets_url ?>/images/dashboard.svg" alt="" /> Dashboard</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider">
+                                            </li>
+                                            <li><a class="dropdown-item" href="<?php print base_url() . '/logout'; ?>"><img src="<?= $assets_url ?>/images/logout.svg" alt="" /> Logout</a></li>
+                                        </ul>
+                                    </li>
+
                                 <?php } ?>
 
 

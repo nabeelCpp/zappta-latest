@@ -44,3 +44,18 @@ $('.newLandingAccountModel').click(function() {
   let id = $(this).attr('data-id');
   $(id).click();
 })
+$(document).ready(function() {
+		
+  $('#image-gallery').lightSlider({
+      gallery:true,
+      item:1,
+      thumbItem:4,
+      slideMargin: 0,
+      speed:500,
+      auto:true,
+      loop:true,
+      onSliderLoad: function() {
+          $('#image-gallery').removeClass('cS-hidden');
+      }  
+  });
+});
