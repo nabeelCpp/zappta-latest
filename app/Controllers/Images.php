@@ -4,12 +4,14 @@ namespace App\Controllers;
 
 class Images extends BaseController
 {
+    private $public = '/public';
     public function index()
     {
+        
         $url = $this->request->getUri()->getSegments();
         switch ($url[1]) {
             case 'product':
-                    $image = '/upload/products/'.$url[4].'-'.$url[4].'-'.$url[2].'.'.$url[3];
+                    $image = $this->public.'/upload/products/'.$url[4].'-'.$url[4].'-'.$url[2].'.'.$url[3];
                     if ( file_exists( $_SERVER['DOCUMENT_ROOT'].$image ) ) {
                         $filepath = $_SERVER['DOCUMENT_ROOT'].$image;
                         $image_mime = image_type_to_mime_type(exif_imagetype($filepath));
@@ -19,7 +21,7 @@ class Images extends BaseController
                         flush();
                         echo file_get_contents($filepath);
                     } else {
-                        $filepath = $_SERVER['DOCUMENT_ROOT'].'/upload/img-not-found.jpg';
+                        $filepath = $_SERVER['DOCUMENT_ROOT'].$this->public.'/upload/img-not-found.jpg';
                         $image_mime = image_type_to_mime_type(exif_imagetype($filepath));
                         header('Content-type:' . $image_mime);
                         header("Content-Length: " . filesize($filepath));
@@ -31,7 +33,7 @@ class Images extends BaseController
                 break;
 
             case 'media':
-                    $image = '/upload/media/'.$url[4].'-'.$url[4].'-'.$url[2].'.'.$url[3];
+                    $image = $this->public.'/upload/media/'.$url[4].'-'.$url[4].'-'.$url[2].'.'.$url[3];
                     if ( file_exists( $_SERVER['DOCUMENT_ROOT'].$image ) ) {
                         $filepath = $_SERVER['DOCUMENT_ROOT'].$image;
                         $image_mime = image_type_to_mime_type(exif_imagetype($filepath));
@@ -41,7 +43,7 @@ class Images extends BaseController
                         flush();
                         echo file_get_contents($filepath);
                     } else {
-                        $filepath = $_SERVER['DOCUMENT_ROOT'].'/upload/img-not-found.jpg';
+                        $filepath = $_SERVER['DOCUMENT_ROOT'].$this->public.'/upload/img-not-found.jpg';
                         $image_mime = image_type_to_mime_type(exif_imagetype($filepath));
                         header('Content-type:' . $image_mime);
                         header("Content-Length: " . filesize($filepath));
@@ -53,10 +55,10 @@ class Images extends BaseController
                 break;
             
             case 'slider':
-                    $image = '/upload/slider/'.$url[4].'-'.$url[4].'-'.$url[2].'.'.$url[3];
+                    $image = $this->public.'/upload/slider/'.$url[4].'-'.$url[4].'-'.$url[2].'.'.$url[3];
                     if ( file_exists( $_SERVER['DOCUMENT_ROOT'].$image ) ) {
                         if ( $url[4] == 1980 ) {
-                            $images = '/upload/slider/'.$url[2].'.'.$url[3];
+                            $images = $this->public.'/upload/slider/'.$url[2].'.'.$url[3];
                             $filepath = $_SERVER['DOCUMENT_ROOT'].$images;
                             $image_mime = image_type_to_mime_type(exif_imagetype($filepath));
                             header('Content-type:' . $image_mime);
@@ -74,7 +76,7 @@ class Images extends BaseController
                             echo file_get_contents($filepath);
                         }
                     } else {
-                        $filepath = $_SERVER['DOCUMENT_ROOT'].'/upload/img-not-found.jpg';
+                        $filepath = $_SERVER['DOCUMENT_ROOT'].$this->public.'/upload/img-not-found.jpg';
                         $image_mime = image_type_to_mime_type(exif_imagetype($filepath));
                         header('Content-type:' . $image_mime);
                         header("Content-Length: " . filesize($filepath));
@@ -96,7 +98,7 @@ class Images extends BaseController
         $url = $this->request->getUri()->getSegments();
         switch ($url[1]) {
             case 'full':
-                    $image = '/upload/media/'.$url[2].'.'.$url[3];
+                    $image = $this->public.'/upload/media/'.$url[2].'.'.$url[3];
                     if ( file_exists( $_SERVER['DOCUMENT_ROOT'].$image ) ) {
                         $filepath = $_SERVER['DOCUMENT_ROOT'].$image;
                         $image_mime = image_type_to_mime_type(exif_imagetype($filepath));
@@ -106,7 +108,7 @@ class Images extends BaseController
                         flush();
                         echo file_get_contents($filepath);
                     } else {
-                        $filepath = $_SERVER['DOCUMENT_ROOT'].'/upload/img-not-found.jpg';
+                        $filepath = $_SERVER['DOCUMENT_ROOT'].$this->public.'/upload/img-not-found.jpg';
                         $image_mime = image_type_to_mime_type(exif_imagetype($filepath));
                         header('Content-type:' . $image_mime);
                         header("Content-Length: " . filesize($filepath));
