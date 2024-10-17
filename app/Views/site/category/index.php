@@ -6,7 +6,7 @@ $dimension_link = $next['dimension_link'] =  isset($_GET['dimension']) ? '&dimen
 $paper_type_link = $next['paper_type_link'] =  isset($_GET['paper_type']) ? '&paper_type=' . $_GET['paper_type'] : '';
 $pf = $next['pf'] =  isset($_GET['p']) ?  '&p=' . $_GET['p'] : '';
 ?>
-<?= view('site/newLanding/header', ['globalSettings' => $globalSettings, 'css' => $css]); ?>
+<?= view('site/newLanding/header', ['globalSettings' => $globalSettings]); ?>
 <?php
 if (isset($category_id) && ! empty($category_id['cat_img'])) {
 	$ext_name = explode('.', $category_id['cat_img']);
@@ -94,7 +94,7 @@ if (isset($category_id) && ! empty($category_id['cat_img'])) {
 								</div>
 							</li>
 						<?php } ?>
-						<?=view('site/category/options', $next)?>
+						<?= view('site/category/options', $next) ?>
 						<li class="nav-item">
 							<a class="nav-link dropdown-toggle mb-3" data-bs-toggle="collapse" href="#seasonCollapse3" aria-expanded="true">
 								Price
@@ -142,7 +142,7 @@ if (isset($category_id) && ! empty($category_id['cat_img'])) {
 			<div class="col-12 col-md-8 col-lg-9">
 				<div class="contentsListing">
 					<div class="d-flex justify-content-between mb-3">
-						<h2>Showing 1-16 of <?=count($products)?> results</h2>
+						<?=displayResultsPhrase($page, $product_limit, $total_products)?>
 						<select class="customSelect">
 							<option>Sort by Latest</option>
 							<option>Sort by Prices</option>
@@ -150,9 +150,9 @@ if (isset($category_id) && ! empty($category_id['cat_img'])) {
 						</select>
 					</div>
 					<div class="row">
-						<?php if ( is_array($products) && count($products) > 0 ) { ?>
-							<?=view('site/stores/prolist',['count' => $products])?>
-						<?php }else { ?>
+						<?php if (is_array($products) && count($products) > 0) { ?>
+							<?= view('site/stores/prolist', ['count' => $products]) ?>
+						<?php } else { ?>
 							<div class="col-12">
 								<div class="alert alert-warning text-center" role="alert">
 									No products found!
@@ -161,18 +161,9 @@ if (isset($category_id) && ! empty($category_id['cat_img'])) {
 						<?php } ?>
 
 					</div>
-					<div class="pagination">
-						<a href="#" class="previous"><img src="./assets/images/chevron-left.svg" alt="" /> Previous</a>
-						<a href="#" class="next">Next <img src="./assets/images/chevron-right.svg" alt="" /> </a>
-						<select class="select-control">
-							<option>
-								1
-							</option>
-							<option>
-								2
-							</option>
-						</select>
-					</div>
+					<?php if ($total_products > $product_limit) { ?>
+						<?php print $pager->makeLinks($page, $product_limit, $total_products, 'zappta_new') ?>
+					<?php } ?>
 				</div>
 			</div>
 

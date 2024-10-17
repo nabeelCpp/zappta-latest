@@ -757,3 +757,16 @@ function timeago($date) {
 function getNotifications($limit = null){
     return (new \App\Models\UsersModel())->getNotifications($limit);
 }
+
+/**
+ * Get results related to pagination
+ * @param int $page
+ * @param int $limit
+ * @param int $total
+ * @return string
+ * @author M Nabeel Arshad
+ */
+function displayResultsPhrase($page, $limit, $total) : string {
+    $t = $page*$limit > $total ? $total : $page*$limit;
+    return "<h2>Showing ".((($page-1)*$limit)+1)."-".($t)." of {$total} results</h2>";
+}

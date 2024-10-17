@@ -57,7 +57,7 @@
   overflow-y: auto;
 }
 .sidebarCollapse .form-group-overflow {
-  max-height: 250px;
+  /* max-height: 250px; */
   overflow: hidden;
     overflow-y: hidden;
 }

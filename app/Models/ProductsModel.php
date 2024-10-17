@@ -622,7 +622,7 @@ class ProductsModel extends Model
 
     public function getProductByCategory($catid, $limit = 1, $filter = [])
     {
-        $limits = 12;
+        $limits = $_GET['limit'] ?? ProductsModel::LIMIT;
         $result_limit = 0;
         if ($limit > 1) {
             $result_limit = $limits * ($limit - 1);
