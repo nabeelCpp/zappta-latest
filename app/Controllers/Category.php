@@ -41,5 +41,21 @@ class Category extends BaseController
         // print_r($data['products']);
         // print '</pre>';
     }
+
+    public function singlee($slug)
+    {
+        $data = $this->categoryTrait($slug);
+        $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
+        $data['css'] = ZapptaHelper::loadModifiedThemeCss();
+        $data['exclude_attr'] = [''];
+        return view('site/category/~index',$data);
+        // dd($data['products']);
+        // print '<pre>';
+        // print_r(count($data['products']));
+        // print '</pre>'; 
+        // print '<pre>';
+        // print_r($data['products']);
+        // print '</pre>';
+    }
         
 }

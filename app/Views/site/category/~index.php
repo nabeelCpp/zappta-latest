@@ -249,7 +249,7 @@
 					<div class="cat-pro-list catp mt-4 mb-4">
 						<div class="row p-0 m-0">
 						<?php if ( is_array($products) && count($products) > 0 ) { ?>
-							<?php print view('site/stores/prolist',['count' => $products]);?>
+							<?php print view('site/stores/~prolist',['count' => $products]);?>
 						<?php } else { ?>
 							<div class="col-12"><p class="alert alert-danger">No result found</p></div>
 						<?php } ?>
