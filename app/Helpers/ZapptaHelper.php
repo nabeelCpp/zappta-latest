@@ -68,6 +68,7 @@ class ZapptaHelper {
      * modified old themes css to be campatible with new design
      * @author M nabeel Arshad
      * @return string
+     * @deprecated
      */
     public static function loadModifiedThemeCss() : string {
         return "<link rel=\"stylesheet\" type=\"text/css\" href=\"".base_url() . "/theme/css/theme_modified.css\">";

@@ -112,7 +112,8 @@ function show_message()
 
 function getImageThumg($dir,$filename,$size)
 {
-    return base_url().'/upload/'.$dir.'/'.$size.'-'.$size.'-'.$filename;
+    $path = "upload/$dir/$size-$size-$filename";
+    return file_exists($path) && is_file($path) ? base_url().$path : base_url()."upload/img-not-found.jpg";
 }
 
 function getImageFull($dir,$filename)
@@ -770,3 +771,10 @@ function displayResultsPhrase($page, $limit, $total) : string {
     $t = $page*$limit > $total ? $total : $page*$limit;
     return "<h2>Showing ".((($page-1)*$limit)+1)."-".($t)." of {$total} results</h2>";
 }
+
+/**
+ * Get URi for input image
+ * @param string $path
+ * @return string
+ * @author M Nabeel Arshad
+ */

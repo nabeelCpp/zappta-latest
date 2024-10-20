@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\ZapptaHelper;
 use CodeIgniter\Model; 
 
 class VendorModel extends Model
@@ -153,13 +154,13 @@ class VendorModel extends Model
                         ->getResultArray();
     }
 
-    public function getHomeResult($limit=20)
+    public function getHomeResult($limit=PER_PAGE)
     {
         return $this->where('store_status',1)
                     ->where('status',2)
                     ->where('deleteStatus',0)
                     ->orderBy('id DESC')
-                    ->findAll($limit);
+                    ->paginate($limit);
     }
 
     public function GetEmailsOfVendors(){

@@ -29,7 +29,7 @@
             $dataimg  = base_url() . '/images/product/img-not-found/jpg/100';
         } 
         $inc_price = ($p['deal_final_price'] + $increments_amount); ?>
-        <div class="col-12 col-md-6 col-lg-4">
+        <div class="col-12 col-md-6 col-lg-4 mb-3">
             <div class="productPostWraps">
                 <div class="productPostThumbnail">
                     <?=$p['deal_enable'] > 0 ? '<span class="priceOff">'.number_format(calculatePercentage( $p['final_price']  + $increments_amount, $inc_price ), 0).'% off</span>' : '' ?>

@@ -12,14 +12,26 @@ use App\Traits\ZapptaTrait;
 class Stores extends BaseController
 {
     use ZapptaTrait;
+
+    protected $VendorModel;
+
+    public function __construct() {
+        $this->VendorModel = new VendorModel();
+    }
+
+
     public function index()
     {
         $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
-        $data['css'] = ZapptaHelper::loadModifiedThemeCss();
+        // $data['css'] = ZapptaHelper::loadModifiedThemeCss();
         $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
         // $data['store_id'] = (new VendorModel())->findIdByUrl($this->request->getUri()->getSegment(2));
         $data['pagetitle'] = 'Stores';
-        $data['store'] = (new VendorModel())->getHomeResult();
+        $data['store'] = $this->VendorModel->getHomeResult();
+        $data['pager'] = $this->VendorModel->pager;
+        foreach ($data['store'] as $key => $value) {
+            $data['store'][$key]['img'] = getImageThumg('media', $value['store_logo'], 250);
+        }
         if (!empty($data['store_id'])) {
             $data['products'] = (new ProductsModel())->getStoreListing($data['store_id']['id']);
         } else {

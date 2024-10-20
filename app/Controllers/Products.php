@@ -28,11 +28,11 @@ class Products extends BaseController
         $sd_row = filtreData($request->getVar('sd_row'));
         $pds = filtreData($request->getVar('pds'));
         $data = ZapptaTrait::productTrait($url, $pc, $sd_row, $pds);
+        $data['image_path'] = 'products/';
         $data['pagetitle'] = 'Adidas';
         // dd($data);
         // for new design
         $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
-        $data['css'] = ZapptaHelper::loadModifiedThemeCss();
         $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
         return view('site/stores/single',$data);
     }
