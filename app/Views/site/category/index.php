@@ -9,10 +9,9 @@ $pf = $next['pf'] =  isset($_GET['p']) ?  '&p=' . $_GET['p'] : '';
 <?= view('site/newLanding/header', ['globalSettings' => $globalSettings]); ?>
 <?php
 if (isset($category_id) && ! empty($category_id['cat_img'])) {
-	$ext_name = explode('.', $category_id['cat_img']);
 ?>
 	<div class="BannerSection">
-		<img src="<?php print base_url() . '/images/full/' . $ext_name[0] . '/' . $ext_name[1]; ?>" alt="" />
+		<img src="<?= $category_id['cat_img'] ?>" alt="" />
 	</div>
 <?php } ?>
 

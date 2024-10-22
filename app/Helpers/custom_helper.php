@@ -118,7 +118,8 @@ function getImageThumg($dir,$filename,$size)
 
 function getImageFull($dir,$filename)
 {
-    return base_url().'/upload/'.$dir.'/'.$filename;
+    $path = "upload/$dir/$filename";
+    return file_exists($path) && is_file($path) ? base_url().$path : base_url()."upload/media/1723736066_00efe961f828f10c94ad.jpeg";
 }
 
 function getAdminUserId()

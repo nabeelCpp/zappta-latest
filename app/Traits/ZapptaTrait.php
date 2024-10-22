@@ -53,6 +53,12 @@ trait ZapptaTrait
             $data['allcat'] = (new CategoriesModel())->getAllCategoryForTree();
         }
 
+        foreach ($data['category_id'] as $key => $value) {
+            if(isset($data['category_id'][$key]) && $key == 'cat_img') {
+                $data['category_id'][$key] = getImageFull('media', $value);
+            }
+        }
+
         $size = isset($_GET['size']) ? $_GET['size'] : '';
         $color = isset($_GET['color']) ? $_GET['color'] : '';
         $dimension = isset($_GET['dimension']) ? $_GET['dimension'] : '';
