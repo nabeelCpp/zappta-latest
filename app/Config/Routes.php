@@ -61,6 +61,7 @@ $routes->get('stores/(:any)', 'Stores::view');
 $routes->get('categories', 'Category::index');
 $routes->get('categories/(:any)', 'Category::single/$1');
 $routes->get('categories_old/(:any)', 'Category::singlee/$1');
+$routes->get('products_old/(:any)/p/(:any)/', 'Products::index_old');
 $routes->get('products/(:any)/p/(:any)/', 'Products::index');
 $routes->get('brands', 'Brands::index');
 $routes->get('brands/(:any)', 'Brands::single');

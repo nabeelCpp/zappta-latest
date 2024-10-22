@@ -4,8 +4,11 @@ namespace App\Controllers;
 
 class Images extends BaseController
 {
-    private $public = '/public';
-    // private $public = '';
+    private $public;
+
+    public function __construct() {
+        $this->public = env('PUBLIC_DIR', '');
+    }
     public function index()
     {
         

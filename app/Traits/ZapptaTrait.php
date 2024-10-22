@@ -146,6 +146,20 @@ trait ZapptaTrait
             $data['store'] = (new VendorModel())->findStoreById($data['single']['store_id']);
 
         }
+        
+
+        if(isset($data['single']['attributes']) && is_array($data['single']['attributes'])){
+            foreach($data['single']['attributes'] as $k => $v) {
+                if(isset($data['single']['attributes'][$k]['values']) && is_array($data['single']['attributes'][$k]['values'])){
+                    foreach($data['single']['attributes'][$k]['values'] as $kk => $vv) {
+                        if(isset($data['single']['attributes'][$k]['values'][$kk]['value_img'])) {
+                            $data['single']['attributes'][$k]['values'][$kk]['value_img'] = getImageThumg('products', $data['single']['attributes'][$k]['values'][$kk]['value_img'], 100);
+                        } 
+                    }
+                }
+            }
+
+        }
         $data['overal_ratings'] = $ReviewModel->select('AVG(rates) as average_ratings, COUNT(id) as total_reviews')->where(['product_id' => $data['single']['product_id']])->groupBy('product_id')->get()->getRow();
         $data['reviews'] = $ReviewModel->where(['product_id' => $data['single']['product_id']])->limit(5)->orderBy('id', 'DESC')->get()->getResult();
         return $data;

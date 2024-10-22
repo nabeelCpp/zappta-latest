@@ -62,20 +62,24 @@ $(function(){
 			var price_value = $(this).data('attr-price');
 			var price = $(this).data('price');
 			var id = $(this).data('id');
-			var value = $(this).val();
+			var value = $(this).data('value');
 			var old_price = $(this).data('value');
-			
 
 			$('.attr_hidden_'+id).remove();
 			$('.attr_hidden_price_'+id).remove();
 			$('.inputhidden').append('<input type="hidden" name="attr[]" class="attr_hidden attr_hidden_'+id+'" value="'+id+'_'+value+'_'+price_value+'" />\
 										<input type="hidden" class="attr_hidden_price attr_hidden_price_'+id+'" value="'+price_value+'" />');
 			$('.nametext_'+id).text(name);
+			$('.attr-ul-'+id+' li').removeClass('active-attr');
+			$(this).addClass('active-attr');
 			
 			var attr = $('.attr_hidden_price').map(function () { return this.value; }).get();
+			console.log('attr',calculator_price(attr));
 			var new_price = (parseFloat(calculator_price(attr)) + parseFloat(price)).toFixed(2);
+			var splitprice = new_price.split('.');
 			$('#itemprice').val(new_price);
-			$('#singleprice').text(new_price);
+			$('#firstdigit').text(splitprice[0]);
+			$('#seconddigit').text(splitprice[1]);
 	});
 
 	$('#decreament').click(function(){
@@ -124,18 +128,19 @@ $(function(){
 
 });
 
-
+/**
+ * 
+ * @deprecated
+ */
 function checkRequiredFields(){
-	let required = $('.requiredAttributes');
+	let required = $('.attr-ul');
 	let errors = 0;
 	required.each(function(){
-		let radio = $(this).find('input[type="radio"]');
-		if(!radio.is(':checked')){
+		if(!$(this).find('li.active-attr').length){
+			$(this).prev('.title').find('span').html('<small style="color: red;">Please select attribute</small>');
 			errors++;
-			$(`.nametext_${radio.attr('name')}`).html('<small style="color: red;">Please select attribute</small>');
 		}
-		
-	})
+	});
 	if(errors){
 		return true;
 	}

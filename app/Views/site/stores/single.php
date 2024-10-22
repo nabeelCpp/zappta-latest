@@ -83,7 +83,7 @@
                         <?php
                         if ($single['deal_enable'] > 0) { 
                             $item_price = $single['deal_final_price']; ?>
-                            <h4 id="singleprice">$<?= number_format($single['deal_final_price'], 2) ?> <span class="priceCutOff"><del>$<?php print number_format($single['final_price'], 2) ?></del></span></h4>
+                            <h4>$<span id="singleprice"><?= number_format($single['deal_final_price'], 2) ?> </span><span class="priceCutOff"><del>$<?php print number_format($single['final_price'], 2) ?></del></span></h4>
                         <?php } else { 
                             $item_price = $single['final_price'];?>
                             <h4 id="singleprice">$<?= number_format($single['final_price'], 2) ?></h4>
@@ -106,71 +106,41 @@
                                 switch ($attrkeys['attr_option']) {
                                     case 2: ?>
                                         <div class="colorSelection">
-                                            <h5><?=$attrkeys['attribute_name'] ?> </h5>
-                                            <span class="nametext_<?=my_encrypt($attrkeys['attr_id'])?>"></span>
-                                            <div class="my-color">
-                                                <label class="radio">
-                                                    <input type="radio" name="colours" value="red" checked>
-                                                    <span class="red"></span>
-                                                </label>
-                                                <label class="radio">
-                                                    <input type="radio" name="colours"
-                                                        value="blue"> <span class="blue"></span>
-                                                </label>
-                                                <label class="radio">
-                                                    <input type="radio"
-                                                        name="colours" value="green"> <span class="green"></span>
-
-                                                </label>
-                                                <label class="radio">
-                                                    <input
-                                                        type="radio" name="colours" value="orange"> <span class="orange"></span>
-                                                </label>
+                                            <h5><?=$attrkeys['attribute_name'] ?> <span class="mx-4 text-danger nametext_<?=my_encrypt($attrkeys['attr_id'])?>"></span></h5>
+                                            
+                                            <div class="my-color requiredAttributes"><?php 
+                                                foreach ($attrkeys['values'] as $val) {
+                                                    $data_price_enable = !empty($val['price_enable']) ? $val['price_enable'] : 0;
+                                                    $data_price_value = !empty($val['price_value']) ? $val['price_value'] : 0; ?>
+                                                    <label class="radio">
+                                                        <input type="radio" name="<?=my_encrypt($attrkeys['attr_id'])?>" data-name="<?php print $val['value_name']; ?>" value="<?=my_encrypt($val['pattr_value_id'])?>" data-attr-setprice="<?=$data_price_enable?>" data-attr-price="<?=$data_price_value?>" class="proattr" data-price="<?=$item_price?>" data-id="<?=my_encrypt($attrkeys['attr_id'])?>"> <?php
+                                                        if (!empty($val['value_img'])) { ?>
+                                                            <span class="attr_texture" style="height: 37px !important">
+                                                                <img src="<?=$val['value_img']?>" alt="" style="width: 35px; height: 35px;"></span>
+                                                        <?php } else { ?>
+                                                            <span class="attr_color" style="background-color:#<?php print $val['color_code']; ?>"></span>
+                                                        <?php } ?>
+                                                    </label><?php 
+                                                } ?>
                                             </div>
                                         </div> <?php
                                         break;
                                     default: ?>
                                         <div class="selectionSize">
-                                            <h4><?=$attrkeys['attribute_name'] ?></h4>
-                                            <span class="nametext_<?=my_encrypt($attrkeys['attr_id'])?>"></span>
+                                            <h4><?=$attrkeys['attribute_name'] ?> <span class="mx-4 text-danger nametext_<?=my_encrypt($attrkeys['attr_id'])?>"></span></h4>
+                                            
 
-                                            <div class="d-flex">
-                                                <div class="form-check">
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" name="">
-                                                        <span class="red">XS</span>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" name="">
-                                                        <span class="red">S</span>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" name="">
-                                                        <span class="red">M</span>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" name="">
-                                                        <span class="red">L</span>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" name="">
-                                                        <span class="red">XL</span>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" name="">
-                                                        <span class="red">2XL</span>
-                                                    </label>
-                                                </div>
+                                            <div class="d-flex requiredAttributes"><?php 
+                                                foreach ($attrkeys['values'] as $val) {
+                                                    $data_price_enable = !empty($val['price_enable']) ? $val['price_enable'] : 0;
+                                                    $data_price_value = !empty($val['price_value']) ? $val['price_value'] : 0; ?>
+                                                    <div class="form-check">
+                                                        <label class="checkbox">
+                                                            <input type="radio" name="<?=my_encrypt($attrkeys['attr_id'])?>" data-attr-setprice="<?=$data_price_enable?>" data-attr-price="<?=$data_price_value?>" class="proattr" data-name="<?=$val['value_name']?>" data-price="<?=$item_price?>" data-id="<?= my_encrypt($attrkeys['attr_id']) ?>" value="<?=my_encrypt($val['pattr_value_id']) ?>">
+                                                            <span class="red"><?php print $val['value_name']; ?></span>
+                                                        </label>
+                                                    </div><?php 
+                                                } ?>
                                             </div>
 
                                         </div><?php
@@ -186,71 +156,40 @@
                                 switch ($attrkeys['attr_option']) {
                                     case 2: ?>
                                         <div class="colorSelection">
-                                            <h5><?=$attrkeys['attribute_name'] ?> </h5>
-                                            <span class="nametext_<?=my_encrypt($attrkeys['attr_id'])?>"></span>
-                                            <div class="my-color">
-                                                <label class="radio">
-                                                    <input type="radio" name="colours" value="red" checked>
-                                                    <span class="red"></span>
-                                                </label>
-                                                <label class="radio">
-                                                    <input type="radio" name="colours"
-                                                        value="blue"> <span class="blue"></span>
-                                                </label>
-                                                <label class="radio">
-                                                    <input type="radio"
-                                                        name="colours" value="green"> <span class="green"></span>
-
-                                                </label>
-                                                <label class="radio">
-                                                    <input
-                                                        type="radio" name="colours" value="orange"> <span class="orange"></span>
-                                                </label>
+                                            <h5><?=$attrkeys['attribute_name'] ?> <span class="mx-4 text-danger nametext_<?=my_encrypt($attrkeys['attr_id'])?>"></span></h5>
+                                            
+                                            <div class="my-color requiredAttributes"><?php 
+                                                foreach ($attrkeys['values'] as $val) {
+                                                    $data_price_enable = !empty($val['price_enable']) ? $val['price_enable'] : 0;
+                                                    $data_price_value = !empty($val['price_value']) ? $val['price_value'] : 0; ?>
+                                                    <label class="radio">
+                                                        <input type="radio" name="<?=my_encrypt($attrkeys['attr_id'])?>" value="<?=my_encrypt($val['pattr_value_id'])?>" data-attr-setprice="<?=$data_price_enable?>" data-name="<?php print $val['value_name']; ?>" data-attr-price="<?=$data_price_value?>" class="proattr" data-price="<?=$item_price?>" data-id="<?=my_encrypt($attrkeys['attr_id'])?>"> <?php
+                                                        if (!empty($val['value_img'])) { ?>
+                                                            <span class="attr_texture" style="height: 37px !important">
+                                                                <img src="<?=$val['value_img']?>" alt="" style="width: 35px; height: 35px;"></span>
+                                                        <?php } else { ?>
+                                                            <span class="attr_color" style="background-color:#<?php print $val['color_code']; ?>"></span>
+                                                        <?php } ?>
+                                                    </label><?php 
+                                                } ?>
                                             </div>
                                         </div> <?php
                                         break;
                                     default: ?>
                                         <div class="selectionSize">
-                                            <h4><?=$attrkeys['attribute_name'] ?></h4>
-                                            <span class="nametext_<?=my_encrypt($attrkeys['attr_id'])?>"></span>
+                                            <h4><?=$attrkeys['attribute_name'] ?> <span class="mx-4 text-danger nametext_<?=my_encrypt($attrkeys['attr_id'])?>"></span></h4>
 
-                                            <div class="d-flex">
-                                                <div class="form-check">
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" name="">
-                                                        <span class="red">XS</span>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" name="">
-                                                        <span class="red">S</span>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" name="">
-                                                        <span class="red">M</span>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" name="">
-                                                        <span class="red">L</span>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" name="">
-                                                        <span class="red">XL</span>
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" name="">
-                                                        <span class="red">2XL</span>
-                                                    </label>
-                                                </div>
+                                            <div class="d-flex requiredAttributes"><?php 
+                                                foreach ($attrkeys['values'] as $val) {
+                                                    $data_price_enable = !empty($val['price_enable']) ? $val['price_enable'] : 0;
+                                                    $data_price_value = !empty($val['price_value']) ? $val['price_value'] : 0; ?>
+                                                    <div class="form-check">
+                                                        <label class="checkbox">
+                                                            <input type="radio" name="<?=my_encrypt($attrkeys['attr_id'])?>" data-attr-setprice="<?=$data_price_enable?>" data-attr-price="<?=$data_price_value?>" class="proattr" data-name="<?=$val['value_name']?>" data-price="<?=$item_price?>" data-id="<?= my_encrypt($attrkeys['attr_id']) ?>" value="<?=my_encrypt($val['pattr_value_id']) ?>">
+                                                            <span class="red"><?php print $val['value_name']; ?></span>
+                                                        </label>
+                                                    </div><?php 
+                                                } ?>
                                             </div>
 
                                         </div><?php
@@ -273,13 +212,43 @@
                         ?>
                             <button type="button " class="btn btn-cart animate mb-3 w-100" id="addtocard" data-id="<?php print my_encrypt($single['product_id']); ?>">Proceed to Game</button>
                         <?php } else { ?>
-                            <a type="button " class="cartBtn" id="addtocard"><img src="<?= $assets_url ?>/images/shoppingcart.svg" alt="" />Add to cart</a>
+                            <button type="button " class="cartBtn" id="addtocard"><img src="<?= $assets_url ?>/images/shoppingcart.svg" alt="" />Add to cart</button>
                         <?php } ?>
-                        <a type="button " class="buyNowBtn" id="buynow">Buy Now</a>
+                        <button type="button " class="buyNowBtn" id="buynow">Buy Now</button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="inputhidden">
+        <?php
+        $givewaytags = isset($_GET['give']) ? $_GET['give'] : 0;
+        if ($givewaytags == 1) {
+        ?>
+            <input type="hidden" name="givewaytags" id="givewaytags" value="1" />
+        <?php } else { ?>
+            <input type="hidden" name="givewaytags" id="givewaytags" value="0" />
+        <?php } ?>
+        <!-- <input type="hidden" name="attr[]" class="attr_hidden" value="1_1"> -->
+        <input type="hidden" name="qtycart" id="qtycart" value="<?=$single['min_qty']; ?>" />
+        <input type="hidden" name="pid" id="pid" value="<?=my_encrypt($single['product_id'])?>" />
+        <?php if ($single['deal_enable'] > 0) { ?>
+            <input type="hidden" name="itemprice" class="itemprice_1" id="itemprice" value="<?php print number_format($single['deal_final_price'], 2); ?>" />
+        <?php } else { ?>
+            <input type="hidden" name="itemprice" class="itemprice_1" id="itemprice" value="<?php print number_format($single['final_price'], 2); ?>" />
+        <?php } ?>
+        <input type="hidden" name="pname" id="pname" value="<?php print ucfirst($single['name']); ?>" />
+        <?php
+        if (!empty($single['cover'])) {
+            $value_img_ext_product = explode('.', $single['cover']);
+        ?>
+            <input type="hidden" name="item_image" id="item_image" value="<?php print base_url() . '/images/product/' . $value_img_ext_product[0] . '/' . end($value_img_ext_product) . '/250'; ?>" />
+        <?php } else { ?>
+            <input type="hidden" name="item_image" id="item_image" value="<?php print base_url() . '/images/product/img-not-found/jpg/100'; ?>" />
+        <?php } ?>
+        <input type="hidden" id="_ajax_request" value="<?php print csrf_hash(); ?>">
+        <input type="hidden" id="_data_handle" value="<?php print $single['handlingcharges']; ?>">
+        <input type="hidden" id="_data_transfer" value="<?php print $single['freeshipat']; ?>">
     </div>
 </section>
 
@@ -290,9 +259,9 @@
             <div class="col-md-3">
                 <nav id="myTab" class="nav nav-pills flex-column">
                     <a href="#category_tab1" data-bs-toggle="pill" class="active nav-link">Description</a>
-                    <a href="#category_tab4" data-bs-toggle="pill" class="nav-link">Reviews</a>
                     <a href="#category_tab2" data-bs-toggle="pill" class="nav-link">Additional Details</a>
                     <a href="#category_tab3" data-bs-toggle="pill" class="nav-link">Shipping & Returns</a>
+                    <a href="#category_tab4" data-bs-toggle="pill" class="nav-link">Reviews</a>
 
                 </nav>
             </div>
@@ -355,7 +324,7 @@
 <section class="w-100 py-5">
     <div class="container mt-4">
         <div class="row">
-            <?= view('site/stores/prolist', ['count' => $related_products]) ?>
+            <?= view('site/stores/prolist', ['count' => $related_products, 'class' => 'col-12 col-md-6 col-lg-3']) ?>
         </div>
         <!-- <div class="col-12 col-sm-12 justify-content-center d-flex align-items-center">
             <a href="#" class="viewMoreBtn">View More</a>

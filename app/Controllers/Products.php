@@ -37,6 +37,24 @@ class Products extends BaseController
         return view('site/stores/single',$data);
     }
 
+    public function index_old()
+    {
+        $request = request();
+        $data['sticky_header'] = true;
+        $url = filtreData($request->getUri()->getSegment(2));
+        $pc = filtreData($request->getUri()->getSegment(4));
+        $sd_row = filtreData($request->getVar('sd_row'));
+        $pds = filtreData($request->getVar('pds'));
+        $data = ZapptaTrait::productTrait($url, $pc, $sd_row, $pds);
+        $data['image_path'] = 'products/';
+        $data['pagetitle'] = 'Adidas';
+        // dd($data);
+        // for new design
+        $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
+        $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
+        return view('site/stores/~single',$data);
+    }
+
     public function askquestion()
     {
         if ($this->request->isAJAX()) {
