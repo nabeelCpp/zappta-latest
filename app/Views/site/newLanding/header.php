@@ -37,6 +37,7 @@ $total_list = (new App\Models\WishlistModel)->getUserTotalList();
         var currentUrl = window.location.origin + window.location.pathname;
     </script>
     <?php print csrf_meta() ?>
+    <meta name="csrf_token_name" content="<?php print csrf_token() ?>">
 </head>
 
 <body>

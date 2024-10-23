@@ -380,6 +380,7 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
 <script type="text/javascript" src="<?php print base_url(); ?>/theme/js/notify.js"></script>
 <script type="text/javascript" src="<?php print base_url(); ?>/theme/js/themee.js"></script>
 <script type="text/javascript" src="<?php print base_url(); ?>/theme/js/cart.js"></script>
+<script type="text/javascript" src="<?php print base_url(); ?>/theme/js/main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script>
   // Create an instance of Notyf

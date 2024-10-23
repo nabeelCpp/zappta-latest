@@ -89,7 +89,7 @@
                             <h4 id="singleprice">$<?= number_format($single['final_price'], 2) ?></h4>
                         <?php } ?>
                     </div>
-                    <?= isset($store['earn_zappta']) ? '<p class="earnTag">Earn <img src="' . $assets_url . '/images/zIcon.svg" alt=""> ' . $store['earn_zappta'] . ' per $' . $store['per_dollar'] . ' spent</p>' : '' ?>
+                    <?= isset($store) && $store['earn_zappta'] ? '<p class="earnTag">Earn <img src="' . $assets_url . '/images/zIcon.svg" alt=""> ' . $store['earn_zappta'] . ' per $' . $store['per_dollar'] . ' spent</p>' : '' ?>
                     <?php
                     $givewaytags = isset($_GET['give']) ? $_GET['give'] : 0;
                     if ($givewaytags == 1) {
@@ -203,7 +203,7 @@
 
 
                     <div class="productSelectionFinal">
-                        <button class="btn heartSelection">
+                        <button class="btn heartSelection" onclick="add_item_wish('<?php print my_encrypt($single['product_id']); ?>','<?php print my_encrypt($single['pds']); ?>',1);">
                             whishlist
                         </button>
                         <?php
@@ -233,19 +233,12 @@
         <input type="hidden" name="qtycart" id="qtycart" value="<?=$single['min_qty']; ?>" />
         <input type="hidden" name="pid" id="pid" value="<?=my_encrypt($single['product_id'])?>" />
         <?php if ($single['deal_enable'] > 0) { ?>
-            <input type="hidden" name="itemprice" class="itemprice_1" id="itemprice" value="<?php print number_format($single['deal_final_price'], 2); ?>" />
+            <input type="hidden" name="itemprice" class="itemprice_1" id="itemprice" value="<?=number_format($single['deal_final_price'], 2)?>" />
         <?php } else { ?>
-            <input type="hidden" name="itemprice" class="itemprice_1" id="itemprice" value="<?php print number_format($single['final_price'], 2); ?>" />
+            <input type="hidden" name="itemprice" class="itemprice_1" id="itemprice" value="<?=number_format($single['final_price'], 2) ?>" />
         <?php } ?>
-        <input type="hidden" name="pname" id="pname" value="<?php print ucfirst($single['name']); ?>" />
-        <?php
-        if (!empty($single['cover'])) {
-            $value_img_ext_product = explode('.', $single['cover']);
-        ?>
-            <input type="hidden" name="item_image" id="item_image" value="<?php print base_url() . '/images/product/' . $value_img_ext_product[0] . '/' . end($value_img_ext_product) . '/250'; ?>" />
-        <?php } else { ?>
-            <input type="hidden" name="item_image" id="item_image" value="<?php print base_url() . '/images/product/img-not-found/jpg/100'; ?>" />
-        <?php } ?>
+        <input type="hidden" name="pname" id="pname" value="<?=ucfirst($single['name']) ?>" />
+        <input type="hidden" name="item_image" id="item_image" value="<?=$single['cover']?>" />
         <input type="hidden" id="_ajax_request" value="<?php print csrf_hash(); ?>">
         <input type="hidden" id="_data_handle" value="<?php print $single['handlingcharges']; ?>">
         <input type="hidden" id="_data_transfer" value="<?php print $single['freeshipat']; ?>">
@@ -323,8 +316,8 @@
 
 <section class="w-100 py-5">
     <div class="container mt-4">
-        <div class="row">
-            <?= view('site/stores/prolist', ['count' => $related_products, 'class' => 'col-12 col-md-6 col-lg-3']) ?>
+        <div class="row" id="viewMoreDiv">
+            <?= view('site/stores/prolist', ['count' => $related['products'], 'col' => 4, 'view_more' => $related['moreProductsAvailable'], 'offset' => $related['offset'], 'product_category' => $single['product_category'],'id' => $single['id']]) ?>
         </div>
         <!-- <div class="col-12 col-sm-12 justify-content-center d-flex align-items-center">
             <a href="#" class="viewMoreBtn">View More</a>

@@ -65,7 +65,7 @@ class ProductsModel extends Model
      * @author M Nabeel Arshad
      */
 
-    const LIMIT = 12;
+    const LIMIT = 2;
 
 
     public function update_product($id)
@@ -1470,19 +1470,34 @@ class ProductsModel extends Model
     }
 
 
-    public function getRelatedProduct($proid = [])
+    public function getRelatedProduct($proid = [], $offset = 0)
     {
-        return $this->db->table('products')
-            ->select('products.id as pid,products.name as pname,products.short as pshort,products.url as purl,products.cover as pcover,products.sd_row as sd_row,products.pds as pds,products.pc as pc,product_detail.retail_price_tax,product_detail.retail_price_notax,product_detail.deal_enable,product_detail.final_price,product_detail.zappta_commission,product_detail.deal_final_price,product_detail.outofstockorder,shipping_preference.handlingcharges,shipping_preference.freeshipat,shipping_preference.freeshipatweight')
-            ->join('product_detail', 'product_detail.product_id=products.id', 'LEFT')
-            ->join('shipping_preference', 'shipping_preference.store_id=products.store_id', 'LEFT')
-            ->join('vendor', 'vendor.id=products.store_id', 'LEFT')
-            ->where('cms_vendor.status != ', '3')
-            ->whereIn('products.id', $proid)
-            ->where('products.deleteStatus', 0)
-            ->where('products.status', 1)
+        $limit = self::LIMIT;
+        $products = $this->relatedProductsQuery($proid)
+            ->limit($limit, $offset)
             ->get()
             ->getResultArray();
+        // Check if there are more products after this batch
+        $totalCount = $this->relatedProductsQuery($proid)->countAllResults();
+        $moreProductsAvailable = $totalCount > $offset + $limit;
+
+        return [
+            'products' => $products,
+            'moreProductsAvailable' => $moreProductsAvailable,
+            'offset' => $offset + $limit
+        ];
+    }
+
+    private function relatedProductsQuery($proid = []) {
+        return $this->db->table('products')
+        ->select('products.id as pid,products.name as pname,products.short as pshort,products.url as purl,products.cover as pcover,products.sd_row as sd_row,products.pds as pds,products.pc as pc,product_detail.retail_price_tax,product_detail.retail_price_notax,product_detail.deal_enable,product_detail.final_price,product_detail.zappta_commission,product_detail.deal_final_price,product_detail.outofstockorder,shipping_preference.handlingcharges,shipping_preference.freeshipat,shipping_preference.freeshipatweight')
+        ->join('product_detail', 'product_detail.product_id=products.id', 'LEFT')
+        ->join('shipping_preference', 'shipping_preference.store_id=products.store_id', 'LEFT')
+        ->join('vendor', 'vendor.id=products.store_id', 'LEFT')
+        ->where('cms_vendor.status != ', '3')
+        ->whereIn('products.id', $proid)
+        ->where('products.deleteStatus', 0)
+        ->where('products.status', 1);
     }
 
     public function getTopVendorProduct($id, $limit = 3, $within)

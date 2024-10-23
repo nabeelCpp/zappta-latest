@@ -1,4 +1,13 @@
 <?php if (is_array($count) && count($count) > 0) {
+    $col = $col ?? null;
+    switch($col) {
+        case 4:
+            $class = 'col-12 col-md-6 col-lg-3';
+            break;
+        default:
+            $class = 'col-12 col-md-6 col-lg-4';
+            break;
+    }
     foreach ($count as $sr => $p) {
         if (!empty($filter['size']) || !empty($filter['color']) || !empty($filter['dimension']) || !empty($filter['paper_type'])  &&  !isset($filter['page'])) {
             $value_price = explode(',', $p['value_price']);
@@ -29,7 +38,7 @@
             $dataimg  = base_url() . '/images/product/img-not-found/jpg/100';
         } 
         $inc_price = ($p['deal_final_price'] + $increments_amount); ?>
-        <div class="<?=isset($class) && $class ? $class : 'col-12 col-md-6 col-lg-4'?> mb-3">
+        <div class="<?=$class?> mb-3">
             <div class="productPostWraps">
                 <div class="productPostThumbnail">
                     <?=$p['deal_enable'] > 0 ? '<span class="priceOff">'.number_format(calculatePercentage( $p['final_price']  + $increments_amount, $inc_price ), 0).'% off</span>' : '' ?>
@@ -57,5 +66,10 @@
                 </a>
             </div>
         </div>
-<?php }
+        <?php }
+        if(isset($view_more) && $view_more) { ?>
+            <div class="col-12 col-sm-12 justify-content-center d-flex align-items-center" id="viewMore">
+                <a type="button" class="viewMoreBtn" onclick="viewMoreProducts(<?=$product_category?>, <?=$id?>, <?=$offset?>)">View More</a>
+            </div>
+        <?php } 
 } ?>

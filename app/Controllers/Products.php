@@ -34,8 +34,33 @@ class Products extends BaseController
         // for new design
         $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
         $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
-        return view('site/stores/single',$data);
+        return view('site/stores/single', $data);
     }
+
+    /**
+     * Load More Products
+     */
+    public function loadMoreProducts()
+    {
+        if($this->request->isAJAX()) {
+            $offset = $this->request->getGet('offset'); // Receive offset from AJAX
+            $pid = $this->request->getGet('pid');  // Product IDs (if needed)
+            $category_id = $this->request->getGet('cat_id');  // Product IDs (if needed)
+            $proids = (new CategoriesModel())->getRelatedCategories($category_id,$pid);
+            $related = (new ProductsModel())->getRelatedProduct($proids, $offset);
+            $product = (new ProductsModel())->getProductById($pid);
+            $data['store'] = (new VendorModel())->findStoreById($product['store_id']);
+            $data['count'] = $related['products'];
+            $data['col'] = 4;
+            $data['view_more'] = $related['moreProductsAvailable'];
+            $data['offset'] = $related['offset'];
+            $data['product_category'] = $category_id;
+            $data['id'] = $pid;
+            return view('site/stores/prolist', $data);
+
+        }
+    }
+
 
     public function index_old()
     {
@@ -52,7 +77,7 @@ class Products extends BaseController
         // for new design
         $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
         $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
-        return view('site/stores/~single',$data);
+        return view('site/stores/~single', $data);
     }
 
     public function askquestion()
@@ -60,19 +85,19 @@ class Products extends BaseController
         if ($this->request->isAJAX()) {
             $pid = filtreData($this->request->getVar('pid'));
             $askQuestionDetail = filtreData($this->request->getVar('askQuestionDetail'));
-            if ( $pid == "" || $askQuestionDetail == "" ) {
-                $data = [ 'code' => (int)1 , 'msg' => 'Please fill all fields ( * )' , 'token' => csrf_hash() ];
+            if ($pid == "" || $askQuestionDetail == "") {
+                $data = ['code' => (int)1, 'msg' => 'Please fill all fields ( * )', 'token' => csrf_hash()];
                 return json_encode($data);
             } else {
                 $vendor_id = (new ProductsModel())->getProductVendorById(my_decrypt($pid));
                 (new NotificationModel())->add([
-                                                'user_id' => getUserId(),
-                                                'product_id' => my_decrypt($pid),
-                                                'vendor_id' => $vendor_id,
-                                                'message' => $askQuestionDetail,
-                                                'status' => 1,
-                                            ]);
-                $data = [ 'code' => (int)2 , 'msg' => 'Message Successfully Sent' , 'token' => csrf_hash() ];
+                    'user_id' => getUserId(),
+                    'product_id' => my_decrypt($pid),
+                    'vendor_id' => $vendor_id,
+                    'message' => $askQuestionDetail,
+                    'status' => 1,
+                ]);
+                $data = ['code' => (int)2, 'msg' => 'Message Successfully Sent', 'token' => csrf_hash()];
                 return json_encode($data);
             }
         } else {
@@ -86,24 +111,23 @@ class Products extends BaseController
             $pid = filtreData($this->request->getVar('pid'));
             $produtRating = filtreData($this->request->getVar('produtRating'));
             $productComment = filtreData($this->request->getVar('productComment'));
-            if ( $pid == "" || $produtRating == "" || $productComment == "" ) {
-                $data = [ 'code' => (int)1 , 'msg' => 'Please fill all fields ( * )' , 'token' => csrf_hash() ];
+            if ($pid == "" || $produtRating == "" || $productComment == "") {
+                $data = ['code' => (int)1, 'msg' => 'Please fill all fields ( * )', 'token' => csrf_hash()];
                 return json_encode($data);
             } else {
                 $vendor_id = (new ProductsModel())->getProductVendorById(my_decrypt($pid));
-                (new ReviewModel())->insertreviews(getUserId(),[
-                                                'user_id' => getUserId(),
-                                                'product_id' => my_decrypt($pid),
-                                                'store_id' => $vendor_id,
-                                                'rates' => $produtRating,
-                                                'comments' => $productComment,
-                                            ]);
-                $data = [ 'code' => (int)2 , 'msg' => 'Comment Successfully add' , 'token' => csrf_hash() ];
+                (new ReviewModel())->insertreviews(getUserId(), [
+                    'user_id' => getUserId(),
+                    'product_id' => my_decrypt($pid),
+                    'store_id' => $vendor_id,
+                    'rates' => $produtRating,
+                    'comments' => $productComment,
+                ]);
+                $data = ['code' => (int)2, 'msg' => 'Comment Successfully add', 'token' => csrf_hash()];
                 return json_encode($data);
             }
         } else {
             return redirect()->to('/');
         }
     }
-
 }

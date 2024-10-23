@@ -69,6 +69,7 @@ $routes->post('cart/add', 'Cart::add');
 $routes->get('cron', 'Cron::index');
 $routes->get('payments/success', 'Cart::paysuccess');
 $routes->get('payments/cancel', 'Cart::paycancel');
+$routes->get('products/load/more', 'Products::loadMoreProducts');
 
 
 
