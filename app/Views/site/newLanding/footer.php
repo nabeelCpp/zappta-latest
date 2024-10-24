@@ -97,7 +97,7 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
 <!-- Modal -->
 
 
-<div class="modal fade signUpModal" id="accountModal" tabindex="-1" aria-labelledby="accountModalLabel" aria-hidden="true">
+<div class="modal fade signUpModal" id="accountModal" tabindex="-1" aria-labelledby="accountModalLabel" aria-hidden="true" style="z-index: 999999;">
 
   <div class="modal-dialog modal-md">
     <div class="modal-content">
@@ -147,7 +147,7 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
 
 
               <div class="fieldset d-flex justify-content-end">
-                <!-- <a id="forgotPassword" href="#">Forget Pasword ?</a> -->
+                <a id="forgotPassword" href="<?=route_to('forgot-password')?>">Forget Pasword ?</a>
               </div>
               <div class="errorForm text-center"></div>
               <div class="successForm text-center"></div>
@@ -360,7 +360,7 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
 </div>
 <!-- JS here -->
 <script src="<?= $assets_url ?>/js/jquary-3.6.0.min.js"></script>
-<script src="<?= $assets_url ?>/js/bootstrap-bundle.js"></script>
+<!-- <script src="<?= $assets_url ?>/js/bootstrap-bundle.js"></script> -->
 <script src="<?= $assets_url ?>/js/swiper.min.js"></script>
 <script src="<?= $assets_url ?>/js/imagesloaded-pkgd.js"></script>
 <script src="<?= $assets_url ?>/js/waypoints.min.js"></script>

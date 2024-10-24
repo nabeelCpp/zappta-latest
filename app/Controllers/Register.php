@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Helpers\ZapptaHelper;
 use App\Models\VendorModel;
 use App\Models\RegisterModel;
 use App\Models\Setting;
@@ -300,5 +301,10 @@ class Register extends BaseController
         $total_zap = (new Setting())->insertDollorFriend($id, 'ZAPPTA_INVITE_FRIEND');
         $link = base_url() . '/dashboard/wallet';
         (new UsersModel())->saveNotification("You won {$total_zap} Zappta dollars bonus via your Referal link signup", $id, $link, 'referral');
+    }
+
+    public function forgot() {
+        $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
+        return view('site/register/forgot-password', $data);
     }
 }

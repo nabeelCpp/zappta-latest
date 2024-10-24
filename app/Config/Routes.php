@@ -121,3 +121,4 @@ $routes->group('api', function($routes)
 });
 $routes->get('signup/(:any)', 'Register::loginViaReferral/$1');
 $routes->post('register/save', 'Register::save');
+$routes->get('forgot-password', 'Register::forgot');
