@@ -21,7 +21,6 @@
     }
 </style>
 <link type="text/css" rel="stylesheet" href="<?= base_url() ?>/theme/zoomer/style.css" />
-<link rel="stylesheet" href="<?= $assets_url ?>/css/lightslider.css" />
 <script>
     currentUrl = "<?php print base_url() . '/stores/' . $single['store_slug']; ?>";
 </script>
