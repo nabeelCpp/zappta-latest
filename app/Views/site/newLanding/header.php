@@ -28,6 +28,7 @@ $total_list = (new App\Models\WishlistModel)->getUserTotalList();
     <link rel="stylesheet" href="<?= $assets_url ?>/css/swiper.min.css" />
     <link rel="stylesheet" href="<?= $assets_url ?>/css/main.css" />
     <link rel="stylesheet" href="<?= $assets_url ?>/css/zappta.css" />
+    <link rel="stylesheet" href="<?= $assets_url ?>/css/lightslider.css" />
     <link rel="stylesheet" href="<?= $assets_url ?>/css/inner-pages.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <?= $css ?? null ?>
