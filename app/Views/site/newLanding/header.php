@@ -30,6 +30,7 @@ $total_list = (new App\Models\WishlistModel)->getUserTotalList();
     <link rel="stylesheet" href="<?= $assets_url ?>/css/zappta.css" />
     <link rel="stylesheet" href="<?= $assets_url ?>/css/lightslider.css" />
     <link rel="stylesheet" href="<?= $assets_url ?>/css/inner-pages.css" />
+    <link rel="stylesheet" href="<?= $assets_url ?>/css/loader.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <?= $css ?? null ?>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
@@ -85,7 +86,7 @@ $total_list = (new App\Models\WishlistModel)->getUserTotalList();
                                 <img src="<?= base_url() . '/upload/logo/' . $globalSettings[0]['var_detail'] ?>" alt="Logo" style="width: 150px; height: 100px" />
                             </a>
                         </div>
-                        <form class="searchSection" method="get" action="<?php print base_url() . '/search'; ?>" id="searchHeaderForm">
+                        <form class="searchSection" method="get" action="<?php print base_url() . '/categories'; ?>" id="searchHeaderForm">
                             <input type="hidden" name="secure" value="<?php print csrf_hash(); ?>">
                             <div class="serchdrop">
                                 <?php

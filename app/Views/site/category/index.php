@@ -37,7 +37,7 @@ if (isset($category_id) && ! empty($category_id['cat_img'])) {
 						</ol>
 					</nav>
 					<div>
-						<form method="get" action="<?php print base_url() . '/categories'; ?>" class="category-form-wrap">
+						<form method="get" action="<?php print base_url() . '/categories/'.$category_id['cat_url']; ?>" class="category-form-wrap">
 							<input class="form-control" type="text" name="q" placeholder="Search...">
 							<input type="submit" class="searchIcon" />
 						</form>

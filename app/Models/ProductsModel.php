@@ -65,7 +65,7 @@ class ProductsModel extends Model
      * @author M Nabeel Arshad
      */
 
-    const LIMIT = 2;
+    const LIMIT = 12;
 
 
     public function update_product($id)
@@ -732,6 +732,9 @@ class ProductsModel extends Model
             $sql->where('products.brand_id', my_decrypt($filter['b']));
         }
         $sql->where('product_category.catid', $catid);
+        if(isset($filter['q']) && !empty($filter['q'])){
+            $sql->like('products.name', $filter['q']);
+        }
         $sql->groupBy('products.id');
         $sql->limit($limits, $result_limit);
         $q = $sql->get()->getResultArray();

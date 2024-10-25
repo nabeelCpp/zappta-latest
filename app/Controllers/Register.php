@@ -239,6 +239,8 @@ class Register extends BaseController
         }
         $id = my_decrypt($id);
         if (is_numeric($id)) {
+            $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
+            $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
             $data['id'] = $id;
             $user = (new RegisterModel())->where(['id' => $id])->get()->getResult();
             $data['username'] = $user[0]->username;
@@ -257,43 +259,40 @@ class Register extends BaseController
         $referred_by = my_decrypt($referred_by);
         $check_email_already_exists = (new RegisterModel())->findByEmail($vEmail);
         if ($check_email_already_exists) {
-            $this->session->setFlashdata('error', 'Email already Exist!');
-            return redirect()->back()->withInput();
-        }
-        if ($vEmail == "" || $userSignusername == "" || $vPassword == "") {
-            $this->session->setFlashdata('error', 'Please fill all fields ( * )');
-            return redirect()->back()->withInput();
-        } elseif (!valid_email($vEmail)) {
-            $this->session->setFlashdata('error', 'Please enter valid email.');
-            return redirect()->back()->withInput();
-        } else {
-            $ids = (new RegisterModel())->add(['email' => $vEmail, 'username' => $userSignusername, 'password' => $vPassword, 'referred_by' => $referred_by]);
-            // Give 100Z to referred by user.
-            $this->giveBalanceToReferredByUser($referred_by);
-            if ($ids > 0) {
-                (new RegisterModel())->login_verify($vEmail, $vPassword);
-                if (session()->get('userIsLoggedIn')) {
-                    (new Setting())->insertDollor('ZAPPTA_REGISTER', 'Regsiter', 3);
-                    // if ( $user_refer_token !== 0 ) {
-                    //     $user_token = decodeToken($user_refer_token);
-                    //     (new \App\Models\Setting())->insertDollorFriend($user_token,'ZAPPTA_INVITE_JOIN');
-                    // }
-                    // $data = [ 'code' => (int)2 , 'msg' => 'Signup Successfully' , 'token' => csrf_hash() ];
-                    // return json_encode($data);
-                    return redirect()->to('/');
+            $data = ['code' => (int)1, 'msg' => 'Email already Exist!'];
+        }else{
+            if ($vEmail == "" || $userSignusername == "" || $vPassword == "") {
+                $data = ['code' => (int)1, 'msg' => 'Please fill all fields ( * )'];
+                return json_encode($data);
+            } elseif (!valid_email($vEmail)) {
+                $data = ['code' => (int)1, 'msg' => 'Please enter valid email.'];
+                return json_encode($data);
+            } else {
+                $ids = (new RegisterModel())->add(['email' => $vEmail, 'username' => $userSignusername, 'password' => $vPassword, 'referred_by' => $referred_by]);
+                // Give 100Z to referred by user.
+                $this->giveBalanceToReferredByUser($referred_by);
+                if ($ids > 0) {
+                    (new RegisterModel())->login_verify($vEmail, $vPassword);
+                    if (session()->get('userIsLoggedIn')) {
+                        (new Setting())->insertDollor('ZAPPTA_REGISTER', 'Regsiter', 3);
+                        // if ( $user_refer_token !== 0 ) {
+                        //     $user_token = decodeToken($user_refer_token);
+                        //     (new \App\Models\Setting())->insertDollorFriend($user_token,'ZAPPTA_INVITE_JOIN');
+                        // }
+                        $data = [ 'code' => (int)2 , 'msg' => 'Signup Successfully' , 'redirect' => '/' ];
+                       
+                    } else {
+                        $data = [ 'code' => (int)1 , 'msg' => 'Invalid Email / Password' ];
+                        // return json_encode($data);
+                    }
                 } else {
-                    $this->session->setFlashdata('error', 'Invalid Email / Password');
-                    return redirect()->back()->withInput();
-                    // $data = [ 'code' => (int)1 , 'msg' => 'Invalid Email / Password' , 'token' => csrf_hash() ];
+                    $data = [ 'code' => (int)1 , 'msg' => 'There is some problem on creating account, please try again later.' ];
                     // return json_encode($data);
                 }
-            } else {
-                $this->session->setFlashdata('error', 'There is some problem on creating account, please try again later.');
-                return redirect()->back()->withInput();
-                // $data = [ 'code' => (int)1 , 'msg' => 'There is some problem on creating account, please try again later.' , 'token' => csrf_hash() ];
-                // return json_encode($data);
             }
         }
+        $data['token'] = csrf_hash();
+        return response()->setJSON($data);
     }
 
     public function giveBalanceToReferredByUser($id)

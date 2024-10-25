@@ -15,6 +15,13 @@ class Category extends BaseController
 
     public function index()
     {
+        if(isset($_GET['c'])) {
+            $cid = my_decrypt($_GET['c']);
+        }
+        $category = (new CategoriesModel)->where('id', $cid)->first();
+        if($category) {
+            return redirect()->to('/categories/'.$category['cat_url'].($_GET['searchq'] ? '?q='.$_GET['searchq'] : ''));
+        }
         // $data['allcat'] = (new CategoriesModel())->getAllCategoryForTree();
         // $data['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
         // $data['products'] = (new ProductsModel())->getAllProductByCategory($data['page']);

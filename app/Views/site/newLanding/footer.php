@@ -147,7 +147,7 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
 
 
               <div class="fieldset d-flex justify-content-end">
-                <a id="forgotPassword" href="<?=route_to('forgot-password')?>">Forget Pasword ?</a>
+                <a id="forgotPassword" href="<?=route_to('forgot-password')?>">Forgot Password ?</a>
               </div>
               <div class="errorForm text-center"></div>
               <div class="successForm text-center"></div>

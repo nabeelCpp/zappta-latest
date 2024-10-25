@@ -40,7 +40,7 @@
         $inc_price = ($p['deal_final_price'] + $increments_amount); ?>
         <div class="<?=$class?> mb-3">
             <div class="productPostWraps">
-                <div class="productPostThumbnail">
+                <div class="productPostThumbnail p-4">
                     <?=$p['deal_enable'] > 0 ? '<span class="priceOff">'.number_format(calculatePercentage( $p['final_price']  + $increments_amount, $inc_price ), 0).'% off</span>' : '' ?>
                     <?php if (! empty($p['pcover'])) {
                         $ext_name = explode('.', $p['pcover']); ?>
