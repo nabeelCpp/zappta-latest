@@ -36,6 +36,9 @@ class Category extends BaseController
     public function single($slug)
     {
         $data = $this->categoryTrait($slug);
+        if(!$data) {
+            return redirect()->to('/');
+        }
         $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
         // $data['css'] = ZapptaHelper::loadModifiedThemeCss();
         $data['exclude_attr'] = ['Color'];

@@ -45,6 +45,9 @@ trait ZapptaTrait
     public function categoryTrait($slug): array
     {
         $data['category_id'] = (new CategoriesModel())->getCatIdByUrl(filtreData($slug));
+        if(!$data['category_id']) {
+            return [];
+        }
 
         $allcat = (new CategoriesModel())->getAllCategoryForTree((int)$data['category_id']['id']);
         if (is_array($allcat) && count($allcat) > 0) {

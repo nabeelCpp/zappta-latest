@@ -43,9 +43,7 @@
                         <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
                             <?php foreach ($single['gallery'] as $gal) { ?>
                                 <li data-thumb="<?= getImageThumg($image_path, $gal['fimg'], 100) ?>">
-                                    <figure class="zoom" onmousemove="zoom(event)" style="background-image: url('<?= getImageThumg($image_path, $gal['fimg'], 1280) ?>')">
-                                        <img src="<?= getImageThumg($image_path, $gal['fimg'], 1280) ?>">
-                                    </figure>
+                                        <img src="<?= getImageThumg($image_path, $gal['fimg'], 600) ?>">
                                 </li>
                             <?php } ?>
                         </ul>
