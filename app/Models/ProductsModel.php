@@ -66,6 +66,7 @@ class ProductsModel extends Model
      */
 
     const LIMIT = 12;
+    const RELATED_PRODUCTS_LIMIT = 4;
 
 
     public function update_product($id)
@@ -1475,7 +1476,7 @@ class ProductsModel extends Model
 
     public function getRelatedProduct($proid = [], $offset = 0)
     {
-        $limit = self::LIMIT;
+        $limit = self::RELATED_PRODUCTS_LIMIT;
         $products = $this->relatedProductsQuery($proid)
             ->limit($limit, $offset)
             ->get()

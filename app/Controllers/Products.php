@@ -56,6 +56,7 @@ class Products extends BaseController
             $data['offset'] = $related['offset'];
             $data['product_category'] = $category_id;
             $data['id'] = $pid;
+            $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
             return view('site/stores/prolist', $data);
 
         }

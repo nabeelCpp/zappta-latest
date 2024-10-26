@@ -14,10 +14,21 @@ const viewMoreProducts = (cat_id, pid, offset) => {
         beforeSend: function() {
             button.text('Loading...');
             button.attr('disabled', true);
+            processLoader();
         },
         success: function (response) {
             div.remove();
             $('#viewMoreDiv').append(response);
+            processLoader(false);
         }
     });
+}
+
+function processLoader(display = true) {
+    if(display) {
+        $('.loader').show();
+        return;
+    }else {
+        $('.loader').hide();
+    }
 }

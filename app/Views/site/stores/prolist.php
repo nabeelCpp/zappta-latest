@@ -63,7 +63,7 @@
                     <?php } ?>
                     <p><?=short($p['pname'],35)?></p>
                     <?php if(isset($store) && $store['earn_zappta']) { ?>
-                        <p class="earnTag">Earn <img src="./assets/images/zIcon.svg" alt="" /> <?=$store['earn_zappta']?> per $<?=$store['per_dollar']?> spent</p>
+                        <p class="earnTag">Earn <img src="<?=$assets_url?>/images/zIcon.svg" alt="" /> <?=$store['earn_zappta']?> per $<?=$store['per_dollar']?> spent</p>
                     <?php } ?>
                 </a>
             </div>
