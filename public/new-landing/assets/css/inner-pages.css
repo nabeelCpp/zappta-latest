@@ -57,7 +57,7 @@
   overflow-y: auto;
 }
 .sidebarCollapse .form-group-overflow {
-  /* max-height: 250px; */
+  max-height: 250px;
   overflow: hidden;
     overflow-y: hidden;
 }
@@ -773,6 +773,10 @@ border: 1px solid #12888C;
   position: relative;
   width: calc(100% - 70px);
 }
+.sliderThumbnail .lSSlideWrapper ul
+{
+  height: 100% !important;
+}
 .sliderThumbnail .lSSlideWrapper img
 {
   width: 100%;
@@ -793,6 +797,9 @@ border: 1px solid #12888C;
   display: flex;
   flex-flow: column;
   justify-content: center;
+  transform: translate(0 0 0) !important;
+  transform: none !important;
+  position: relative !important;
 }
 .sliderThumbnail .lSPager.lSGallery li
 {
