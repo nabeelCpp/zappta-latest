@@ -49,13 +49,13 @@
 								<table class="meta">
 									<tr>
 										<th><span contenteditable>Name</span></th>
-										<td><span contenteditable><?php print $address[1]['first_name'] . ' ' . $address[1]['last_name'];?></span></td>
+										<td><span contenteditable><?= ($address[1]['first_name'] ?? null) . ' ' . ($address[1]['last_name'] ?? null);?></span></td>
 									</tr>
 									<tr>
 										<th><span contenteditable>Address</span></th>
 										<td>
 											<span contenteditable>
-												<?php print $address[1]['stree_address'] . ', ' . $address[1]['stree_address_optional'];?> <?php print $address[1]['town_city'];?>, <?php print $address[1]['postcode'];?><br/><?php print $address[1]['country_name'];?>
+												<?= ($address[1]['stree_address'] ?? null ) . ', ' . ($address[1]['stree_address_optional'] ?? null );?> <?= $address[1]['town_city'] ?? null ?>, <?= $address[1]['postcode'] ?? null ?><br/><?= $address[1]['country_name'] ?? null ?>
 											</span>
 										</td>
 									</tr>

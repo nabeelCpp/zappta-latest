@@ -109,11 +109,18 @@ class Cart extends BaseController
                 return redirect()->to('/cart/payments/'.my_encrypt($ord));        
             } else {
                 get_cart_destroy();
+                $this->setCheckoutSession();
+                return redirect()->to('/cart/thankyou');
             }
-            return redirect()->to('/dashboard');
+            // return redirect()->to('/dashboard');
         } else {
             return redirect()->to('/');
         }
+    }
+
+    public function setCheckoutSession()
+    {
+        session()->setFlashdata('checkout_success', true);
     }
 
     public function payments()
@@ -229,7 +236,9 @@ class Cart extends BaseController
                     (new OrderModel())->add(['id' => filtreData($order), 'status' => 0, 'payment_confirmation' => $payment_intent->status , 'payment_response' => 'Your payment was not successful, please try again']);
                 break;
         }
-        return redirect()->to('/dashboard?order_msg='.urlencode($payment_intent->status));
+        $this->setCheckoutSession();
+        return redirect()->to('/cart/thankyou?order_msg='.urlencode($payment_intent->status));
+        // return redirect()->to('/dashboard?order_msg='.urlencode($payment_intent->status));
     }
 
     public function paycancel()
@@ -539,6 +548,21 @@ class Cart extends BaseController
                     </div>';
             return $html;
         }
+    }
+
+    /**
+     * Cart checkout thankyou page
+     * @return view
+     */
+    public function thankyou() {
+        if ( session()->has('checkout_success')  ) {
+            session()->remove('checkout_success');
+            $data['title'] = 'Thank You';
+            $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
+            $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
+            return view('site/cart/thankyou',$data);
+        }
+        return redirect()->to('/');
     }
 
 
