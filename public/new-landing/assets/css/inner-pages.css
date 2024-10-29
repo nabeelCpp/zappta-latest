@@ -1251,6 +1251,9 @@ border: 1px solid #12888C;
   {
     width: 47%;
   }
+  .sliderThumbnail .lSPager.lSGallery{
+    display:none
+  }
 
 }
 

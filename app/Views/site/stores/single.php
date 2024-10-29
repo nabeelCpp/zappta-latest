@@ -109,7 +109,7 @@
                                                 foreach ($attrkeys['values'] as $val) {
                                                     $data_price_enable = !empty($val['price_enable']) ? $val['price_enable'] : 0;
                                                     $data_price_value = !empty($val['price_value']) ? $val['price_value'] : 0; ?>
-                                                    <label class="radio px-5">
+                                                    <label class="radio">
                                                         <input type="radio" name="<?=my_encrypt($attrkeys['attr_id'])?>" data-name="<?php print $val['value_name']; ?>" value="<?=my_encrypt($val['pattr_value_id'])?>" data-attr-setprice="<?=$data_price_enable?>" data-attr-price="<?=$data_price_value?>" class="proattr" data-price="<?=$item_price?>" data-id="<?=my_encrypt($attrkeys['attr_id'])?>"> <?php
                                                         if (!empty($val['value_img'])) { ?>
                                                             <span class="attr_texture" style="height: 37px !important">
@@ -132,7 +132,7 @@
                                                     $data_price_enable = !empty($val['price_enable']) ? $val['price_enable'] : 0;
                                                     $data_price_value = !empty($val['price_value']) ? $val['price_value'] : 0; ?>
                                                     <div class="form-check">
-                                                        <label class="checkbox px-5">
+                                                        <label class="checkbox">
                                                             <input type="radio" name="<?=my_encrypt($attrkeys['attr_id'])?>" data-attr-setprice="<?=$data_price_enable?>" data-attr-price="<?=$data_price_value?>" class="proattr" data-name="<?=$val['value_name']?>" data-price="<?=$item_price?>" data-id="<?= my_encrypt($attrkeys['attr_id']) ?>" value="<?=my_encrypt($val['pattr_value_id']) ?>">
                                                             <span class="red"><?php print $val['value_name']; ?></span>
                                                         </label>
@@ -159,7 +159,7 @@
                                                 foreach ($attrkeys['values'] as $val) {
                                                     $data_price_enable = !empty($val['price_enable']) ? $val['price_enable'] : 0;
                                                     $data_price_value = !empty($val['price_value']) ? $val['price_value'] : 0; ?>
-                                                    <label class="radio px-5">
+                                                    <label class="radio">
                                                         <input type="radio" name="<?=my_encrypt($attrkeys['attr_id'])?>" value="<?=my_encrypt($val['pattr_value_id'])?>" data-attr-setprice="<?=$data_price_enable?>" data-name="<?php print $val['value_name']; ?>" data-attr-price="<?=$data_price_value?>" class="proattr" data-price="<?=$item_price?>" data-id="<?=my_encrypt($attrkeys['attr_id'])?>"> <?php
                                                         if (!empty($val['value_img'])) { ?>
                                                             <span class="attr_texture" style="height: 37px !important">
@@ -181,7 +181,7 @@
                                                     $data_price_enable = !empty($val['price_enable']) ? $val['price_enable'] : 0;
                                                     $data_price_value = !empty($val['price_value']) ? $val['price_value'] : 0; ?>
                                                     <div class="form-check">
-                                                        <label class="checkbox px-5">
+                                                        <label class="checkbox">
                                                             <input type="radio" name="<?=my_encrypt($attrkeys['attr_id'])?>" data-attr-setprice="<?=$data_price_enable?>" data-attr-price="<?=$data_price_value?>" class="proattr" data-name="<?=$val['value_name']?>" data-price="<?=$item_price?>" data-id="<?= my_encrypt($attrkeys['attr_id']) ?>" value="<?=my_encrypt($val['pattr_value_id']) ?>">
                                                             <span class="red"><?php print $val['value_name']; ?></span>
                                                         </label>
