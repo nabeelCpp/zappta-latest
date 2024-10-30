@@ -4,10 +4,11 @@ namespace App\Helpers;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use App\Models\Setting;
 
 class ZapptaHelper {
 
-    
+    public const CACHE_SECONDS = 1209600;
 
     const HASHING_ALGO = 'HS256';
 
@@ -89,13 +90,29 @@ class ZapptaHelper {
      * @author M Nabeel Arshad
      */
     public static function getGlobalSettings($fields = []) : array {
-        $globalSettings = (new \App\Models\Setting())->orderBy('id', 'ASC');
-        if(count($fields)) {
-            $globalSettings = $globalSettings->GetValues($fields);
-        }else {
-            $globalSettings = $globalSettings->get()->getResultArray();
+        if ( ! cache()->get('getGlobalSettings') ) {
+            cache()->save('getGlobalSettings',(new Setting())->orderBy('id', 'ASC')->get()->getResultArray(), self::CACHE_SECONDS);
         }
-        return $globalSettings;
+        if(count($fields) > 0 ) {
+            $settings = cache()->get('getGlobalSettings');
+            $return = [];
+            foreach($settings as $setting) {
+                if(in_array($setting['var_name'], $fields)) {
+                    $return[] = $setting;
+                }
+            }
+            return $return;
+        }
+        return cache()->get('getGlobalSettings');
+
+
+        // $globalSettings = (new \App\Models\Setting())->orderBy('id', 'ASC');
+        // if(count($fields)) {
+        //     $globalSettings = $globalSettings->GetValues($fields);
+        // }else {
+        //     $globalSettings = $globalSettings->get()->getResultArray();
+        // }
+        // return $globalSettings;
     }
 
     /**

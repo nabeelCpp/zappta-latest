@@ -30,19 +30,7 @@
                             <div class="category-item">
                                 <div class="row">
                                     <div class="col-6">
-                                        <?php
-                                        if (! empty($comp['store_logo'])) {
-                                            $ext_name = explode('.', $comp['store_logo']);
-                                        ?>
-                                            <img
-                                                src="<?php print base_url() . '/images/media/' . $ext_name[0] . '/' . $ext_name[1] . '/250'; ?>"
-                                                class="img img-thumbnail bg-transparent py-3" style="width: 250px; height: 100px;">
-                                        <?php } else { ?>
-                                            <img
-                                                src="<?php print base_url() . '/images/media/img-not-found/jpg/100'; ?>"
-                                                class="img img-thumbnail bg-transparent py-3" style="width: 250px; height: 100px;"
-                                                alt="">
-                                        <?php } ?>
+                                        <img src="<?= $comp['store_logo'] ?>" class="img img-thumbnail bg-transparent py-3" style="width: 250px; height: 100px;">
                                     </div>
                                     <div class="col-6">
                                         <h3 class="title"><a href="#"><?php print short($comp['store_name'], 20); ?></a></h3>
@@ -53,14 +41,7 @@
                                     </div>
                                 </div>
                                 <div class="category-img">
-                                    <?php
-                                    if (! empty($comp['cover'])) {
-                                        $ext_cover = explode('.', $comp['cover']);
-                                    ?>
-                                        <img src="<?php print base_url() . '/upload/media/spree/' . $comp['cover']; ?>" alt="" style="width: 267px; height: 139px;">
-                                    <?php } else { ?>
-                                        <img src="<?php print base_url() . '/images/media/img-not-found/jpg/100'; ?>" alt="" style="width: 267px; height: 139px;">
-                                    <?php } ?>
+                                    <img src="<?= $comp['cover']; ?>" alt="" style="width: 267px; height: 139px;">
                                 </div>
                                 <h3 class="title"><a href="#">Game Ends is</a></h3>
                                 <div class="periodic_timer_minutes_1">

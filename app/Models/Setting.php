@@ -41,9 +41,18 @@ class Setting extends Model
 
     public function getThemeVar($theme_var)
     {
-        $sql = $this->where('var_name',$theme_var)->first();
-        if ( !empty($sql) ) {
-            return $sql['var_detail'];
+        if(cache()->get('getGlobalSettings')) {
+            $sql = cache()->get('getGlobalSettings');
+            foreach($sql as $setting) {
+                if($setting['var_name'] == $theme_var) {
+                    return $setting['var_detail'];
+                }
+            }
+        }else {
+            $sql = $this->where('var_name',$theme_var)->first();
+            if ( !empty($sql) ) {
+                return $sql['var_detail'];
+            }
         }
     }
 

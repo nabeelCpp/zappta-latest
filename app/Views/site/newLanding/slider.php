@@ -8,14 +8,7 @@
         <div class="swiper-wrapper">
             <?php foreach ($homeslider as $key => $hslide) { ?>
                 <section class="hero-section swiper-slide <?= $key ? "others" : ''  ?>">
-                    <?php
-                    if (! empty($hslide['name'])) {
-                        $ext_name = explode('.', $hslide['name']);
-                    ?>
-                        <img src="<?php print base_url() . '/images/slider/' . $ext_name[0] . '/' . $ext_name[1] . '/1980'; ?>" alt="Home Page Slider">
-                    <?php } else { ?>
-                        <img src="<?php print base_url() . '/images/media/img-not-found/jpg/100'; ?>" alt="Home Page Slider">
-                    <?php } ?>
+                        <img src="<?= $hslide['slider_image']?>" alt="Home Page Slider">
                     <?php if (!$key) { ?>
                         <div class="waveWrapper">
                             <div class="container">

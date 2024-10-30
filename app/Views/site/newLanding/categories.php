@@ -14,19 +14,7 @@
                         <div class="swiper-slide" onclick="location.href='<?php print base_url() . '/categories/' . $homecat['cat_url']; ?>'">
                             <div class="category-item">
                                 <div class="category-img">
-                                    <?php
-                                    if (! empty($homecat['cat_icon'])) {
-                                        $ext_name = explode('.', $homecat['cat_icon']);
-                                    ?>
-                                        <img 
-                                        src="<?php print base_url() . '/images/media/' . $ext_name[0] . '/' . $ext_name[1] . '/350'; ?>" 
-                                        class="img img-responsive" style="height: 132px;"
-                                        alt="">
-                                    <?php } else { ?>
-                                        <img 
-                                        src="<?php print base_url() . '/images/product/img-not-found/jpg/350'; ?>" 
-                                        class="img img-responsive" alt="" style="height: 132px;">
-                                    <?php } ?>
+                                    <img  src="<?=$homecat['cat_icon'] ?>"  class="img img-responsive" style="height: 132px;" alt="">
                                 </div>
                             </div>
                             <h3 class="title mt-3">

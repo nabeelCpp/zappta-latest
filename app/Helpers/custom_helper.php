@@ -1,4 +1,6 @@
-<?php 
+<?php
+
+use App\Helpers\ZapptaHelper;
 
 function uuid_creat($values)
 {
@@ -644,31 +646,41 @@ function calculatePercentage($current, $prev) : float {
 function getHeaderCategory()
 {
     if ( ! cache()->get('getHeaderCategory') ) {
-        cache()->save('getHeaderCategory',(new App\Models\CategoriesModel())->getAllCategoryTree(),1209600);
+        cache()->save('getHeaderCategory',(new App\Models\CategoriesModel())->getAllCategoryTree(),ZapptaHelper::CACHE_SECONDS);
     }
     return cache()->get('getHeaderCategory');
 }
 
 function getHomeCategory()
 {
-    if ( ! cache()->get('home_category') ) {
-        cache()->save('home_category',(new App\Models\CategoriesModel())->getParentCategories(),1209600);
+    if ( ! cache()->get('getHomeCategory') ) {
+        cache()->save('getHomeCategory',(new App\Models\CategoriesModel())->getParentCategories(),ZapptaHelper::CACHE_SECONDS);
     }
-    return cache()->get('home_category');
+    $results = [];
+    foreach (cache()->get('getHomeCategory') as $key => $value) {
+        $value['cat_icon'] = getImageThumg('media',$value['cat_icon'], 350);
+        $results[] = $value;
+    }
+    return $results;
 }
 
 function getHeaderSlider()
 {
     if ( ! cache()->get('homeslider') ) {
-        cache()->save('homeslider',(new App\Models\SliderModel())->getAllResult(),1209600);
+        cache()->save('homeslider',(new App\Models\SliderModel())->getAllResult(),ZapptaHelper::CACHE_SECONDS);
     }
-    return cache()->get('homeslider');
+    $slider = [];
+    foreach (cache()->get('homeslider') as $key => $value) {
+        $value['slider_image'] = getImageFull('slider',$value['name']);
+        $slider[] = $value;
+    }
+    return $slider;
 }
 
 function searchSlider()
 {
     if ( ! cache()->get('cms_search_slider') ) {
-        cache()->save('cms_search_slider', (new \App\Models\SearchSliderModel())->getAllResult(),1209600);
+        cache()->save('cms_search_slider', (new \App\Models\SearchSliderModel())->getAllResult(),ZapptaHelper::CACHE_SECONDS);
     }
     return cache()->get('cms_search_slider');
 }
@@ -772,10 +784,3 @@ function displayResultsPhrase($page, $limit, $total) : string {
     $t = $page*$limit > $total ? $total : $page*$limit;
     return "<h2>Showing ".((($page-1)*$limit)+1)."-".($t)." of {$total} results</h2>";
 }
-
-/**
- * Get URi for input image
- * @param string $path
- * @return string
- * @author M Nabeel Arshad
- */

@@ -156,11 +156,20 @@ class VendorModel extends Model
 
     public function getHomeResult($limit=PER_PAGE)
     {
-        return $this->where('store_status',1)
-                    ->where('status',2)
-                    ->where('deleteStatus',0)
-                    ->orderBy('id DESC')
-                    ->paginate($limit);
+        if(!cache()->get('getHomeResult')) {
+            $result =$this->where('store_status',1)
+                ->where('status',2)
+                ->where('deleteStatus',0)
+                ->orderBy('id DESC')
+                ->paginate($limit);
+            cache()->save('getHomeResult', $result ?? [], ZapptaHelper::CACHE_SECONDS);
+        }
+        $results = [];
+        foreach(cache()->get('getHomeResult') as $key => $value) {
+           $value['store_logo'] = getImageThumg('media', $value['store_logo'], 250);
+           $results[] = $value;
+        }
+        return $results;
     }
 
     public function GetEmailsOfVendors(){
@@ -499,17 +508,21 @@ class VendorModel extends Model
 
     public function getSpreesToDisplayUpcoming($limit=10)
     {
-        return $this->db->table('vendor_sprees')
-                        ->select('cms_vendor_sprees.*, cms_compain.compain_s_date, cms_vendor.store_logo, cms_vendor.store_name, cms_vendor.store_slug')
-                        ->join('cms_compain', 'cms_vendor_sprees.com_id = cms_compain.id')
-                        ->join('cms_vendor', 'cms_vendor.id = cms_vendor_sprees.vendor_id')
-                        ->where('cms_vendor_sprees.status', 1)
-                        ->where('vendor.deleteStatus',0)
-                        ->where('compain.compain_s_date >= ',date('Y-m-d'))
-                        ->limit($limit)
-                        ->orderBy('id DESC')
-                        ->get()
-                        ->getResultArray();
+        if( !cache()->get('getSpreesToDisplayUpcoming') ) {
+            $result = $this->db->table('vendor_sprees')
+                    ->select('cms_vendor_sprees.*, cms_compain.compain_s_date, cms_vendor.store_logo, cms_vendor.store_name, cms_vendor.store_slug')
+                    ->join('cms_compain', 'cms_vendor_sprees.com_id = cms_compain.id')
+                    ->join('cms_vendor', 'cms_vendor.id = cms_vendor_sprees.vendor_id')
+                    ->where('cms_vendor_sprees.status', 1)
+                    ->where('vendor.deleteStatus',0)
+                    ->where('compain.compain_s_date >= ',date('Y-m-d'))
+                    ->limit($limit)
+                    ->orderBy('id DESC')
+                    ->get()
+                    ->getResultArray();
+            cache()->save('getSpreesToDisplayUpcoming', $result ?? [], ZapptaHelper::CACHE_SECONDS);
+        }
+        return cache()->get('getSpreesToDisplayUpcoming');
     }
 
 
@@ -537,19 +550,29 @@ class VendorModel extends Model
 
     public function getSpreesToDisplayOngoing($limit=10)
     {
-        return $this->db->table('vendor_sprees')
-                        ->select('cms_vendor_sprees.*, cms_compain.compain_e_date, cms_vendor.store_logo, cms_vendor.store_name, cms_vendor.store_slug')
-                        ->join('cms_compain', 'cms_vendor_sprees.com_id = cms_compain.id')
-                        ->join('cms_vendor', 'cms_vendor.id = cms_vendor_sprees.vendor_id')
-                        ->where('vendor.deleteStatus',0)
-                        ->where('cms_vendor_sprees.status', 1)
-                        ->where('compain.compain_e_date >= ',date('Y-m-d'))
-                        ->where('compain.compain_s_date < ',date('Y-m-d'))
-                        ->where('compain.compain_s_date < ',date('Y-m-d'))
-                        ->limit($limit)
-                        ->orderBy('id DESC')
-                        ->get()
-                        ->getResultArray();
+        if( !cache()->get('getSpreesToDisplayOngoing') ) {
+            $result = $this->db->table('vendor_sprees')
+                            ->select('cms_vendor_sprees.*, cms_compain.compain_e_date, cms_vendor.store_logo, cms_vendor.store_name, cms_vendor.store_slug')
+                            ->join('cms_compain', 'cms_vendor_sprees.com_id = cms_compain.id')
+                            ->join('cms_vendor', 'cms_vendor.id = cms_vendor_sprees.vendor_id')
+                            ->where('vendor.deleteStatus',0)
+                            ->where('cms_vendor_sprees.status', 1)
+                            ->where('compain.compain_e_date >= ',date('Y-m-d'))
+                            ->where('compain.compain_s_date < ',date('Y-m-d'))
+                            ->where('compain.compain_s_date < ',date('Y-m-d'))
+                            ->limit($limit)
+                            ->orderBy('id DESC')
+                            ->get()
+                            ->getResultArray();
+            cache()->save('getSpreesToDisplayOngoing', $result ?? [], ZapptaHelper::CACHE_SECONDS);
+        }
+        $results = [];
+        foreach (cache()->get('getSpreesToDisplayOngoing') as $key => $value) {
+            $value['store_logo'] = getImageThumg('media', $value['store_logo'], 250);
+            $value['cover'] = getImageThumg('media/spree', $value['cover'], 250);
+            $results[] = $value;
+        }
+        return $results;
     }
 
 

@@ -15,17 +15,7 @@
       <?php foreach ($store as $key => $st) { ?>
         <div class="logoItem" onclick="location.href='<?php print base_url() . '/stores/' . $st['store_slug']; ?>'">
           <div class="shop-thumb text-center">
-            <?php
-            if (! empty($st['store_logo'])) {
-              $ext_name = explode('.', $st['store_logo']);
-            ?>
-              <img 
-              src="<?php print base_url() . '/images/media/' . $ext_name[0] . '/' . $ext_name[1] . '/250'; ?>" 
-              class="img img-responsive"
-               alt="">
-            <?php } else { ?>
-              <img src="<?php print base_url() . '/images/media/img-not-found/jpg/100'; ?>" class="img img-responsive" alt="">
-            <?php } ?>
+            <img src="<?= $st['store_logo'] ?>" class="img img-responsive" alt="">
           </div>
           <div class="text-center">
             <span class="text-success"><?= $st['earn_zappta'] && $st['per_dollar'] ? '+'.$st['earn_zappta'].' Zapptas / $'.$st['per_dollar'] : '' ?></span>

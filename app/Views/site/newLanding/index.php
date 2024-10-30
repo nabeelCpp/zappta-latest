@@ -1,5 +1,4 @@
 <?php
-  $globalSettings = (new \App\Models\Setting())->orderBy('id', 'ASC')->GetValues(['company_name', 'frontend_logo']);
   echo view('site/newLanding/header', ['globalSettings' => $globalSettings]);
 ?>
 
@@ -8,7 +7,6 @@
 <!-- ./ hero-section start -->
 
 <?= view('site/newLanding/slider') ?>
-
 <!-- ./ hero-section end-->
 
 <!-- how you win -->

@@ -24,6 +24,7 @@ trait ZapptaTrait
         $data['categories'] = getHomeCategory();
         $data['store'] = (new VendorModel())->getHomeResult(10);
         // $data['compaign'] = (new ProductsModel())->getCompaignProducts(10);
+        $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
         $data['compaign'] = (new VendorModel())->getSpreesToDisplayOngoing(10);
         $data['compaign_upcoming'] = (new VendorModel())->getSpreesToDisplayUpcoming(10);
         $vendor_display_setting = (new Setting())->getThemeVar('vendor_display');
