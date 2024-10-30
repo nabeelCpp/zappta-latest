@@ -126,7 +126,7 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
                 <label class="image-replace cd-email" for="signin-email">Email Address</label>
 
                 <div class="fieldSection">
-                  <div class="formIcon"><img src="assets/img/Email.svg" alt="" /></div>
+                  <div class="formIcon"><img src="<?= $assets_url ?>/img/Email.svg" alt="" /></div>
                   <input class="full-width has-padding has-border" name="email" id="userEmail" type="email" placeholder="Enter your Email address">
                 </div>
 
@@ -136,7 +136,7 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
                 <label class="image-replace cd-email" for="signin-email">Password</label>
 
                 <div class="fieldSection">
-                  <div class="formIcon"><img src="assets/img/lock.svg" alt="" /></div>
+                  <div class="formIcon"><img src="<?= $assets_url ?>/img/lock.svg" alt="" /></div>
                   <input class="full-width has-padding has-border password-field" name="password" id="userPassword" type="password" placeholder="........">
                   <a type="button" class="hide-password"><img src="<?= $assets_url ?>/img/eye-slash.svg" alt="" /></a>
                   <!-- <span class="cd-error-message">Error message here!</span> -->
@@ -242,7 +242,7 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
             <button type="button" style="right:20px" class="btn-close position-absolute" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="lg-form-head">
-            <img src="<?php print base_url(); ?>/theme/image/footer-logo.png" alt="" />
+            <img src="<?= base_url() . '/upload/logo/' . $globalSettings[0]['var_detail'] ?>" alt="" />
           </div>
           <div class="lg-form-tabs">
             <div class="lg-form-field">
@@ -330,7 +330,7 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
             <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="lg-form-head">
-            <img src="<?php print base_url(); ?>/theme/image/footer-logo.png" alt="" />
+            <img src="<?= base_url() . '/upload/logo/' . $globalSettings[0]['var_detail'] ?>" alt="" />
           </div>
           <div class="lg-form-tabs">
             <div class="lg-form-field">
