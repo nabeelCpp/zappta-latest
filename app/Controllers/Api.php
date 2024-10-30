@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Helpers\ZapptaHelper;
 use App\Models\VendorModel;
 use App\Models\CategoriesModel;
 use App\Models\ProductsModel;
@@ -270,6 +271,13 @@ class Api extends BaseController
         }else{
             return true;
         }
+    }
+
+    public function getLogo() {
+        $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['frontend_logo']);
+        $logo = $data['globalSettings'][0]['var_detail'];
+        $logo = getImageFull('logo', $logo);
+        return response()->setJSON(['logo' => $logo]);
     }
     
 }
