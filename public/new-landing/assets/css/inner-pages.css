@@ -1254,6 +1254,26 @@ border: 1px solid #12888C;
   .sliderThumbnail .lSPager.lSGallery{
     display:none
   }
+  .sliderThumbnail .lSSlideWrapper
+  {
+    width: 100%;
+  }
+  .sliderThumbnail .lSSlideWrapper ul
+  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  /* .sliderThumbnail .lSSlideWrapper ul li
+  {
+    width: 100% !important;
+  } */
+  .sliderThumbnail .lSAction .lSNext
+  {
+    top: 0;
+    bottom: auto;
+
+  }
 
 }
 

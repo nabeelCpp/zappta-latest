@@ -359,28 +359,9 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
 <!--scrollup-->
 </div>
 <!-- JS here -->
-<script src="<?= $assets_url ?>/js/jquary-3.6.0.min.js"></script>
-<!-- <script src="<?= $assets_url ?>/js/bootstrap-bundle.js"></script> -->
-<script src="<?= $assets_url ?>/js/swiper.min.js"></script>
-<script src="<?= $assets_url ?>/js/imagesloaded-pkgd.js"></script>
-<script src="<?= $assets_url ?>/js/waypoints.min.js"></script>
+ <script src="<?= base_url('minified/js/scripts-1.0.min.js')?>"></script>
 
-<script src="<?= $assets_url ?>/js/odometer.min.js"></script>
 
-<script src="<?= $assets_url ?>/js/smooth-scroll.js"></script>
-<script src="<?= $assets_url ?>/js/jquery.isotope.js"></script>
-<script src="<?= $assets_url ?>/js/countdown.js"></script>
-
-<script src="<?= $assets_url ?>/js/nice-select.js"></script>
-<script src="<?= $assets_url ?>/js/contact.js"></script>
-<script src="<?= $assets_url ?>/js/main.js"></script>
-<script src="<?= $assets_url ?>/js/login.js"></script>
-
-<script type="text/javascript" src="<?php print base_url(); ?>/theme/js/bundle.js"></script>
-<script type="text/javascript" src="<?php print base_url(); ?>/theme/js/notify.js"></script>
-<script type="text/javascript" src="<?php print base_url(); ?>/theme/js/themee.js"></script>
-<script type="text/javascript" src="<?php print base_url(); ?>/theme/js/cart.js"></script>
-<script type="text/javascript" src="<?php print base_url(); ?>/theme/js/main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script>
   // Create an instance of Notyf
