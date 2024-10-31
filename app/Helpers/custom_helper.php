@@ -166,12 +166,12 @@ function perm($right)
 
 function getUserId()
 {
-    if(session()->get('userIsLoggedIn')){
+    if($customer = \App\Traits\CustomerTrait::getLoggedInApiCustomer()) {
+        return $customer->id;
+    } elseif(session()->get('userIsLoggedIn')){
         $session = session()->get('userIsLoggedIn');
         return $session['user_id'];
-    } else if($customer = \App\Traits\CustomerTrait::getLoggedInApiCustomer()) {
-        return $customer->id;
-    } else {
+    }  else {
         return 0;
     }
 }
