@@ -157,17 +157,11 @@ class RegisterModel extends Model
 
     public function login_verify($email , $password, $api_customer = false)
     {
+        self::destroySession();
         $user = $this->findByEmailId($email);
         if(!empty($user)) {
             if ( password_verify( $password , $user['password'] ) ) {
-                $session = session();
-                $session->set('lang',1);
-                $session->set('userIsLoggedIn' , [ 'user_id' => $user['id'] , 'username' => $user['username'] ]);
-                if($api_customer) {
-                    unset($user['password']);
-                    $session->set('api_customer' , $user);
-                }
-
+                $this->setUserSession($user,$api_customer);
                 return true;
             } else {
                 return 0;
@@ -175,6 +169,27 @@ class RegisterModel extends Model
         } else {
                 return 0;
         }
+    }
+
+    public function setUserSession($user,$api_customer = false) {
+        $session = session();
+        $session->set('lang',1);
+        $session->set('userIsLoggedIn' , [ 'user_id' => $user['id'] , 'username' => $user['username'] ]);
+        if($api_customer) {
+            unset($user['password']);
+            $session->set('api_customer' , $user);
+        }
+    }
+
+    /**
+     * Destroy the current session
+     * @return void
+     * @author M Nabeel Arshad
+     */
+    private static function destroySession() : void {
+        $session = session();
+        $session->remove('userIsLoggedIn');
+        $session->remove('api_customer');
     }
 
     public function checkSocialAccountWeb($email,$name,$platform)

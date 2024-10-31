@@ -23,6 +23,7 @@ $routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes) 
     $routes->group('customer', ['namespace' => 'App\Controllers\API\User'], function($routes) {
         $routes->post('login', 'Login::index');
         $routes->post('register', 'Login::register');
+        $routes->post('login/verify', 'Login::verify');
         $routes->group('', ['filter' => 'api.customer'], function($routes) {
             $routes->get('dashboard', 'Home::index');
             $routes->group('wishlist', function($routes) {

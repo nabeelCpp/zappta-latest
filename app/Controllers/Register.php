@@ -50,7 +50,13 @@ class Register extends BaseController
                 $data = ['code' => (int)1, 'msg' => 'Please enter valid email.', 'token' => csrf_hash()];
                 return json_encode($data);
             } else {
-                return response()->setJSON(UserTrait::customerRegisterTrait($vEmail, $userSignusername, $vPassword, $user_refer_token));
+                $arr = [
+                    'email' => $vEmail,
+                    'username' => $userSignusername,
+                    'password' => $vPassword,
+                    'referred_by' => $user_refer_token
+                ];
+                return response()->setJSON(UserTrait::customerRegisterTrait($arr));
             }
         } else {
             return redirect()->to('/');
