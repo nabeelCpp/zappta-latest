@@ -4,12 +4,14 @@ namespace App\Controllers\API\User;
 
 use App\Controllers\BaseController;
 use App\Helpers\ZapptaHelper;
+use App\Models\RegisterModel;
 use App\Traits\CustomerTrait;
+use App\Traits\UserTrait;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class Profile extends BaseController
 {
-    use CustomerTrait;
+    use CustomerTrait, UserTrait;
     public function index()
     {
         $customer = CustomerTrait::getLoggedInApiCustomer();
@@ -50,5 +52,57 @@ class Profile extends BaseController
         $data = CustomerTrait::updatePasswordTrait($current_pass, $new_pass, $confirm_pass);
         $response = ZapptaHelper::response($data['msg'], [], $data['success'] ? 200 : 400);
         return response()->setJSON($response)->setStatusCode($response['code']);
+    }
+
+    /**
+     * Update customer profile
+     * @return object
+     * @author M Nabeel Arshad
+     */
+    public function update() : object {
+        $customer = request()->customer;
+        $register = new RegisterModel();
+        $data = $this->request->getVar();
+        $validationRules = [];
+        $messages = [];
+        if (isset($data->email)) {
+            // Unique validation, excluding the current user's email
+            $validationRules['email'] = "valid_email|is_unique[register.email,id,{$customer->id}]";
+            $messages['email'] = [
+                'is_unique' => 'The email has already been taken'
+            ];
+        }
+        if (isset($data->fname)) {
+            $validationRules['fname'] = 'alpha_space|min_length[3]|max_length[50]';
+            $messages['fname'] = [
+                'required' => 'First name is required.',
+                'min_length' => 'First name must have at least 3 characters.'
+            ];
+        }
+        if (isset($data->phone_code)) {
+            $validationRules['phone_code'] = 'required';
+        }
+        if (isset($data->phone)) {
+            $validationRules['phone'] = 'required|min_length[10]|is_unique[register.phone,id,{$customer->id}]';
+            $messages['phone'] = [
+                'is_unique' => 'This phone is already registered. Please try another one.'
+            ];
+        }
+        if ($validationRules && !$this->validate($validationRules, $messages)) {
+            $response = ZapptaHelper::response("Validation errors!", $this->validator->getErrors(), 400);
+            return response()->setJSON($response);
+        }
+
+        // Update user data
+        if ($register->update($customer->id, $data)) {
+            $user = $register->find($customer->id);
+            $register->setUserSession($user);
+            $jwtToken = ZapptaHelper::generateJwtToken($user);
+            $resp = ['accesstoken' => $jwtToken, 'customer' => $user];
+            $response =  ZapptaHelper::response('Profile updated successfully', $resp, 200);
+        } else {
+            $response = ZapptaHelper::response('Failed to update profile', [], 500);
+        }
+        return response()->setJSON($response);
     }
 }

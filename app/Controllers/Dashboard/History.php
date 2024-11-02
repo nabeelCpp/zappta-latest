@@ -5,17 +5,16 @@ namespace App\Controllers\Dashboard;
 use App\Controllers\BaseController;
 use App\Models\OrderModel;
 use App\Models\ReviewModel;
+use App\Traits\Dashboard\HistoryTrait;
 
 class History extends BaseController
 {
+    use HistoryTrait;
     
     public function index()
     {
+        $data = HistoryTrait::historyTrait();
         $data['pagetitle'] = 'History';
-        $data['total_order'] = (new OrderModel())->getUserTotalOrder();
-        $data['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
-        $data['order_list'] = (new OrderModel())->getUserOrderList($data['page']);
-        $data['pager'] = service('pager');
         return view('dashboard/history/index',$data);
     }
     

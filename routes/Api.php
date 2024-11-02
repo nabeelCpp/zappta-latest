@@ -26,17 +26,26 @@ $routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes) 
         $routes->post('login/verify', 'Login::verify');
         $routes->group('', ['filter' => 'api.customer'], function($routes) {
             $routes->get('dashboard', 'Home::index');
+            $routes->group('history', function($routes) {
+                $routes->get('', 'History::index');
+                // $routes->delete('remove/(:any)', 'Home::removeWishlist/$1');
+                // $routes->post('add', 'Home::addToWishlist');
+            });
             $routes->group('wishlist', function($routes) {
-                $routes->get('', 'Home::wishList'); //"http://localhost:8080/api/customer/wishlist?limit=1&page=2"
-                $routes->delete('remove/(:any)', 'Home::removeWishlist/$1'); //"http://localhost:8080/api/customer/wishlist/remove/{id}"
-                $routes->post('add', 'Home::addToWishlist'); //"http://localhost:8080/api/customer/wishlist/add"
+                $routes->get('', 'Home::wishList');
+                $routes->delete('remove/(:any)', 'Home::removeWishlist/$1');
+                $routes->post('add', 'Home::addToWishlist');
             });
             $routes->get('wallet', 'Home::wallet');
             $routes->get('addresses', 'Home::addresses');
             $routes->delete('addresses/(:num)', 'Home::removeAddress/$1');
             $routes->group('profile', function($routes) {
                 $routes->get('', 'Profile::index');
+                $routes->patch('', 'Profile::update');
                 $routes->post('password', 'Profile::updatePassword');
+            });
+            $routes->group('checkout', function($routes) {
+                $routes->post('paymentIntent/create', 'Checkout::createPaymentIntent');
             });
         });
     });
