@@ -27,11 +27,11 @@ class Stores extends BaseController
         $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
         // $data['store_id'] = (new VendorModel())->findIdByUrl($this->request->getUri()->getSegment(2));
         $data['pagetitle'] = 'Stores';
-        $data['store'] = $this->VendorModel->getHomeResult();
-        $data['pager'] = $this->VendorModel->pager;
-        foreach ($data['store'] as $key => $value) {
-            $data['store'][$key]['img'] = getImageThumg('media', $value['store_logo'], 250);
-        }
+        $data['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
+        $data['limit'] = $_GET['limit'] ?? ProductsModel::LIMIT;
+        $data['store'] = $this->VendorModel->getStores($data['page'], $data['limit']);
+        $data['total'] = $this->VendorModel->countStores();
+        $data['pager'] = service('pager');
         if (!empty($data['store_id'])) {
             $data['products'] = (new ProductsModel())->getStoreListing($data['store_id']['id']);
         } else {

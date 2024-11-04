@@ -25,7 +25,7 @@
         <a href="<?=base_url().'/stores/'.$st['store_slug']?>" class="logoItem">
           <div class="shop-thumb text-center" style="height: auto">
             <img
-              src="<?=$st['img']?>"
+              src="<?=$st['store_logo']?>"
               class="img img-responsive"
               alt="shop" />
           </div>
@@ -37,6 +37,6 @@
         </a>
       <?php } ?>
   </div>
-  <?= $pager->links('default', 'zappta_new') ?>
+  <?php print $pager->makeLinks($page, $limit, $total, 'zappta_new') ?>
 </section>
 <?= view('site/newLanding/footer', ['globalSettings' => $globalSettings]) ?>

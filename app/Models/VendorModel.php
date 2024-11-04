@@ -172,6 +172,44 @@ class VendorModel extends Model
         return $results;
     }
 
+    /**
+     * Get all stores for displaying on stores page
+     * @param int $limit
+     * @param int $page
+     * @return array
+     * @author M Nabeel Arshad
+     */
+    public function getStores( $page = 1, $limit=PER_PAGE)
+    {
+        $result =$this->where('store_status',1)
+            ->where('status',2)
+            ->where('deleteStatus',0)
+            ->orderBy('id DESC')
+            ->limit($limit, ($page - 1) * $limit)
+            ->get()
+            ->getResultArray();
+        $results = [];
+        foreach($result as $key => $value) {
+           $value['store_logo'] = getImageThumg('media', $value['store_logo'], 250);
+           $results[] = $value;
+        }
+        return $results;
+    }
+
+    /**
+     * Count all stores
+     * @return int
+     */
+    public function countStores()
+    {
+        $result =$this->where('store_status',1)
+            ->where('status',2)
+            ->where('deleteStatus',0)
+            ->orderBy('id DESC')
+            ->countAllResults();
+        return $result;
+    }
+
     public function GetEmailsOfVendors(){
 
         return $this->db->table($this->table)
