@@ -96,6 +96,7 @@ class Pages extends BaseController
 		}
 		$ids = $this->request->getUri()->getSegment(4);
 		$data['sql'] = $this->pages->find(my_decrypt($ids));
+		dd($data['sql']);
 		return view( ADMINVIEW . 'pages/edit',$data);
 	}
 

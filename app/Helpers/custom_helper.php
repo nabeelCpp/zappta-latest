@@ -773,6 +773,24 @@ function getNotifications($limit = null){
 }
 
 /**
+ * Save notification for different users types
+ * 
+ */
+function saveNotification($message, $type, $order_id=null, $user_id = null, $vendor_id = null) {
+    $data = [
+        'message' => $message,
+        'type' => $type,
+        'order_id' => $order_id,
+        'user_id' => $user_id,
+        'vendor_id' => $vendor_id,
+        'is_read' => 0  
+    ];
+    return (new \App\Models\Notification())->saveNotification($data);
+    
+}
+
+
+/**
  * Get results related to pagination
  * @param int $page
  * @param int $limit
