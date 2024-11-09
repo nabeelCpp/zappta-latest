@@ -940,7 +940,7 @@ class ProductsModel extends Model
 
     public function getSearchProducts($catid = 0, $word = null, $filter = [], $limit = 1)
     {
-        $limits = 12;
+        $limits = ProductsModel::LIMIT;
         $result_limit = 0;
         if ($limit > 1) {
             $result_limit = $limits * ($limit - 1);

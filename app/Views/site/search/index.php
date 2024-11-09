@@ -1,193 +1,190 @@
 <?= view('site/newLanding/header', ['globalSettings' => $globalSettings, 'css' => $css]); ?>
-	<section class="category-page">
-		<div class="container">
-			<div class="row">
-				<div class="col-xl-3 col-lg-3 col-md-3 col-12">
-					<button class="btn btn-link see_details" data-id="0">See Details <i class="fa fa-arrow-down"></i></button>
-					<div class="cate-left d-none">
-						
-						<?php 
-							if ( isset($_GET['size']) || isset($_GET['color']) || isset($_GET['dimension']) || isset($_GET['paper_type']) || isset($_GET['p']) ) {
-						?>
-						<div class="clearfilter">
-							<a href="<?php print base_url().'/search/?c='.$_GET['c'].'&searchq='.$_GET['searchq'].'&secure='.$_GET['secure'];?>">Clear Filter</a>
-						</div>
-						<?php
-							}
-						?>
-						<?php 
-							if ( is_array($attrbutes) && count($attrbutes) > 0 ) { 
-								$size_link = isset($_GET['size']) ? '&size='.$_GET['size'] : '';
-								$color_link = isset($_GET['color']) ? '&color='.$_GET['color'] : '';
-								$dimension_link = isset($_GET['dimension']) ? '&dimension='.$_GET['dimension'] : '';
-								$paper_type_link = isset($_GET['paper_type']) ? '&paper_type='.$_GET['paper_type'] : '';
-								$pf = isset($_GET['p']) ?  '&p='.$_GET['p'] : '';
-								$option_check = [1,2,3,4];
-						?>
-							
-							<div class="left-block-link filters">
-								<?php foreach ( $attrbutes as $attrkey => $attrvalues ) { ?>
-									<h3><?php print $attrkey;?></h3>
-								<ul class="pagelink">
-										<?php foreach( $attrvalues as $vv ) {?>
-								<li>
-								<?php 
-									switch ($vv['value_opt']) {
-										case 1:
-												$filter_url = 'size';
-												$filter_ids = isset($_GET[$filter_url]) ? $_GET[$filter_url] : 0;
-												$filter_active = explode('|',$filter_ids);
-								?>
-									<?php if ( !empty($filter_ids) || $filter_ids > 0 ) { ?>
-										<?php if ( in_array( my_encrypt($vv['value_id']), $filter_active ) ) { ?>
-											<a href="<?php print base_url().'/search/?c='.urldecode($_GET['c']).'&searchq='.urldecode($_GET['searchq']).'&secure='.urldecode($_GET['secure']).'&'.$filter_url.'='.$filter_ids.$color_link.$dimension_link.$paper_type_link.$pf;?>" class="activeatr"><?php print $vv['value_name'];?></a>
-										<?php } else { ?>
-									<a href="<?php print base_url().'/search/?c='.urldecode($_GET['c']).'&searchq='.urldecode($_GET['searchq']).'&secure='.urldecode($_GET['secure']).'&'.$filter_url.'='.$filter_ids.'|'.my_encrypt($vv['value_id']).$color_link.$dimension_link.$paper_type_link.$pf;?>"><?php print $vv['value_name'];?></a>
-										<?php } ?>
-									<?php } else { ?>
-									<a href="<?php print base_url().'/search/?c='.urldecode($_GET['c']).'&searchq='.urldecode($_GET['searchq']).'&secure='.urldecode($_GET['secure']).'&'.$filter_url.'='.my_encrypt($vv['value_id']).$color_link.$dimension_link.$paper_type_link.$pf;?>"><?php print $vv['value_name'];?></a>
-									<?php } ?>
-								<?php
-										
-											break;
-										case 2:
-												$filter_url = 'color';
-												$filter_ids = isset($_GET[$filter_url]) ? $_GET[$filter_url] : 0;
-												$filter_active = explode('|',$filter_ids);
-								?>
-									<?php if ( !empty($filter_ids) || $filter_ids > 0 ) { ?>
-										<?php if ( in_array( my_encrypt($vv['value_id']), $filter_active ) ) { ?>
-											<a href="<?php print base_url().'/search/?c='.urldecode($_GET['c']).'&searchq='.urldecode($_GET['searchq']).'&secure='.urldecode($_GET['secure']).$size_link.'&'.$filter_url.'='.$filter_ids.$dimension_link.$paper_type_link.$pf;?>" class="cclink"><span style="background-color: #<?php print $vv['color_code'];?>;" class="activeatr"></span></a>
-										<?php } else { ?>
-									<a href="<?php print base_url().'/search/?c='.urldecode($_GET['c']).'&searchq='.urldecode($_GET['searchq']).'&secure='.urldecode($_GET['secure']).$size_link.'&'.$filter_url.'='.$filter_ids.'|'.my_encrypt($vv['value_id']).$dimension_link.$paper_type_link.$pf;?>" class="cclink"><span style="background-color: #<?php print $vv['color_code'];?>;"></span></a>
-										<?php } ?>
-									<?php } else { ?>
-									<a href="<?php print base_url().'/search/?c='.urldecode($_GET['c']).'&searchq='.urldecode($_GET['searchq']).'&secure='.urldecode($_GET['secure']).$size_link.'&'.$filter_url.'='.my_encrypt($vv['value_id']).$dimension_link.$paper_type_link.$pf;?>" class="cclink"><span style="background-color: #<?php print $vv['color_code'];?>;"></span></a>
-									<?php } ?>
-								<?php
-											break;
-										
-										case 3:
-												$filter_url = 'dimension';
-												$filter_ids = isset($_GET[$filter_url]) ? $_GET[$filter_url] : 0;
-												$filter_active = explode('|',$filter_ids);
-								?>
-									<?php if ( !empty($filter_ids) || $filter_ids > 0 ) { ?>
-										<?php if ( in_array( my_encrypt($vv['value_id']), $filter_active ) ) { ?>
-											<a href="<?php print base_url().'/search/?c='.urldecode($_GET['c']).'&searchq='.urldecode($_GET['searchq']).'&secure='.urldecode($_GET['secure']).$size_link.$color_link.'&'.$filter_url.'='.$filter_ids.$paper_type_link.$pf;?>" class="activeatr"><?php print $vv['value_name'];?></a>
-										<?php } else { ?>
-									<a href="<?php print base_url().'/search/?c='.urldecode($_GET['c']).'&searchq='.urldecode($_GET['searchq']).'&secure='.urldecode($_GET['secure']).$size_link.$color_link.'&'.$filter_url.'='.$filter_ids.'|'.my_encrypt($vv['value_id']).$paper_type_link.$pf;?>"><?php print $vv['value_name'];?></a>
-										<?php } ?>
-									<?php } else { ?>
-									<a href="<?php print base_url().'/search/?c='.urldecode($_GET['c']).'&searchq='.urldecode($_GET['searchq']).'&secure='.urldecode($_GET['secure']).$size_link.$color_link.'&'.$filter_url.'='.my_encrypt($vv['value_id']).$paper_type_link.$pf;?>"><?php print $vv['value_name'];?></a>
-									<?php } ?>
-								<?php
-										
-											break;
+<!-- noUiSlider CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.1/nouislider.min.css" rel="stylesheet">
 
-										case 4:
-												$filter_url = 'paper_type';
-												$filter_ids = isset($_GET[$filter_url]) ? $_GET[$filter_url] : 0;
-												$filter_active = explode('|',$filter_ids);
-								?>
-									<?php if ( !empty($filter_ids) || $filter_ids > 0 ) { ?>
-										<?php if ( in_array( my_encrypt($vv['value_id']), $filter_active ) ) { ?>
-											<a href="<?php print base_url().'/search/?c='.urldecode($_GET['c']).'&searchq='.urldecode($_GET['searchq']).'&secure='.urldecode($_GET['secure']).$size_link.$color_link.$paper_type_link.'&'.$filter_url.'='.$filter_ids.$pf;?>" class="activeatr"><?php print $vv['value_name'];?></a>
-										<?php } else { ?>
-									<a href="<?php print base_url().'/search/?c='.urldecode($_GET['c']).'&searchq='.urldecode($_GET['searchq']).'&secure='.urldecode($_GET['secure']).$size_link.$color_link.$paper_type_link.'&'.$filter_url.'='.$filter_ids.'|'.my_encrypt($vv['value_id']).$pf;?>"><?php print $vv['value_name'];?></a>
-										<?php } ?>
-									<?php } else { ?>
-									<a href="<?php print base_url().'/search/?c='.urldecode($_GET['c']).'&searchq='.urldecode($_GET['searchq']).'&secure='.urldecode($_GET['secure']).$size_link.$color_link.$paper_type_link.'&'.$filter_url.'='.my_encrypt($vv['value_id']).$pf;?>"><?php print $vv['value_name'];?></a>
-									<?php } ?>
-								<?php
-										
-											break;
+<!-- noUiSlider JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.1/nouislider.min.js"></script>
 
-										default:
+<!-- section dividie Layout// -->
+<section class="py-5">
+	<div class="container">
+		<div class="row">
+			<!-- sidebar //// -->
+			<div class="col-12 col-md-4 col-lg-3">
+				<div class="sidebarCollapse">
 
-											break;
-									}
-								?>
-								</li>
-										<?php } ?>
-									</ul>
-								<?php } ?>
+					<ul class="nav nav-vertical" id="filterNav">
+						<li class="nav-item">
+							<a class="nav-link dropdown-toggle mb-3" data-bs-toggle="collapse" href="#seasonCollapse" aria-expanded="true">
+								Product Categories
+							</a>
+							<div class="collapse show" id="seasonCollapse" data-simplebar-collapse="#seasonGroup">
+								<div class="form-group form-group-overflow mb-6" id="seasonGroup" data-simplebar="init">
+									<div class="form-check mb-3">
+										<input class="form-check-input" id="seasonOne" type="checkbox" <?= $search_cat == 0?'checked=""':''?> onchange="location.href='<?=base_url('search?c=0')?>'">
+										<label class="form-check-label" for="seasonOne">
+											All
+										</label>
+									</div>
+									<?php 
+									foreach ($categories as $key => $cat) { ?>
+										<div class="form-check">
+											<input class="form-check-input" id="season<?=$cat['id']?>" type="checkbox" <?= $search_cat == $cat['id']?'checked=""':''?> onchange="location.href='<?=base_url('search?c='.my_encrypt($cat['id']))?>'">
+											<label class="form-check-label" for="season<?=$cat['id']?>">
+												<?=$cat['cat_name']?>
+											</label>
+										</div>
+									<?php	
+									} 
+									?>
+								</div>
 							</div>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link dropdown-toggle mb-3" data-bs-toggle="collapse" href="#seasonCollapse1" aria-expanded="true">
+								Vendors
+							</a>
+							<div class="collapse show" id="seasonCollapse1" data-simplebar-collapse="#seasonGroup1">
+								<div class="form-group form-group-overflow mb-6" id="seasonGroup1" data-simplebar="init">
+									<?php 
+									foreach ($vendors as $key => $vendor) { ?>
+										<div class="form-check mb-3">
+											<input class="form-check-input" id="seasonOne<?=$vendor['id']?>" type="checkbox">
+											<label class="form-check-label" for="seasonOne<?=$vendor['id']?>">
+												<?=$vendor['store_name']?>
+											</label>
+										</div>
+									<?php } ?>
+								</div>
+							</div>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link dropdown-toggle mb-3" data-bs-toggle="collapse" href="#seasonCollapse2" aria-expanded="true">
+								Brands
+							</a>
+							<div class="collapse show" id="seasonCollapse2" data-simplebar-collapse="#seasonGroup2">
+								<div class="form-group form-group-overflow mb-6" id="seasonGroup2" data-simplebar="init">
+									<?php
+									foreach ($brands as $key => $brand) { ?>
+										<div class="form-check mb-3">
+											<input class="form-check-input" id="seasonOne<?=$brand['id']?>" type="checkbox">
+											<label class="form-check-label" for="seasonOne<?=$brand['id']?>">
+												<?=$brand['name']?>
+											</label>
+										</div>
+									<?php
+									} ?>
+									<!-- <a class="seeAllBtn" href="#">See All</a> -->
+								</div>
+							</div>
+						</li>
+						<li class="nav-item">
+							<h6 class="mb-5">Price</h6>
+							<div id="price-slider" class="my-3"></div>
+							<div class="d-flex justify-content-between mt-3">
+								<input type="number" id="min-price" class="form-control"  min="0" max="300000" value="<?=$min_price ?? '' ?>">
+								<span class="mx-2">-</span>
+								<input type="number" id="max-price" class="form-control" min="0" max="300000" value="<?=$max_price ?? ''?>">
+							</div>
+							<div class="text-center mt-3">
+								<button class="btn btn-secondary px-5" onclick="applyFilter()">Filter</button>
+							</div>
+						</li>
+					</ul>
 
-						<?php } ?>
-						
 
-						<div class="left-block-link brands">
-							<h3>Price</h3>
-							<ul class="pagelink">
-								<li>
-									<a href="<?php print base_url().'/search/?c='.urldecode($_GET['c']).'&searchq='.urldecode($_GET['searchq']).'&secure='.urldecode($_GET['secure']).$size_link.$color_link.$paper_type_link.$paper_type_link.'&p=0-100';?>">
-										<span>0</span>
-										<span>--</span>
-										<span>100</span>
-									</a>
-								</li>
-								<li>
-									<a href="<?php print base_url().'/search/?c='.urldecode($_GET['c']).'&searchq='.urldecode($_GET['searchq']).'&secure='.urldecode($_GET['secure']).$size_link.$color_link.$paper_type_link.$paper_type_link.'&p=200-300';?>">
-										<span>200</span>
-										<span>--</span>
-										<span>300</span>
-									</a>
-								</li>
-								<li>
-									<a href="<?php print base_url().'/search/?c='.urldecode($_GET['c']).'&searchq='.urldecode($_GET['searchq']).'&secure='.urldecode($_GET['secure']).$size_link.$color_link.$paper_type_link.$paper_type_link.'&p=300-400';?>">
-										<span>300</span>
-										<span>--</span>
-										<span>400</span>
-									</a>
-								</li>
-								<li>
-									<a href="<?php print base_url().'/search/?c='.urldecode($_GET['c']).'&searchq='.urldecode($_GET['searchq']).'&secure='.urldecode($_GET['secure']).$size_link.$color_link.$paper_type_link.$paper_type_link.'&p=400-a';?>">
-										<span>400</span>
-										<span>--</span>
-										<span>Above</span>
-									</a>
-								</li>
-							</ul>
-						</div>
-
-					</div>
-				</div>
-				<div class="col-xl-9 col-lg-9 col-md-9 col-12  p-0 m-0">
-					<div class="cat-pro-list catp mt-4 mb-4">
-						<div class="row p-0 m-0">
-						<?php if ( is_array($products) && count($products) > 0 ) { ?>
-							<?php print view('site/stores/prolist',['count' => $products]);?>
-						<?php } else { ?>
-							<div class="col-12"><p class="alert alert-danger">No result found</p></div>
-						<?php } ?>
-
-						<?php if ( $total_products > 12 ) { ?>
-						<div class="pagenation">
-							<?php print $pager->makeLinks($page, 12, $total_products,'front_full') ?>
-						</div>
-						<?php } ?>
-
-						</div>
-						
-					</div>
 				</div>
 			</div>
+			<!-- end sidebarr // -->
+			<!-- content /// -->
+			<div class="col-12 col-md-8 col-lg-9">
+				<div class="contentsListing">
+					<div class="d-flex justify-content-between mb-3">
+						<?=displayResultsPhrase($page, $limit, $total_products)?>
+						<select class="customSelect">
+							<option>Sort by Latest</option>
+							<option>Sort by Prices</option>
+							<option>Sort by Brands</option>
+						</select>
+					</div>
+					<div class="row">
+						<?php if (is_array($products) && count($products) > 0) { ?>
+							<?php print view('site/stores/prolist', ['count' => $products]); ?>
+						<?php } else { ?>
+							<div class="col-12">
+								<p class="alert alert-danger">No result found</p>
+							</div>
+						<?php } ?>
+					</div>
+					<?php if ($total_products > 12) { ?>
+						<?php print $pager->makeLinks($page, $limit, $total_products, 'zappta_new') ?>
+					<?php } ?>
+				</div>
+			</div>
+
+			<!-- end content /// -->
 		</div>
-	</section>
-<?= view('site/newLanding/footer', ['globalSettings' => $globalSettings]) ?>
+	</div>
+</section>
 <script>
-	$('.see_details').click(function(){
-		let id = parseInt($(this).attr('data-id'));
-		if(id == 0){
-			$('.cate-left').removeClass('d-none');
-			$(this).attr('data-id', 1)
-			$(this).html('Hide Details <i class="fa fa-arrow-up"></i>');
-		}
-		if(id == 1){
-			$('.cate-left').addClass('d-none');
-			$(this).attr('data-id', 0)
-			$(this).html('See Details <i class="fa fa-arrow-down"></i>');
-		}
-	})
+	document.addEventListener("DOMContentLoaded", function() {
+    const priceSlider = document.getElementById('price-slider');
+    const minPriceInput = document.getElementById('min-price');
+    const maxPriceInput = document.getElementById('max-price');
+	let maxprice = parseInt(maxPriceInput.value);
+	let minprice = parseInt(minPriceInput.value);
+    // Initialize the noUiSlider
+    noUiSlider.create(priceSlider, {
+        start: [minprice ?? 0, maxprice ?? 300000],  // Starting values set to 0 and 300000
+        connect: true,
+        range: {
+            'min': 0,          // Set minimum to 0
+            'max': 300000      // Set maximum to 300000
+        },
+        tooltips: [true, true],
+        format: {
+            to: (value) => Math.round(value),
+            from: (value) => Number(value)
+        }
+    });
+
+    // Update input fields when slider values change
+    priceSlider.noUiSlider.on('update', function(values, handle) {
+        if (handle === 0) {
+            minPriceInput.value = values[0];
+        } else {
+            maxPriceInput.value = values[1];
+        }
+    });
+
+    // Update slider when min price input changes
+    minPriceInput.addEventListener('change', function() {
+        const minPrice = parseInt(minPriceInput.value) || 0;
+        const maxPrice = parseInt(maxPriceInput.value) || 300000;
+        priceSlider.noUiSlider.set([minPrice, maxPrice]);
+    });
+
+    // Update slider when max price input changes
+    maxPriceInput.addEventListener('change', function() {
+        const minPrice = parseInt(minPriceInput.value) || 0;
+        const maxPrice = parseInt(maxPriceInput.value) || 300000;
+        priceSlider.noUiSlider.set([minPrice, maxPrice]);
+    });
+});
+
+const applyFilter = () => {
+	const minPrice = document.getElementById('min-price').value;
+	const maxPrice = document.getElementById('max-price').value;
+	const url = '<?= $current_url ?>';
+	const searchParams = new URLSearchParams(window.location.search);  // Get the current query parameters
+
+	// Update or add the 'p' parameter with the price range
+	searchParams.set('p', `${minPrice}-${maxPrice}`);
+	// Reconstruct the full URL with the updated query string
+	const updatedUrl = `${window.location.pathname}?${searchParams.toString()}`;
+	window.location.href = updatedUrl;
+}
+
+
 </script>
+<?= view('site/newLanding/footer', ['globalSettings' => $globalSettings]) ?>

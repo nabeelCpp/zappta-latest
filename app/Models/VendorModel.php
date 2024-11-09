@@ -197,6 +197,20 @@ class VendorModel extends Model
     }
 
     /**
+     * Get all stores name and id
+     */
+    public function getStoresName() {
+        if(!cache()->get('getStoresName')) {
+            $result = $this->select('id, store_name')->where('store_status',1)
+                ->where('status',2)
+                ->where('deleteStatus',0)
+                ->findAll();
+            cache()->save('getStoresName', $result ?? [], ZapptaHelper::CACHE_SECONDS);
+        }
+        return cache()->get('getStoresName');
+    }
+
+    /**
      * Count all stores
      * @return int
      */

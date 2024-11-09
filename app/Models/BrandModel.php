@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\ZapptaHelper;
 use CodeIgniter\Model;
 
 class BrandModel extends Model
@@ -259,6 +260,18 @@ class BrandModel extends Model
         $sql = $this->db->query('SELECT cms_brands.*,cms_brands_categories.category_id as bcat,cms_brands_categories.brand_id as bid FROM cms_brands LEFT JOIN cms_brands_categories ON cms_brands_categories.brand_id=cms_brands.id WHERE cms_brands.id='.$id.' LIMIT 1')
                            ->getRowArray();
         return $sql;
+    }
+
+    public function getAllBrands() {
+        if(!cache()->get('getAllBrands')) {
+            $result = $this->db->table($this->table)
+                    ->where('deleteStatus',0)
+                    ->where('status',1)
+                    ->get()
+                    ->getResultArray();
+            cache()->save('getAllBrands', $result ?? [], ZapptaHelper::CACHE_SECONDS);
+        }
+        return cache()->get('getAllBrands');
     }
 
 

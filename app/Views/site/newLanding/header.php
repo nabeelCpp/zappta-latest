@@ -78,7 +78,7 @@ $total_list = (new App\Models\WishlistModel)->getUserTotalList();
                                 <img src="<?= base_url() . '/upload/logo/' . $globalSettings[0]['var_detail'] ?>" alt="Logo" style="width: 150px; height: 100px" />
                             </a>
                         </div>
-                        <form class="searchSection" method="get" action="<?php print base_url() . '/categories'; ?>" id="searchHeaderForm">
+                        <form class="searchSection" method="get" action="<?php print base_url() . '/search'; ?>" id="searchHeaderForm">
                             <input type="hidden" name="secure" value="<?php print csrf_hash(); ?>">
                             <div class="serchdrop">
                                 <?php
