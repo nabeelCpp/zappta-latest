@@ -47,6 +47,19 @@ class Media extends BaseController
                 // $formDataRaw['csrf_token'] = csrf_hash();
                 if ( $_FILES['file']['size'] != 0 ) {
                     $file = $this->request->getFile('file');
+                    // check dimensions of uploaded image.
+                    $dimensions = getImageDimensions('store_products');
+                    list($width, $height) = getimagesize($file->getTempName());
+                    if ($width > $dimensions['width'] || $height > $dimensions['height']) {
+
+                        echo json_encode([
+                            'status' => 'error',
+                            'error' => true,
+                            'message' =>  "Image dimensions should be {$dimensions['width']}x{$dimensions['height']} or smaller. Uploaded image dimensions are {$width}x{$height}.",
+                            'csrf_token' => csrf_hash()
+                        ]);
+                        exit;
+                    }
                     $newName = $file->getRandomName();
                     $dir = ROOTPATH . 'public/upload/products';
                     $file->move($dir,$newName);

@@ -375,22 +375,29 @@ $(function(){
         },
         onUploadSuccess: function(id, data){
           var paths = JSON.parse(data);
-          // A file was successfully uploaded
-          // ui_add_log('Server Response for file #' + id + ': ' + JSON.stringify(data));
-          // ui_add_log('Upload of file #' + id + ' COMPLETED', 'success');
-          // ui_multi_update_file_status(id, 'success', 'Upload Complete');
-          ui_multi_update_file_progress(id, 100, 'success', false);
-          $('#mediaGalleryUpload').val(data.csrf_token);
-
-          var html = '<div class="col-md-2 mt-3 mb-2">\
-                        <div class="gallery-cols active_img" id="gallery_cols_'+paths.id+'" onclick="selectGallery('+paths.id+');" data-thumb="'+paths.small+'" data-img="'+paths.path+'">\
-                      <img src="'+paths.medium+'" alt="" class="rounded" style="height: 100px; width: 100%; object-fit: cover; object-position: center; cursor:pointer;">\
-                     </div></div>';
-          $('#galleryBlock #gbb').prepend(html);
-          // $('#myTab #galleryBlock-tab').tab('show');
-          $('.alert-danger').hide();
-          $('.productGal').append('<input type="hidden" name="product_gallery[]" value="'+paths.path+'"/>');
-          // console.log(html);
+          if(paths.error) {
+            alert(paths.message);
+            ui_multi_update_file_status(id, 'danger', paths.message);
+            ui_multi_update_file_progress(id, 0, 'danger', false); 
+          }else{
+            // A file was successfully uploaded
+            // ui_add_log('Server Response for file #' + id + ': ' + JSON.stringify(data));
+            // ui_add_log('Upload of file #' + id + ' COMPLETED', 'success');
+            // ui_multi_update_file_status(id, 'success', 'Upload Complete');
+            ui_multi_update_file_progress(id, 100, 'success', false);
+            $('#mediaGalleryUpload').val(data.csrf_token);
+  
+            var html = '<div class="col-md-2 mt-3 mb-2">\
+                          <div class="gallery-cols active_img" id="gallery_cols_'+paths.id+'" onclick="selectGallery('+paths.id+');" data-thumb="'+paths.small+'" data-img="'+paths.path+'">\
+                        <img src="'+paths.medium+'" alt="" class="rounded" style="height: 100px; width: 100%; object-fit: cover; object-position: center; cursor:pointer;">\
+                       </div></div>';
+            $('#galleryBlock #gbb').prepend(html);
+            // $('#myTab #galleryBlock-tab').tab('show');
+            $('.alert-danger').hide();
+            $('.productGal').append('<input type="hidden" name="product_gallery[]" value="'+paths.path+'"/>');
+            // console.log(html);
+            
+          }
         },
         onUploadError: function(id, xhr, status, message){
           ui_multi_update_file_status(id, 'danger', message);
@@ -431,8 +438,9 @@ $(function(){
     
 });
 
-function uploaddesign(uploadDesign,field)
+function uploaddesign(uploadDesign,field, type=null)
 {
+  
     $("#"+uploadDesign).dmUploader({
         url: baseUrl+'vendors/design/upload',
         //... More settings here...
@@ -483,16 +491,20 @@ function uploaddesign(uploadDesign,field)
           ui_multi_update_file_progress(id, percent);
         },
         onUploadSuccess: function(id, data){
-          var paths = JSON.parse(data);
-          // A file was successfully uploaded
-          // ui_add_log('Server Response for file #' + id + ': ' + JSON.stringify(data));
-          // ui_add_log('Upload of file #' + id + ' COMPLETED', 'success');
-          // ui_multi_update_file_status(id, 'success', 'Upload Complete');
-          ui_multi_update_file_progress(id, 100, 'success', false);
-          $('#'+uploadDesign).css("background-image", "url(\""+ paths.medium +"\")");
-          $('#'+uploadDesign+' .grids').remove();
-          $('#'+uploadDesign+' .changebg').removeClass('d-none');
-          // console.log(paths);
+          var paths = data;
+          if(paths.error) {
+            alert(paths.message);
+          }else{
+            // A file was successfully uploaded
+            // ui_add_log('Server Response for file #' + id + ': ' + JSON.stringify(data));
+            // ui_add_log('Upload of file #' + id + ' COMPLETED', 'success');
+            // ui_multi_update_file_status(id, 'success', 'Upload Complete');
+            ui_multi_update_file_progress(id, 100, 'success', false);
+            $('#'+uploadDesign).css("background-image", "url(\""+ paths.medium +"\")");
+            $('#'+uploadDesign+' .grids').remove();
+            $('#'+uploadDesign+' .changebg').removeClass('d-none');
+            // console.log(paths);
+          }
         },
         onUploadError: function(id, xhr, status, message){
           ui_multi_update_file_status(id, 'danger', message);
@@ -507,7 +519,8 @@ function uploaddesign(uploadDesign,field)
           alert('File \'' + file.name + '\' Cannot be added: Maximum 20MB file allow to upload');
         },
         extraData: {
-           "field": field
+           "field": field,
+            "type": type??null
         }
         
     });

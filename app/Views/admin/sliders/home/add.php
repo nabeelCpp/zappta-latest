@@ -9,7 +9,7 @@
                 		<input type="hidden" name="<?php print csrf_token() ?>" value="<?php print csrf_hash() ?>">
                 		<div class="form-group">
                 			<label>Upload Image</label>
-                			<input type="file" name="fimg" class="form-control" required />
+                			<input type="file" name="fimg" class="form-control" required onchange="checkImageDimensions(this)" data-type="slider" />
                 		</div>
                 		<button class="btn btn-info" type="submit">Add</button>
                 	</form>

@@ -802,3 +802,44 @@ function displayResultsPhrase($page, $limit, $total) : string {
     $t = $page*$limit > $total ? $total : $page*$limit;
     return "<h2>Showing ".((($page-1)*$limit)+1)."-".($t)." of {$total} results</h2>";
 }
+
+/**
+ * Get dimensions for different images
+ * 
+ */
+function getImageDimensions($type = null) {
+    $dimensions = [
+        'store_logo' => [
+            'width' => 300,
+            'height' => 300
+        ],
+        'store_products' => [
+            'width' => 350,
+            'height' => 350,
+        ],
+        'spree' => [
+            'width' => 250,
+            'height' => 250,
+        ],
+        'category' => [
+            'width' => 250,
+            'height' => 250,
+        ],
+        'category_banner' => [
+            'width' => 1680,
+            'height' => 780,
+        ],
+        'slider' => [
+            'width' => 1680,
+            'height' => 780,
+        ],
+        'store_banner' => [
+            'width' => 1680,
+            'height' => 780,
+        ],
+    ];
+    if($type) {
+        return $dimensions[$type];
+    }
+    return $dimensions;
+}

@@ -10,7 +10,7 @@
                 		<input type="hidden" name="_id" value="<?php print $id; ?>">
                 		<div class="form-group">
                 			<label>Upload Image</label>
-                			<input type="file" name="fimg" class="form-control" required />
+                			<input type="file" name="fimg" class="form-control" required onchange="checkImageDimensions(this)" data-type="slider" />
                 		</div>
                 		<div class="form-group">
                 			<img src="<?php print getImageThumg('slider',$file, 100);?>" class="img-lg rounded" alt="" />

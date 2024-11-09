@@ -84,9 +84,9 @@
                     </div>
                     <div class="form-group">
                       <label>Category Icon</label>
-                      <input type="file" name="cat_icon" class="file-upload-default">
+                      <input type="file" name="cat_icon" class="file-upload-default" onchange="checkImageDimensions(this)" data-type="category">
                       <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image" id="category_text_field">
                         <span class="input-group-append">
                           <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
                         </span>
@@ -100,9 +100,9 @@
                     </div>
                     <div class="form-group">
                       <label>Category Banner</label>
-                      <input type="file" name="catimg" class="file-upload-default">
+                      <input type="file" name="catimg" class="file-upload-default" onchange="checkImageDimensions(this)" data-type="category_banner">
                       <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image" id="category_banner_text_field">
                         <span class="input-group-append">
                           <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
                         </span>

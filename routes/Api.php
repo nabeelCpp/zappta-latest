@@ -1,5 +1,6 @@
 <?php
 $routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes) {
+    $routes->get('image_dimensions', 'Home::imageDimensions');
     $routes->get('home', 'Home::index');
     /**
      * Category API

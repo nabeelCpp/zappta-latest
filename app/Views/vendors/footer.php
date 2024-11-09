@@ -210,6 +210,7 @@
 <script src="<?php print base_url();?>/theme/js/vendors/js/jscolor.js"></script>
 <script src="<?php print base_url();?>/theme/js/vendors/js/select2.full.min.js"></script>
 <script src="<?php print base_url();?>/theme/js/vendors/js/dataTables.min.js"></script>
+<script src="<?=base_url('js/image_dimensions.js')?>"></script> <!-- Image Dimension Validation from backend helper -->
 
 <script type="text/javascript" src="<?php print base_url();?>/theme/js/admin.js"></script>		
 <!-- Modal -->

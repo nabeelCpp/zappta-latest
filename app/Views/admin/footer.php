@@ -38,6 +38,7 @@
   <script src="<?php print base_url() . ADMIN;?>/js/dashboard.js"></script>
   <script src="<?php print base_url() . ADMIN;?>/js/Chart.roundedBarCharts.js"></script>
   <script src="<?php print base_url() . ADMIN;?>/js/select2.js"></script>
+  <script src="<?=base_url('js/image_dimensions.js')?>"></script> <!-- Image Dimension Validation from backend helper -->
 <!-- <script type="text/javascript" src="<?php print base_url() . ADMIN;?>/tiny_mce/tiny_mce.js"></script> -->
   <!-- End custom js for this page-->
   <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>

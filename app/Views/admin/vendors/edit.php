@@ -60,9 +60,9 @@
 
                     <div class="form-group">
                       <label>Store Logo</label>
-                      <input type="file" name="store_logo" class="file-upload-default" accept=".jpg,.jpeg,.png">
+                      <input type="file" name="store_logo" class="file-upload-default" accept=".jpg,.jpeg,.png" onchange="checkImageDimensions(this)" data-type="store_logo">
                       <div class="input-group col-xs-12">
-                        <input type="file" name="store_logo" class="form-control file-upload-info" placeholder="Upload Image">
+                        <input type="file" name="store_logo" class="form-control file-upload-info" placeholder="Upload Image" id="store_logo_text_field">
                         <span class="input-group-append">
                           <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
                         </span>

@@ -32,6 +32,17 @@ class Home extends BaseController {
         $data = ZapptaTrait::productTrait($url, $pc, $sd_row, $pds);
         return response()->setJSON(ZapptaHelper::response('Product details fetched successfully!', $data));
     }
+
+    /**
+     * Get image dimensions
+     * @return json
+     * 
+     */
+    public function imageDimensions() {
+        $data = getImageDimensions();
+        $response = ZapptaHelper::response('Image dimensions fetched successfully!', $data);
+        return response()->setJSON($response);
+    }
 }
 
 ?>

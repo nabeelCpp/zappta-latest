@@ -44,6 +44,18 @@ class Design extends BaseController
                 // $formDataRaw['csrf_token'] = csrf_hash();
                 if ( $_FILES['file']['size'] != 0 ) {
                     $file = $this->request->getFile('file');
+                    $type = $this->request->getVar('type') ?? null;
+                    if($type) {
+                        // check dimensions of image
+                        list($width, $height) = getimagesize($file->getTempName());
+                        $dimensions = getImageDimensions($type);
+                        if ($width > $dimensions['width'] || $height > $dimensions['height']) {
+                            return $this->response->setJSON([
+                                'error' => true,
+                                'message' => "Image dimensions should be {$dimensions['width']}x{$dimensions['height']} or smaller. Uploaded image dimensions are {$width}x{$height}.",
+                            ]);
+                        }
+                    }
                     $field = str_replace('.','_',filtreData($this->request->getVar('field')));
                     $newName = $file->getRandomName();
                     $dir = ROOTPATH . 'public/upload/media';

@@ -40,22 +40,22 @@
 											$img_ext = explode('.',$design['header_banner']);
 									?>
 										<div class="v-header-bg" id="uploadDesign" style="background-image:url('<?php print base_url().'/images/media/'.$img_ext[0].'/'.$img_ext[1].'/600';?>');">
-											<div class="changebg" onclick="uploaddesign('uploadDesign','header.banner');">
+											<div class="changebg" onclick="uploaddesign('uploadDesign','header.banner', 'store_banner');">
 												<i class="fas fa-edit"></i>
-			                            		<input type="file" title='Click to add Files' class="position-absolute" />
+			                            		<input type="file" title='Click to add Files' class="position-absolute" id="store_banner" data-type="store_banner"  />
 											</div>
 										</div>
 									<?php } else { ?>
 										<div class="v-header-bg dm-uploader p-2" id="uploadDesign">
-											<div class="changebg d-none" onclick="uploaddesign('uploadDesign','header.banner');">
+											<div class="changebg d-none" onclick="uploaddesign('uploadDesign','header.banner', 'store_banner');">
 												<i class="fas fa-edit"></i>
-			                            		<input type="file" title='Click to add Files' class="position-absolute" />
+			                            		<input type="file" title='Click to add Files' class="position-absolute" id="store_banner" data-type="store_banner" />
 											</div>
-											<div class="grids" onclick="uploaddesign('uploadDesign','header.banner');">
+											<div class="grids" onclick="uploaddesign('uploadDesign','header.banner', 'store_banner');">
 												<h3 class="mb-5 mt-5 text-muted">Drag and drop Banner Image</h3>
 			                                  	<div class="btn btn-block position-relative">
 			                                      	<span>Open the file Browser</span>
-			                                      	<input type="file" title='Click to add Files' class="position-absolute"/>
+			                                      	<input type="file" title='Click to add Files' class="position-absolute" id="store_banner" data-type="store_banner"/>
 			                                  	</div>
 											</div>
 										</div>
