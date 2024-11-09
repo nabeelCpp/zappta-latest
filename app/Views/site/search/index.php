@@ -182,7 +182,13 @@ const applyFilter = () => {
 	searchParams.set('p', `${minPrice}-${maxPrice}`);
 	// Reconstruct the full URL with the updated query string
 	const updatedUrl = `${window.location.pathname}?${searchParams.toString()}`;
-	window.location.href = updatedUrl;
+	let currentUrl = baseUrl+updatedUrl;
+	// Remove multiple consecutive slashes (except for the domain part)
+	currentUrl = currentUrl.replace(/([^:]\/)\/+/g, "$1");
+
+	// Remove trailing slashes (except for the domain)
+	currentUrl = currentUrl.replace(/\/+$/, '');
+	window.location.href = currentUrl;
 }
 
 
