@@ -131,8 +131,8 @@
     const priceSlider = document.getElementById('price-slider');
     const minPriceInput = document.getElementById('min-price');
     const maxPriceInput = document.getElementById('max-price');
-	let maxprice = parseInt(maxPriceInput.value);
-	let minprice = parseInt(minPriceInput.value);
+	let minprice = minPriceInput.value ? parseInt(minPriceInput.value) : 0;
+	let maxprice = maxPriceInput.value ? parseInt(maxPriceInput.value) : 300000;
     // Initialize the noUiSlider
     noUiSlider.create(priceSlider, {
         start: [minprice ?? 0, maxprice ?? 300000],  // Starting values set to 0 and 300000
