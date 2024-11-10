@@ -12,7 +12,7 @@ class Notifications extends BaseController
     {
         $data = [
             'title' => 'Notifications',
-            'notifications' => (new \App\Models\UsersNotification())->where('user_id', getUserId())->orderBy('id', 'DESC')->findAll(20),
+            'notifications' => (new \App\Models\UsersNotification())->where('user_id', getUserId())->orderBy('id', 'DESC')->findAll(6),
             'assets_url' => ZapptaHelper::loadAssetsUrl()
         ];
 
