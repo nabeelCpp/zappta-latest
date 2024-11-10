@@ -91,6 +91,7 @@ $routes->post('compaign/ajax/winners', 'Compaign::ajaxWinners',['as' => 'ajax.wi
 
 $routes->post('page-feedback','Pages::AddPagesFeedBack');
 $routes->get('notifications', 'Pages::notificationpage');
+$routes->post('notifications', 'Notifications::index');
 
 
 

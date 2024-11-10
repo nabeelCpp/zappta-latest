@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\ZapptaHelper;
+use App\Models\UsersNotification;
 
 function uuid_creat($values)
 {
@@ -842,4 +843,12 @@ function getImageDimensions($type = null) {
         return $dimensions[$type];
     }
     return $dimensions;
+}
+
+/**
+ * Count all notifications
+ * 
+ */
+function count_notifications() {
+    return $result = (new UsersNotification())->where('user_id', getUserId())->where('is_read', 0)->countAllResults();
 }

@@ -16,7 +16,7 @@ class CreateMinifiedCssjs extends BaseCommand
     protected $group = 'App';
     protected $theme = 'public/theme/';
     protected $newLanding = 'public/new-landing/assets/';
-    protected $version = '1.0';
+    protected $version = '1.0.1';
 
     /**
      * The Command's Name
@@ -120,11 +120,12 @@ class CreateMinifiedCssjs extends BaseCommand
             ROOTPATH . $this->newLanding.'js/contact.js',
             ROOTPATH . $this->newLanding.'js/main.js',
             ROOTPATH . $this->newLanding.'js/login.js',
+            ROOTPATH . $this->newLanding.'js/notifications.js',
             ROOTPATH . $this->theme.'js/bundle.js',
             ROOTPATH . $this->theme.'js/notify.js',
             ROOTPATH . $this->theme.'js/themee.js',
             ROOTPATH . $this->theme.'js/cart.js',
-            ROOTPATH . $this->theme.'js/main.js',
+            ROOTPATH . $this->theme.'js/main.js'
         ];
 
         // Initialize the Minify\JS instance

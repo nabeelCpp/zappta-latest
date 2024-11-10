@@ -1234,7 +1234,87 @@ border: 1px solid #12888C;
   justify-content: center;
   align-items: center;
 }
+/* 11/7/24// */
+.header .header-middle .header-middle-right .contact-item-list li.dropdown.notifiDropdown ul
+{
+  min-width: 300px;
+  left: auto !important;
+  right: 0 !important;
+}
+.header .header-middle .header-middle-right .contact-item-list li.dropdown.notifiDropdown a.dropdown-toggle span
+{
+  display: flex;
+  padding:0;
+}
+.header .header-middle .header-middle-right .contact-item-list li.dropdown.notifiDropdown a.dropdown-toggle
+{
+  padding-right: 0;
+}
+.header .header-middle .header-middle-right .contact-item-list li.dropdown.notifiDropdown a.dropdown-toggle::after
+{
+  display: none;
+}
+.header .header-middle .header-middle-right .contact-item-list li.dropdown.notifiDropdown div.notifiNotesWrap span
+{
+  padding: 0;
+  min-width: 40px;
+  height: 40px;
+  background: #F3F4F6;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 100%;
+}
+.header .header-middle .header-middle-right .contact-item-list li.dropdown.notifiDropdown ul li
+{
+  padding: 7px;
+  margin-bottom: 7px;
+  border-bottom: 1px solid #efeffe;
 
+}
+.header .header-middle .header-middle-right .contact-item-list li.dropdown.notifiDropdown ul li:last-child
+{
+  border: none;
+  margin: 0;
+}
+.header .header-middle .header-middle-right .contact-item-list li.dropdown.notifiDropdown div.notifiNotesWrap span img
+{
+  width: 20px;
+  height: 20px;
+}
+.header .header-middle .header-middle-right .contact-item-list li.dropdown.notifiDropdown div.notifiNotesWrap h5
+{
+  font-size: 14px;
+  font-weight: 600;
+  position: relative;
+}
+.header .header-middle .header-middle-right .contact-item-list li.dropdown.notifiDropdown div.notifiNotesWrap p
+{
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  margin-bottom: 0;
+  padding-bottom: 5px;
+}
+.header .header-middle .header-middle-right .contact-item-list li.dropdown.notifiDropdown div.notifiNotesWrap h5 span.newNotify
+{
+  position: absolute;
+  right: 0;
+  top: -6px;
+  color: #12888C;
+  font-size: 12px;
+  font-weight: 600;
+  height: auto;
+  width: auto;
+  border-radius: 11px;
+  padding: 5px 7px;
+}
+.header .header-middle .header-middle-right .contact-item-list li.dropdown.notifiDropdown div.notifiNotesWrap h5 a
+{
+  padding: 0;
+  color: #000;
+}
 @media (max-width: 1370px) {
   .pageWrapper .ampSection.ampCleints .logoItem
   {
@@ -1263,6 +1343,10 @@ border: 1px solid #12888C;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .sliderThumbnail .lSSlideOuter
+  {
+    height: auto;
   }
   /* .sliderThumbnail .lSSlideWrapper ul li
   {
@@ -1348,4 +1432,14 @@ border: 1px solid #12888C;
   {
     width: 100% ;
   }
+  .header .header-middle .header-middle-right .contact-item-list li.dropdown.notifiDropdown div.notifiNotesWrap span
+  {
+    min-width: 34px;
+    height: 34px;
+  }
+  .header .header-middle .header-middle-right .contact-item-list li.dropdown.notifiDropdown ul
+{
+  min-width: 250px;
+ 
+}
 }
