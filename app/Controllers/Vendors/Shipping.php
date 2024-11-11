@@ -22,9 +22,9 @@ class Shipping extends BaseController
         $freeshipat = $this->request->getVar('freeshipat');
         $freeshipatweight = $this->request->getVar('freeshipatweight');
         if ( $id == 0 ) {
-            (new CarriersPreferenceModel())->add(['handlingcharges' => $handlingcharges,'freeshipat' => $freeshipat,'freeshipatweight' => $freeshipatweight,'store_id' => getVendorUserId()]);
+            (new CarriersPreferenceModel())->add(['handlingcharges' => $handlingcharges,'freeshipat' => $freeshipat,'freeshipatweight' => $freeshipatweight,'store_id' => getVendorUserId(), 'shipping_returns_msg' => $this->request->getVar('shipping_returns_msg')??null]);
         } else {
-            (new CarriersPreferenceModel())->add(['id' => $id,'handlingcharges' => $handlingcharges,'freeshipat' => $freeshipat,'freeshipatweight' => $freeshipatweight,'store_id' => getVendorUserId()]);
+            (new CarriersPreferenceModel())->add(['id' => $id,'handlingcharges' => $handlingcharges,'freeshipat' => $freeshipat,'freeshipatweight' => $freeshipatweight,'store_id' => getVendorUserId(), 'shipping_returns_msg' => $this->request->getVar('shipping_returns_msg')??null]);
         }
         $this->session->setFlashdata('success', 'Shipping successfully added.');
         return redirect()->to('/vendors/shipping');

@@ -24,6 +24,7 @@ class ProductsModel extends Model
         'url',
         'short',
         'description',
+        'additional_details',
         'conditions',
         'reference',
         'isbn',
@@ -276,7 +277,7 @@ class ProductsModel extends Model
             foreach ($post['product']['default'] as $d => $v) {
                 if ($d == 'brand_id') {
                     $default[$d] = filtreData($v);
-                } elseif ($d == 'short' || $d == 'description') {
+                } elseif ($d == 'short' || $d == 'description'  || $d == 'additional_details') {
                     $default[$d] = filtreDataText($v);
                 } else {
                     $default[$d] = filtreData($v);
@@ -358,7 +359,7 @@ class ProductsModel extends Model
             foreach ($post['product']['default'] as $d => $v) {
                 if ($d == 'brand_id') {
                     $default[$d] =  filtreData($v);
-                } elseif ($d == 'short' || $d == 'description') {
+                } elseif ($d == 'short' || $d == 'description' || $d == 'additional_details') {
                     $default[$d] = filtreDataText($v);
                 } else {
                     $default[$d] = filtreData($v);

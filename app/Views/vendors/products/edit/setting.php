@@ -60,6 +60,14 @@
 		</div>
 		<div class="form-row">
 			<div class="row">
+				<div class="col-xl-12 col-lg-12 col-md-12 col-12">
+					<label>Additional Details</label>
+					<textarea class="tinymce form-control" name="product[default][additional_details]"><?php print $default['additional_details'];?></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="row">
 				<div class="col-xl-6 col-lg-6 col-md-6 col-12">
 					<label>
 						<span class="tit">Condition</span>

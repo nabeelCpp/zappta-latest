@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Helpers\ZapptaHelper;
 use App\Models\AttributeModel;
 use App\Models\BrandModel;
+use App\Models\CarriersPreferenceModel;
 use App\Models\CategoriesModel;
 use App\Models\VendorModel;
 use App\Models\Setting;
@@ -172,6 +173,7 @@ trait ZapptaTrait
         }
         $data['overal_ratings'] = $ReviewModel->select('AVG(rates) as average_ratings, COUNT(id) as total_reviews')->where(['product_id' => $data['single']['product_id']])->groupBy('product_id')->get()->getRow();
         $data['reviews'] = $ReviewModel->where(['product_id' => $data['single']['product_id']])->limit(5)->orderBy('id', 'DESC')->get()->getResult();
+        $data['vendor_preference'] = (new CarriersPreferenceModel())->where(['store_id' => $data['single']['store_id']])->get()->getRow();
         return $data;
     }
 

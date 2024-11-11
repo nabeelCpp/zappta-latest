@@ -19,6 +19,7 @@ class CarriersPreferenceModel extends Model
 										'handlingcharges',
 										'freeshipat', 
 										'freeshipatweight', 
+										'shipping_returns_msg'
 									];
 
 	// Dates

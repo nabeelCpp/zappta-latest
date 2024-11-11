@@ -51,6 +51,12 @@
 				      					<input type="text" name="freeshipatweight" value="<?php print isset($sql['freeshipatweight']) ? $sql['freeshipatweight'] : '';?>" placeholder="0" class="form-control font-0-8">
 				      				</div>
 				      			</div>
+								<div class="form-group">
+									<label class="mb-2 font-13">Shipping & Returns Message</label>
+				      				<div class="field-input">
+										<textarea class="tinymce form-control" name="shipping_returns_msg"><?php print isset($sql['shipping_returns_msg']) ? $sql['shipping_returns_msg'] : ''; ?></textarea>
+				      				</div>
+								</div>
 								<div class="form-group mt-2">
 									<button type="submit" class="btn btn-pro m-0">Update</button>
 								</div>
@@ -64,4 +70,4 @@
 		</div>
 	</section>
 
-<?php // print view('vendors/footer');?>
+<?php  print view('vendors/footer');?>
