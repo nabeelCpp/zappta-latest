@@ -20,7 +20,6 @@ class Cart extends BaseController
     {
         $data['pagetitle'] = 'Cart';
         $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
-        $data['css'] = ZapptaHelper::loadModifiedThemeCss();
         $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
         return view('site/cart/index',$data);
     }
@@ -69,6 +68,8 @@ class Cart extends BaseController
             }
             $data['coupons'] = $allCoupons;
             $data['country'] = (new CountryModel())->getAll();
+            $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
+            $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
             return view('site/cart/checkout',$data);
         } else {
             return redirect()->to('/');

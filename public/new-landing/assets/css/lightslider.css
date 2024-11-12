@@ -170,24 +170,24 @@
 .lSAction > .lSPrev {
    width: 28px;
    height: 28px;
-   background: url(../images/slider-down.png) no-repeat;
+   background: url(/new-landing/assets/images/slider-down.png) no-repeat;
    transform: rotate(90deg);
    top: 0;
    left: 10px;
 }
 .lSAction > .lSPrev:hover {
-    background: url(../images/slider-down-active.png) no-repeat;
+    background: url(/new-landing/assets/images/slider-down-active.png) no-repeat;
 }
 .lSAction > .lSNext {
     width: 28px;
     height: 28px;
     bottom: 0;
     right: 10px;
-    background: url(../images/slider-up.png) no-repeat;
+    background: url(/new-landing/assets/images/slider-up.png) no-repeat;
     transform: rotate(90deg);
 }
 .lSAction > .lSNext:hover {
-    background: url(../images/slider-up-active.png) no-repeat;
+    background: url(/new-landing/assets/images/slider-up-active.png) no-repeat;
 }
 .lSAction > a.disabled {
     pointer-events: none;

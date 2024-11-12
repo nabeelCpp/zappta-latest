@@ -8,7 +8,6 @@ const fetchNotifications = () => {
         type: 'POST',
         data: data,
         success: function(response) {
-            console.log(response);
             $('#loading-notifications').hide();
             $('#notifications-area').append(response);
         },
