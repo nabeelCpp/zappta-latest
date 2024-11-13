@@ -12,7 +12,7 @@
 		</div>
 		<?php if (is_array(get_cart_contents()) && count(get_cart_contents()) > 0) { ?>
 			<div class="cartSection ">
-				<form method="POST" action="<?php print base_url() . '/cart/address'; ?>" id="checkoutform">
+				<form method="POST" action="<?php print base_url() . 'cart/address'; ?>" id="checkoutform">
 					<input type="hidden" name="<?php print csrf_token() ?>" id="_cc" value="<?php print csrf_hash() ?>">
 					<div class="row no-gutters mt-5">
 						<div class="col-lg-8">

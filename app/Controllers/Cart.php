@@ -78,7 +78,6 @@ class Cart extends BaseController
 
     public function address()
     {
-        dd(is_array(get_cart_contents()) && count(get_cart_contents()), get_cart_contents());
         if ( is_array(get_cart_contents()) && count(get_cart_contents()) > 0 ) {
             $postdata = $this->request->getPost();
             $ip = $this->request->getIPAddress();
@@ -111,7 +110,7 @@ class Cart extends BaseController
                 return redirect()->to('/cart/payments/'.my_encrypt($ord));        
             } else {
                 echo "<script> alert('Invalid Request.'); </script>"; // COD disabled from now on.
-                return redirect()->back()->with('error', 'Invalid Request.');      
+                return redirect()->back();      
                 // get_cart_destroy();
                 // $this->setCheckoutSession();
                 // return redirect()->to('/cart/thankyou');

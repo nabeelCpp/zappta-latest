@@ -230,7 +230,7 @@ class OrderModel extends Model
    					'company_name' => filtreData($data['company_name']),
    					'country' => filtreData(my_decrypt($data['country'])),
    					'stree_address' => filtreData($data['stree_address']),
-   					'stree_address_optional' => filtreData($data['stree_address_optional']),
+   					'stree_address_optional' => filtreData($data['stree_address_optional']??null),
    					'town_city' => filtreData($data['town_city']),
    					'postcode' => filtreData($data['postcode']),
    					'phone' => filtreData($data['phone']),
