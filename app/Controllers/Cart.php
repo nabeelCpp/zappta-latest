@@ -78,6 +78,7 @@ class Cart extends BaseController
 
     public function address()
     {
+        dd(is_array(get_cart_contents()) && count(get_cart_contents()), get_cart_contents());
         if ( is_array(get_cart_contents()) && count(get_cart_contents()) > 0 ) {
             $postdata = $this->request->getPost();
             $ip = $this->request->getIPAddress();
