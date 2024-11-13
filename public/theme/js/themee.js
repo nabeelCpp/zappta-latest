@@ -847,8 +847,8 @@ $(function(){
  	});
 
  	$('#checkoutform').validate({
- 			errorElement: "div",
-      errorClass : 'formitemvalidation',
+ 			errorElement: "small",
+      errorClass : 'text-danger',
  	});
 
 });
