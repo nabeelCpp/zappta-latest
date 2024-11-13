@@ -109,7 +109,7 @@ class Cart extends BaseController
                 get_cart_destroy();
                 return redirect()->to('/cart/payments/'.my_encrypt($ord));        
             } else {
-                echo "<script>alert('Invalid Request.')</script>"; // COD disabled from now on.
+                echo "<script> alert('Invalid Request.'); </script>"; // COD disabled from now on.
                 return redirect()->back()->with('error', 'Invalid Request.');      
                 // get_cart_destroy();
                 // $this->setCheckoutSession();

@@ -14,7 +14,6 @@
 			<div class="cartSection ">
 				<form method="POST" action="<?php print base_url() . '/cart/address'; ?>" id="checkoutform">
 					<input type="hidden" name="<?php print csrf_token() ?>" id="_cc" value="<?php print csrf_hash() ?>">
-					<?= csrf_field() ?>
 					<div class="row no-gutters mt-5">
 						<div class="col-lg-8">
 							<!-- Cart Items -->
