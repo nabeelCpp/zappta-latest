@@ -144,7 +144,7 @@ if (!empty($store)) { ?>
 
 				<h2 class="mb-5">Top Rated Products</h2>
 				<div class="row ">
-					<?php print view('site/stores/prolist',['count' => $products, 'store'=>$store]);?>
+					<?php print view('site/stores/prolist',['count' => $products, 'store'=>$store, 'col' => 4]);?>
 				</div>
 
 			</div>
