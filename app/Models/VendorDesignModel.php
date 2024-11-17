@@ -52,6 +52,7 @@ class VendorDesignModel extends Model
     public function getVendorDesignById($id)
     {
         $sql = $this->where('vendor_id',$id)->first();
+        $sql['header_banner'] = getImageThumg('media', $sql['header_banner'], 1980);
         if ( !empty($sql) ) {
             return $sql;
         }

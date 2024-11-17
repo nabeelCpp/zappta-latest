@@ -7,6 +7,7 @@ use App\Models\AttributeModel;
 use App\Models\BrandModel;
 use App\Models\CarriersPreferenceModel;
 use App\Models\CategoriesModel;
+use App\Models\CompainModel;
 use App\Models\VendorModel;
 use App\Models\Setting;
 use App\Models\ProductsModel;
@@ -175,6 +176,41 @@ trait ZapptaTrait
         $data['reviews'] = $ReviewModel->where(['product_id' => $data['single']['product_id']])->limit(5)->orderBy('id', 'DESC')->get()->getResult();
         $data['vendor_preference'] = (new CarriersPreferenceModel())->where(['store_id' => $data['single']['store_id']])->get()->getRow();
         return $data;
+    }
+
+    /**
+     * Get compaign winners
+     */
+    public function compaignWinnersTrait()
+    {
+        $CompainModel = new CompainModel();
+        $compaign = $CompainModel->getLatestCompaign();
+        $products = $CompainModel->getCompaignProductsToshow($compaign->id);
+        $data = [];
+        foreach ($products as $key => $value) {
+            if( ! empty( $value['cover'] ) ) { 
+                $ext_name = explode('.',$value['cover']);
+                $value['cover']  = base_url().'/images/product/'.$ext_name[0].'/'.$ext_name[1].'/250';
+            } else {
+                $value['cover']  = base_url().'/images/product/img-not-found/jpg/100';
+            }
+            // $value['brand_logo'] = $CompainModel->getBrandLogo($value['id']);
+
+            // if( ! empty( $value['brand_logo'] ) ) { 
+            //     $ext_name = explode('.',$value['brand_logo']);
+            //     $value['brand_logo']  = base_url().'/images/product/'.$ext_name[0].'/'.$ext_name[1].'/250';
+            // } else {
+            //     $value['brand_logo']  = base_url().'/images/product/img-not-found/jpg/100';
+            // }
+            $points = (new \App\Models\CompainModel())->getUserCompaignResult('',my_encrypt($compaign->id),'',$value['id']);
+            usort($points, function ($item1, $item2) {
+                return $item2['score'] <=> $item1['score'];
+            });
+            $arr = ['product' => $value, 'points' => $points];
+            array_push($data, $arr);
+        }
+        $res = ['compaign' => $compaign, 'details' => $data];
+        return $this->response->setJSON($res);
     }
 
 }

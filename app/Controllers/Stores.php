@@ -50,12 +50,14 @@ class Stores extends BaseController
         $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
         $data['css'] = ZapptaHelper::loadModifiedThemeCss();
         $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
+        $data['categories'] = buildTree($data['categories']);
         $data['sticky_header'] = true;
-        if(isset($_GET['cat']) ) {
-            return view('site/stores/storecat', $data);
-        }else {
+        
+        // if(isset($_GET['cat']) ) {
+        //     return view('site/stores/storecat', $data);
+        // }else {
             return view('site/stores/view', $data);
-        }
+        // }
     }
 
     public function category()

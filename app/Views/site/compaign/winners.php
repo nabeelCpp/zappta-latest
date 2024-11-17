@@ -1,19 +1,209 @@
 <?= view('site/newLanding/header', ['globalSettings' => $globalSettings, 'css' => $css]); ?>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-	<div class="container-fluid p-5 px-5" id="ajaxWinners">
-		<h5 class="text-center">Loading...</h5>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+<div class="container-fluid p-5 px-5" id="ajaxWinners">
+	<div class="lunarSection">
+		<div class="saleheading">
+			<h1>Lunar Sale</h1>
+			<p><span>Ended date:</span> 08-20-2024</p>
+		</div>
+		<div class="lunarSalePost">
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="lunarInner">
+						<div class="lunartop">
+							<h3>Winner</h3>
+							<div class="btnSale">
+								<p>Reward</p>
+								<button class="btn btn-danger zappta-red-bg btn-lg px-4 mb-3">
+									$500
+								</button>
+							</div>
+						</div>
+						<div class="lunarLogo">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="lunarName">
+										<p>Name: <span>Alan Hill</span></p>
+										<p>Score:</p>
+										<h4>100000</h4>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="logoLunar">
+										<img src="./assets/images/lunar-logo.png" alt="" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="lunarInner">
+						<div class="lunartop">
+							<h3>Winner</h3>
+							<div class="btnSale">
+								<p>Reward</p>
+								<button class="btn btn-danger zappta-red-bg btn-lg px-4 mb-3">
+									$500
+								</button>
+							</div>
+						</div>
+						<div class="lunarLogo">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="lunarName">
+										<p>Name: <span>Alan Hill</span></p>
+										<p>Score:</p>
+										<h4>100000</h4>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="logoLunar">
+										<img src="./assets/images/lunar-logo.png" alt="" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="lunarInner">
+						<div class="lunartop">
+							<h3>Winner</h3>
+							<div class="btnSale">
+								<p>Reward</p>
+								<button class="btn btn-danger zappta-red-bg btn-lg px-4 mb-3">
+									$500
+								</button>
+							</div>
+						</div>
+						<div class="lunarLogo">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="lunarName">
+										<p>Name: <span>Alan Hill</span></p>
+										<p>Score:</p>
+										<h4>100000</h4>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="logoLunar">
+										<img src="./assets/images/lunar-logo.png" alt="" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="lunarInner">
+						<div class="lunartop">
+							<h3>Winner</h3>
+							<div class="btnSale">
+								<p>Reward</p>
+								<button class="btn btn-danger zappta-red-bg btn-lg px-4 mb-3">
+									$500
+								</button>
+							</div>
+						</div>
+						<div class="lunarLogo">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="lunarName">
+										<p>Name: <span>Alan Hill</span></p>
+										<p>Score:</p>
+										<h4>100000</h4>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="logoLunar">
+										<img src="./assets/images/lunar-logo.png" alt="" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="saleheading bgGrayColor">
+			<h1>Summer Sale</h1>
+			<p><span>Ended date:</span> 08-20-2024</p>
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="lunarInner">
+					<div class="lunartop">
+						<h3>Winner</h3>
+						<div class="btnSale">
+							<p>Reward</p>
+							<button class="btn btn-danger zappta-red-bg btn-lg px-4 mb-3">
+								$500
+							</button>
+						</div>
+					</div>
+					<div class="lunarLogo">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="lunarName">
+									<p>Name: <span>Alan Hill</span></p>
+									<p>Score:</p>
+									<h4>100000</h4>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="logoLunar">
+									<img src="./assets/images/lunar-logo.png" alt="" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="lunarInner">
+					<div class="lunartop">
+						<h3>Winner</h3>
+						<div class="btnSale">
+							<p>Reward</p>
+							<button class="btn btn-danger zappta-red-bg btn-lg px-4 mb-3">
+								$500
+							</button>
+						</div>
+					</div>
+					<div class="lunarLogo">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="lunarName">
+									<p>Name: <span>Alan Hill</span></p>
+									<p>Score:</p>
+									<h4>100000</h4>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="logoLunar">
+									<img src="./assets/images/lunar-logo.png" alt="" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
 	</div>
+</div>
 <?= view('site/newLanding/footer', ['globalSettings' => $globalSettings]) ?>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	$(document).ready(()=>{
 		$.ajax({
-			url: '<?=base_url().route_to('ajax.winners')?>',
+			url: '<?= base_url() . route_to('ajax.winners') ?>',
 			type: 'POST',
 			dataType:'json',
 			data: {
-				<?=csrf_token()?>: '<?=csrf_hash()?>',
+				<?= csrf_token() ?>: '<?= csrf_hash() ?>',
 			},
 			success: function(response){
 				let i = 0;
@@ -67,7 +257,7 @@
 											<div class="col-md-9">
 												<div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-12">
 													<div class="topPlayerBlock" id="topPlayerBlock">
-														<div class="tphead" style="background-image: url(<?=base_url()?>/theme/image/Group%201439.png);padding:3.3rem">
+														<div class="tphead" style="background-image: url(<?= base_url() ?>/theme/image/Group%201439.png);padding:3.3rem">
 														</div>
 														<div class="tptable">
 															<div class="d-flex thtablehead">
@@ -81,7 +271,7 @@
 																	return `<div class="resultplay py-4">
 													                            <div class="no">${sn}</div>
 													                            <div class="imgtitle d-flex ml-5">
-													                                <div class="img"><img src="<?=base_url()?>/images/product/1662295452_e46633276ba56a2aa8b6/jpg/250" class="img img-responsive rounded-circle img-thumbnail" style="height: 50px; width: 50px"></div>
+													                                <div class="img"><img src="<?= base_url() ?>/images/product/1662295452_e46633276ba56a2aa8b6/jpg/250" class="img img-responsive rounded-circle img-thumbnail" style="height: 50px; width: 50px"></div>
 													                                <div class="tt">${po.fname}</div>
 													                            </div>
 													                            <div class="sc">${po.score}</div>
@@ -136,4 +326,4 @@
 			}
 		})
 	})
-</script>
+</script> -->

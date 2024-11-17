@@ -793,6 +793,8 @@ class CompainModel extends Model
 
     public function getLatestCompaign()
     {
+
+        return $compaign = $this->db->table('compain')->where('id', 3)->get()->getRow();
         $compaign = $this->db->table('compain')->orderBy('id', 'desc')->limit(1)->get()->getRow();
         return $compaign;
     }

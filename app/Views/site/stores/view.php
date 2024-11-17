@@ -1,240 +1,164 @@
-<?php $globalSettings = (new \App\Models\Setting())->orderBy('id', 'ASC')->GetValues(['company_name', 'frontend_logo']); ?>
-<?= view('site/newLanding/header', ['globalSettings' => $globalSettings, 'css' => $css]); ?>
-<?php 
-	if( !empty($store) ) {
-?>
-	<?php 
-		if ( $vendor_design > 0 && !empty($vendor_design['header_banner']) ) {
-			$img_ext = explode('.',$vendor_design['header_banner']);
-	?>
-	<section class="storeBanner animate d-flex flex-row-reverse align-items-center" id="bannerSectionGala" style="background-image:  url('<?php print base_url().'/images/media/'.$img_ext[0].'/'.$img_ext[1].'/1980';?>');">
-			
-	</section>
-	<?php } else { ?>
-	<section class="storeBanner animate d-flex flex-row-reverse align-items-center" id="bannerSectionGala" style="background-image: url('<?php print base_url().'/upload/stores/Image-10.jpg';?>');"></section>
-	<?php } ?>
-	<section class="bread bg-white">
-		<div class="container">
-			<div class="row align-items-center">
-				<div class="col-12">
-					<div class="bb">
-						<ul class="p-0 m-0 d-flex align-items-center">
-							<li>
-								<a href="<?php print base_url();?>">Home</a>
-							</li>
-							<li>/</li>
-							<li>
-								<a href="<?php print base_url().'/stores/'.strtolower($store['store_slug'])?>">Stores</a>
-							</li>
-							<li>/</li>
-							<li><?php print $store['store_name'];?></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+<?= view('site/newLanding/header', ['globalSettings' => $globalSettings]); ?>
+<?php
+if (!empty($store)) { ?>
+	<!-- ./ Banner-section start -->
+	<div class="BannerSection">
+		<img src="<?=$vendor_design['header_banner']?>" alt="" />
+	</div>
+	<!-- ./ Banner-section end-->
 
-	<section class="storenav">
+	<!-- section dividie Layout// -->
+	<section class="py-2 brandPage">
 		<div class="container">
 			<div class="row">
+				<!-- sidebar // -->
 				<div class="col-12">
-					<div class="navs d-flex">
-						<div class="followbtn">
-							<button type="button" class="btns animate" onclick="window.location.href='<?php print '/stores/'.$store['store_slug'];?>'">Home</button>
-						</div>
-						<div class="links">
-							<?php print StoreCatTree( buildTree($categories),'/stores/'.$store['store_slug'] );?>
-						</div>
-						
+					<div class="sidebarCollapse">
+						<nav aria-label="breadcrumb">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="<?php print base_url();?>">Home</a></li>
+								<li class="breadcrumb-item">Store</li>
+								<li class="breadcrumb-item active" aria-current="page"><a href="<?php print base_url().'/stores/'.strtolower($store['store_slug'])?>"><?php print $store['store_name'];?></a></li>
+							</ol>
+						</nav>
+
 					</div>
 				</div>
 			</div>
-		</div>
-	</section>
+			<!-- end sidebarr // -->
+			<!-- content /// -->
 
-	<section class="storecats">
-		<div class="container">
-			
-			<div class="cat-coll-m d-none mt-4 mb-4">
-				<div class="row">
-					<div class="col-xl-6 col-lg-6 col-md-6 col-12">
-						<?php 
-							if ( $vendor_design > 0 && !empty($vendor_design['category_banner_first']) ) {
-								$img_ext = explode('.',$vendor_design['category_banner_first']);
-								if ( !empty($vendor_design['category_link_second']) ) {
-									$store_cat_slug = '/?cat='.$vendor_design['category_link_second'];
-								} else {
-									$store_cat_slug = '';
-								}
-						?>
-						<a href="<?php print base_url().'/stores/'.$store['store_slug'].$store_cat_slug;?>">
-							<div class="store-cat-banner animate" style="background-image:url('<?php print base_url().'/images/media/'.$img_ext[0].'/'.$img_ext[1].'/600';?>');">
-								<div class="cat-logos">
-								<?php if ( !empty($vendor_design['category_title_first']) ) {?>
-									<div class="catname"></div>
-								<?php } else { ?>
-									<?php 
-										if ( !empty($store['store_logo']) ) { 
-											$img_ext = explode('.',$store['store_logo']);
-									?>
-										<img src="<?php print base_url().'/images/media/'.$img_ext[0].'/'.$img_ext[1].'/250';?>" alt="">
-									<?php } else {?>
-										<img src="<?php print base_url().'/theme/image/logo.png';?>" alt="">
-									<?php } ?>
-								<?php } ?>
+			<div class="contentsListing">
+				<div class="d-flex justify-content-between align-items-center mb-1">
+					<h2>All Products</h2>
+					<form method="GET" action="<?php print $search_url;?>" class="category-form-wrap">
+						<?php if ( isset($_GET['cat']) && isset($_GET['p']) ) { ?>
+							<input type="hidden" name="cat" value="<?php print isset($_GET['cat']) ? $_GET['cat']: '';?>" />
+							<input type="hidden" name="p" value="<?php print isset($_GET['p']) ? $_GET['p']: '';?>" />
+						<?php } ?>
+						<input class="form-control" type="text" name="searchq" placeholder="Search Product" value="<?=$_GET['searchq'] ?? null ?>">
+						<input type="submit" class="searchIcon" />
+					</form>
+				</div>
+				<div class="filterSectionTab gallery-wrap">
+
+					<ul id="filters" class="filterSection clearfix">
+						<li><span class="filter <?= !isset($_GET['cat']) ? 'active' : '' ?>" data-filter="*"><a href="<?php print '/stores/'.$store['store_slug'];?>">Home</a></span></li>
+						
+						<?php foreach ($categories as $key => $cat) { ?>
+							<li><span class="filter <?= isset($_GET['cat']) && my_decrypt($_GET['p']) == $cat['id'] ? 'active' : '' ?>" data-slug="<?= $cat['cat_url'] ?>"><a href="<?= base_url("/stores/{$store['store_slug']}?cat={$cat['cat_url']}&p=".my_encrypt($cat['id'])) ?>"><?= $cat['cat_name']?></a></span></li>
+						<?php } ?>
+					</ul>
+
+					<!-- <div id="gallery">
+
+						<a class="gallery-item shirts" href="#" data-cat="shirts">
+							<div class="productPostWraps">
+								<div class="productPostThumbnail">
+									<span class="giveAway">Giveaway</span>
+									<img src="./assets/images/flannel-t-shirt.png" alt="" />
+									<button class="btn heartSelection">
+										whishlist
+									</button>
+								</div>
+								<div class="productPostInfo">
+									<h3 class="productPriceTag">$83.97</h3>
+									<p>Vans Men's classic skate Shirt</p>
+									<p class="earnTag">Earn <img src="./assets/images/zIcon.svg" alt="" /> 15 per $1 spent</p>
 								</div>
 							</div>
 						</a>
-						<?php 
-							} else {
-						?>
-						<div class="store-cat-banner animate">
-							<div class="cat-logos">
-							<?php 
-								if ( !empty($store['store_logo']) ) { 
-									$img_ext = explode('.',$store['store_logo']);
-							?>
-								<img src="<?php print base_url().'/images/media/'.$img_ext[0].'/'.$img_ext[1].'/250';?>" alt="">
-							<?php } else {?>
-								<img src="<?php print base_url().'/theme/image/logo.png';?>" alt="">
-							<?php } ?>
-							</div>
-						</div>
-						<?php } ?>
-					</div>
-					<div class="col-xl-6 col-lg-6 col-md-6 col-12">
-						<div class="row">
-							<div class="col-12">
-								<?php 
-									if ( $vendor_design > 0 && !empty($vendor_design['category_banner_second']) ) {
-										$img_ext = explode('.',$vendor_design['category_banner_second']);
-										if ( !empty($vendor_design['category_link_second']) ) {
-											$store_cat_slug = '/?cat='.$vendor_design['category_link_second'];
-										} else {
-											$store_cat_slug = '';
-										}
-								?>
-								<a href="<?php print base_url().'/stores/'.$store['store_slug'].$store_cat_slug;?>">
-									<div class="store-cat-banner-left" style="background-image:url('<?php print base_url().'/images/media/'.$img_ext[0].'/'.$img_ext[1].'/600';?>');">
-										<div class="catname"></div>
-										<?php if ( !empty($vendor_design['category_link_second']) ) {?>
-										<div class="shoplink"></div>
-										<?php } ?>
-									</div>
-								</a>
-								<?php } else { ?>
-								<div class="store-cat-banner-left" style="background-image:url('<?php print base_url().'/upload/stores/11.png';?>');">
-									<div class="catname"></div>
-								</div>
-								<?php } ?>
-							</div>
-						</div>
-						<div class="row mt-4">
 
-							<div class="col-xl-6 col-lg-6 col-md-6 col-12">
-								<?php 
-									if ( $vendor_design > 0 && !empty($vendor_design['category_banner_third']) ) {
-										$img_ext = explode('.',$vendor_design['category_banner_third']);
-										if ( !empty($vendor_design['category_link_second']) ) {
-											$store_cat_slug = '/?cat='.$vendor_design['category_link_second'];
-										} else {
-											$store_cat_slug = '';
-										}
-								?>
-								<a href="<?php print base_url().'/stores/'.$store['store_slug'].$store_cat_slug;?>">
-									<div class="store-cat-banner-bottom" style="background-image:url('<?php print base_url().'/images/media/'.$img_ext[0].'/'.$img_ext[1].'/600';?>');">
-										<div class="catname"></div>
-										<?php if ( !empty($vendor_design['category_link_third']) ) {?>
-										<div class="shoplink"></div>
-										<?php } ?>
-									</div>
-								</a>
-								<?php } else { ?>
-								<div class="store-cat-banner-bottom" style="background-image:url('<?php print base_url().'/upload/stores/women.png';?>');">
-									<div class="catname"></div>
+						<a class="gallery-item shoes" href="#" data-cat="shoes">
+							<div class="productPostWraps">
+								<div class="productPostThumbnail">
+									<span class="priceOff">40% off</span>
+									<img src="./assets/images/shoes.png" alt="" />
+									<button class="btn heartSelection">
+										whishlist
+									</button>
 								</div>
-								<?php } ?>
+								<div class="productPostInfo">
+									<h3 class="productPriceTag">$83.97</h3>
+									<p>Vans Men's classic skate Shirt</p>
+									<p class="earnTag">Earn <img src="./assets/images/zIcon.svg" alt="" /> 15 per $1 spent</p>
+								</div>
 							</div>
-							<div class="col-xl-6 col-lg-6 col-md-6 col-12">
-								<?php 
-									if ( $vendor_design > 0 && !empty($vendor_design['category_banner_fourth']) ) {
-										$img_ext = explode('.',$vendor_design['category_banner_fourth']);
-										if ( !empty($vendor_design['category_link_second']) ) {
-											$store_cat_slug = '/?cat='.$vendor_design['category_link_second'];
-										} else {
-											$store_cat_slug = '';
-										}
-								?>
-								<a href="<?php print base_url().'/stores/'.$store['store_slug'].$store_cat_slug;?>">
-								<div class="store-cat-banner-bottom" style="background-image:url('<?php print base_url().'/images/media/'.$img_ext[0].'/'.$img_ext[1].'/600';?>');">
-									<div class="catname"></div>
-									<?php if ( !empty($vendor_design['category_link_fourth']) ) {?>
-									<div class="shoplink"></div>
-									<?php } ?>
-								</a>
-								</div>
-								<?php } else { ?>
-								<div class="store-cat-banner-bottom" style="background-image:url('<?php print base_url().'/upload/stores/kids.png';?>');">
-									<div class="catname"></div>
-								</div>
-								<?php } ?>	
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			
-			<div class="row" id="newGalaDetails">
-				
-			</div>
-			<div class="cat-pro-list mt-4 mb-4">
-				<div class="cat-pro-head">
-					<!-- <h2 class="text-center">Best Selling</h2> -->
-				</div>
-				<div class="row flex-wrap">
-					<?php print view('site/stores/prolist',['count' => 8]);?>
-				</div>
-			</div>
+						</a>
 
-			<div class="cat-pro-list mt-4 mb-4">
-				<div class="cat-pro-head">
-					<h2 class="text-center" id="storesProList">Top Trending</h2>
+						<a class="gallery-item shirts" href="#" data-cat="shirts">
+							<div class="productPostWraps">
+								<div class="productPostThumbnail">
+									<span class="priceOff">40% off</span>
+									<img src="./assets/images/flannel-t-shirt.png" alt="" />
+									<button class="btn heartSelection">
+										whishlist
+									</button>
+								</div>
+								<div class="productPostInfo">
+									<h3 class="productPriceTag">$83.97</h3>
+									<p>Vans Men's classic skate Shirt</p>
+									<p class="earnTag">Earn <img src="./assets/images/zIcon.svg" alt="" /> 15 per $1 spent</p>
+								</div>
+							</div>
+						</a>
+
+						<a class="gallery-item shoes" href="#" data-cat="shoes">
+							<div class="productPostWraps">
+								<div class="productPostThumbnail">
+									<span class="priceOff">40% off</span>
+									<img src="./assets/images/flannel-t-shirt.png" alt="" />
+									<button class="btn heartSelection">
+										whishlist
+									</button>
+								</div>
+								<div class="productPostInfo">
+									<h3 class="productPriceTag">$83.97</h3>
+									<p>Vans Men's classic skate Shirt</p>
+									<p class="earnTag">Earn <img src="./assets/images/zIcon.svg" alt="" /> 15 per $1 spent</p>
+								</div>
+							</div>
+						</a>
+
+						<a class="gallery-item shirts" href="#" data-cat="shirts">
+							<div class="productPostWraps">
+								<div class="productPostThumbnail">
+									<span class="priceOff">40% off</span>
+									<img src="./assets/images/flannel-t-shirt.png" alt="" />
+									<button class="btn heartSelection">
+										whishlist
+									</button>
+								</div>
+								<div class="productPostInfo">
+									<h3 class="productPriceTag">$83.97</h3>
+									<p>Vans Men's classic skate Shirt</p>
+									<p class="earnTag">Earn <img src="./assets/images/zIcon.svg" alt="" /> 15 per $1 spent</p>
+								</div>
+							</div>
+						</a>
+
+
+
+					</div> -->
 				</div>
-				<div class="row flex-wrap justify-content-center">
+
+				<h2 class="mb-5">Top Rated Products</h2>
+				<div class="row ">
 					<?php print view('site/stores/prolist',['count' => $products, 'store'=>$store]);?>
 				</div>
-				<!-- <div class="row align-items-center justify-content-center marg-cst-50">
-					<div class="col-12">
-						<div class="pagination">
-							<ul class="d-flex justify-content-center">
-								<li>
-									<a href="" class="animate"><i class="fa-solid fa-angle-left"></i></a>
-								</li>
-								<li>
-									<a href="" class="active-pag animate">1</a>
-								</li>
-								<li>
-									<a href="" class="animate">2</a>
-								</li>
-								<li>
-									<a href="" class="animate">3</a>
-								</li>
-								<li>
-									<a href="" class="animate">4</a>
-								</li>
-								<li>
-									<a href="" class="animate"><i class="fa-solid fa-angle-right"></i></a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div> -->
+
 			</div>
+
+
+			<!-- end content /// -->
 
 		</div>
 	</section>
-<?php } else { ?>
-	<?php print view('site/404');?>
-<?php }?>
+	<script>
+		currentUrl = "<?php print base_url().'/stores/'.$store['store_slug'];?>";
+	</script>
+<?php
+} else {
+	print view('site/404');
+} ?>
 <?= view('site/newLanding/footer', ['globalSettings' => $globalSettings]) ?>

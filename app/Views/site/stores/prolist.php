@@ -74,4 +74,6 @@
                 <a type="button" class="viewMoreBtn" onclick="viewMoreProducts(<?=$product_category?>, <?=$id?>, <?=$offset?>)">View More</a>
             </div>
         <?php } 
-} ?>
+} else { ?>
+    <div class="text-center py-5 border border-2 border-danger-subtle"><b>No products found!</b></div>
+<?php } ?>
