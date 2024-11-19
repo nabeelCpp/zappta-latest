@@ -42,6 +42,13 @@ class Category extends BaseController
         $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
         // $data['css'] = ZapptaHelper::loadModifiedThemeCss();
         $data['exclude_attr'] = ['Color'];
+        $data['current_url'] = current_url().(isset($_GET) ? '?'.http_build_query($_GET) : '');
+        $p = isset($_GET['p']) ? $_GET['p'] : ''; 
+        if($p) {
+            $price = explode('-', $p);
+            $data['min_price'] = $price[0];
+            $data['max_price'] = $price[1];
+        }
         return view('site/category/index',$data);
         // dd($data['products']);
         // print '<pre>';

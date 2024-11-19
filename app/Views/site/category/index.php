@@ -96,38 +96,17 @@ if (isset($category_id) && ! empty($category_id['cat_img'])) {
 						<?= view('site/category/options', $next) ?>
 						<li class="nav-item">
 							<a class="nav-link dropdown-toggle mb-3" data-bs-toggle="collapse" href="#seasonCollapse3" aria-expanded="true">
-								Price
+								Price ($)
 							</a>
-							<div class="collapse show" id="seasonCollapse3" data-simplebar-collapse="#seasonGroup3">
-								<div class="form-group form-group-overflow mb-6" id="seasonGroup3" data-simplebar="init">
-									<div class="form-check mb-3">
-										<a href="<?php print base_url() . '/categories/' . $category_id['cat_url'] . '/?b=' . $brand_get . $size_link . $color_link . $paper_type_link . $paper_type_link . '&p=0-100'; ?>">
-											<span>0</span>
-											<span>--</span>
-											<span>100</span>
-										</a>
-									</div>
-									<div class="form-check mb-3">
-										<a href="<?php print base_url() . '/categories/' . $category_id['cat_url'] . '/?b=' . $brand_get . $size_link . $color_link . $paper_type_link . $paper_type_link . '&p=200-300'; ?>">
-											<span>200</span>
-											<span>--</span>
-											<span>300</span>
-										</a>
-									</div>
-									<div class="form-check mb-3">
-										<a href="<?php print base_url() . '/categories/' . $category_id['cat_url'] . '/?b=' . $brand_get . $size_link . $color_link . $paper_type_link . $paper_type_link . '&p=300-400'; ?>">
-											<span>300</span>
-											<span>--</span>
-											<span>400</span>
-										</a>
-									</div>
-									<div class="form-check">
-										<a href="<?php print base_url() . '/categories/' . $category_id['cat_url'] . '/?b=' . $brand_get . $size_link . $color_link . $paper_type_link . $paper_type_link . '&p=400-a'; ?>">
-											<span>400</span>
-											<span>--</span>
-											<span>Above</span>
-										</a>
-									</div>
+							<div class="collapse show my-5" id="seasonCollapse3" data-simplebar-collapse="#seasonGroup3">
+								<div id="price-slider" class="my-3"></div>
+								<div class="d-flex justify-content-between mt-3">
+									<input type="number" id="min-price" class="form-control"  min="0" max="5000" value="<?=$min_price ?? '' ?>">
+									<span class="mx-2">-</span>
+									<input type="number" id="max-price" class="form-control" min="0" max="5000" value="<?=$max_price ?? ''?>">
+								</div>
+								<div class="text-center mt-3">
+									<button class="btn btn-secondary px-5" onclick="applyFilter()">Filter</button>
 								</div>
 							</div>
 						</li>
@@ -171,6 +150,6 @@ if (isset($category_id) && ! empty($category_id['cat_img'])) {
 	</div>
 </section>
 
-
+<?= view('site/search/price-slider-script') ?>
 
 <?= view('site/newLanding/footer', ['globalSettings' => $globalSettings]) ?>
