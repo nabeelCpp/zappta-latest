@@ -793,8 +793,6 @@ class CompainModel extends Model
 
     public function getLatestCompaign()
     {
-
-        return $compaign = $this->db->table('compain')->where('id', 3)->get()->getRow();
         $compaign = $this->db->table('compain')->orderBy('id', 'desc')->limit(1)->get()->getRow();
         return $compaign;
     }
@@ -805,5 +803,71 @@ class CompainModel extends Model
         // echo $this->db->getLastQuery();exit;
         return $compaigns;
     }
+
+    /**
+     * Get compaigns, its sprees and winner of each spree!
+     * @author M Nabeel Arshad
+     */
+    
+    public function getWinnerOfSpree() {
+        $db = \Config\Database::connect();
+    
+        // Raw query to fetch campaigns, sprees, and top scorers
+        $query = $db->query("
+            SELECT 
+                c.id AS campaign_id,
+                c.compain_name AS campaign_name,
+                c.compain_e_date AS campaign_end_date,
+                s.id AS spree_id,
+                s.price AS spree_reward,
+                s.cover AS spree_logo,
+                r.username AS top_scorer_name,
+                MAX(e.result_win) AS top_scorer_score
+            FROM (
+                SELECT c.id, c.compain_name, c.compain_e_date
+                FROM cms_compain c
+                INNER JOIN cms_vendor_sprees s ON s.com_id = c.id
+                WHERE c.status = 1 AND c.deleteStatus = 0 AND c.compain_e_date < CURDATE()
+                GROUP BY c.id
+                ORDER BY c.compain_e_date DESC
+                LIMIT 3
+            ) AS c
+            INNER JOIN cms_vendor_sprees s ON s.com_id = c.id
+            LEFT JOIN cms_compain_players_entry e ON e.spree_id = s.id AND e.is_deleted = 0
+            LEFT JOIN cms_register r ON r.id = e.player_id
+            GROUP BY c.id, s.id, r.username
+            ORDER BY c.compain_e_date DESC, s.id
+        ");
+
+
+
+    
+        $results = $query->getResultArray();
+    
+        // Group sprees under their respective campaigns
+        $campaigns = [];
+        foreach ($results as $row) {
+            $campaignId = $row['campaign_id'];
+    
+            if (!isset($campaigns[$campaignId])) {
+                $campaigns[$campaignId] = [
+                    'campaign_id' => $row['campaign_id'],
+                    'campaign_name' => $row['campaign_name'],
+                    'campaign_end_date' => $row['campaign_end_date'],
+                    'sprees' => []
+                ];
+            }
+    
+            $campaigns[$campaignId]['sprees'][] = [
+                'spree_id' => $row['spree_id'],
+                'spree_reward' => $row['spree_reward'],
+                'spree_logo' => getImageThumg('media', $row['spree_logo'], 250),
+                'top_scorer_name' => $row['top_scorer_name'],
+                'top_scorer_score' => $row['top_scorer_score']
+            ];
+        }
+    
+        return array_values($campaigns);
+    }    
 
 }
