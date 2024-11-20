@@ -95,5 +95,13 @@ class Home extends BaseController
         $data['see_all_btn'] = false;
         return view('site/campaigns', $data);
     }
+
+    /**
+     * Generate CSRF Token
+     */
+    public function generateCsrfToken() {
+        $data['token'] = csrf_hash();
+        return response()->setJSON($data);
+    }
     
 }

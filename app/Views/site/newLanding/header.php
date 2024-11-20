@@ -27,7 +27,7 @@ $total_list = (new App\Models\WishlistModel)->getUserTotalList();
     <?= $css ?? null ?>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script type="text/javascript">
-        var baseUrl = '<?php print base_url(); ?>/';
+        var baseUrl = '<?php print base_url(); ?>';
         var currentUrl = window.location.origin + window.location.pathname;
     </script>
     <?php print csrf_meta() ?>

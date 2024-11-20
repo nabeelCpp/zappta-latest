@@ -422,3 +422,14 @@
 
     });
 })(jQuery);
+
+const fetchFreshCsrfToken = () => {
+    $.ajax({
+        url: baseUrl+'csrf_token',
+        type: 'GET',
+        success: function(data) {
+            console.log(data);
+            $('#_tt_cc').val(data.token)
+        }
+    })
+}

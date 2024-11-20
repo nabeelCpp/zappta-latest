@@ -13,6 +13,9 @@ const fetchNotifications = () => {
         },
         error: function(xhr, status, error) {
             console.error("An error occurred: ", error);
+        },
+        complete: function() {
+            fetchFreshCsrfToken();
         }
     });
 }
