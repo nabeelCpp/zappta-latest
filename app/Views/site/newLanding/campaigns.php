@@ -73,7 +73,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button class="btn btn-info w-100 text-white mt-4 py-3 upcoming_select_store" data-href="<?=base_url()?>/stores/<?=$comp['store_slug']?>" data-comp="<?=my_encrypt($comp['com_id'])?>" <?=getUserId() == 0?'onclick="showLogin(\'login\');"':''?> data-url="<?=base_url()?>/compaign/verify/<?=my_encrypt($comp['id'])?>" data-id="<?=my_encrypt($comp['vendor_id'])?>" data-button="play">
+                                            <button class="btn btn-info w-100 text-white mt-4 py-3 upcoming_select_store" data-href="<?=base_url()?>stores/<?=$comp['store_slug']?>" data-comp="<?=my_encrypt($comp['com_id'])?>" <?=getUserId() == 0?'onclick="showLogin(\'login\');"':''?> data-url="<?=base_url()?>compaign/verify/<?=my_encrypt($comp['id'])?>" data-id="<?=my_encrypt($comp['vendor_id'])?>" data-button="play">
                                                 PLAY NOW
                                             </button>
                                         </div>

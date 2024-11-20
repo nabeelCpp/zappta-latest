@@ -33,28 +33,28 @@
         }
         if (! empty($p['pcover'])) {
             $ext_name = explode('.', $p['pcover']);
-            $dataimg  = base_url() . '/images/product/' . $ext_name[0] . '/' . $ext_name[1] . '/250';
+            $dataimg  = base_url() . 'images/product/' . $ext_name[0] . '/' . $ext_name[1] . '/250';
         } else {
-            $dataimg  = base_url() . '/images/product/img-not-found/jpg/100';
+            $dataimg  = base_url() . 'images/product/img-not-found/jpg/100';
         } 
         $inc_price = ($p['deal_final_price'] + $increments_amount); ?>
         <div class="<?=$class?> mb-3">
             <div class="productPostWraps">
                 <div class="productPostThumbnail p-4">
                     <?=$p['deal_enable'] > 0 ? '<span class="priceOff">'.number_format(calculatePercentage( $p['final_price']  + $increments_amount, $inc_price ), 0).'% off</span>' : '' ?>
-                    <a href="<?= base_url() . '/products/' . $p['purl'] . '/p/' . $p['pc'] . '/' . '?sd_row=' . $p['sd_row'] . '&pds=' . $p['pds'] . $attr_url ?>">
+                    <a href="<?= base_url() . 'products/' . $p['purl'] . '/p/' . $p['pc'] . '/' . '?sd_row=' . $p['sd_row'] . '&pds=' . $p['pds'] . $attr_url ?>">
                         <?php if (! empty($p['pcover'])) {
                             $ext_name = explode('.', $p['pcover']); ?>
-                            <img src="<?php print base_url() . '/images/product/' . $ext_name[0] . '/' . $ext_name[1] . '/350'; ?>" alt="" />
+                            <img src="<?php print base_url() . 'images/product/' . $ext_name[0] . '/' . $ext_name[1] . '/350'; ?>" alt="" />
                         <?php } else { ?>
-                            <img src="<?php print base_url() . '/images/product/img-not-found/jpg/100'; ?>" alt="">
+                            <img src="<?php print base_url() . 'images/product/img-not-found/jpg/100'; ?>" alt="">
                         <?php } ?>
                     </a>
                     <button class="btn heartSelection" onclick="add_item_wish('<?= my_encrypt($p['pid']) ?>','<?= my_encrypt($p['pds']) ?>',<?= $sr ?>);">
                         whishlist
                     </button>
                 </div>
-                <a class="productPostInfo" href="<?= base_url() . '/products/' . $p['purl'] . '/p/' . $p['pc'] . '/' . '?sd_row=' . $p['sd_row'] . '&pds=' . $p['pds'] . $attr_url ?>">
+                <a class="productPostInfo" href="<?= base_url() . 'products/' . $p['purl'] . '/p/' . $p['pc'] . '/' . '?sd_row=' . $p['sd_row'] . '&pds=' . $p['pds'] . $attr_url ?>">
                     <?php if ($p['deal_enable'] > 0) { ?>
                         <h3 class="productPriceTag">$<?=number_format($inc_price, 2)?></h3>
                         <p class="text-decoration-line-through">$<?=number_format( ( $p['final_price']  + $increments_amount ) ,2)?></p>

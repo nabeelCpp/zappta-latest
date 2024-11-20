@@ -64,8 +64,8 @@ class Api extends BaseController
         $data['product']->final_price = $spree->price;
         $data['product']->pid = $spree->id;
         $data['product']->store_id = $spree->vendor_id;
-        $data['product']->pcover = base_url().'/upload/media/spree/'.$spree->cover;
-        $data['product']->store_logo = base_url().'/upload/media/'.$spree->store_logo;
+        $data['product']->pcover = base_url().'upload/media/spree/'.$spree->cover;
+        $data['product']->store_logo = base_url().'upload/media/'.$spree->store_logo;
         // $data['compaign'] = (new ProductsModel())->getAllPlayCompaignProducts($data['pid']);
         // $data['coins_played'] = ( (new \App\Models\CompainModel())->getZapptaPlay($wheel, $pid)?(new \App\Models\CompainModel())->getZapptaPlay($wheel, $pid):0 );
         $data['coins_played'] = ( (new \App\Models\CompainModel())->getZapptaPlay($wheel, $spree_id)?(new \App\Models\CompainModel())->getZapptaPlay($wheel, $spree_id):0 );

@@ -27,7 +27,7 @@ class ZapptaHelper {
             $return['meta'] = $meta;
         }
         if($media) {
-            $return['media'] = base_url().'/images/media/';
+            $return['media'] = base_url().'images/media/';
         }
         return $return;
     }

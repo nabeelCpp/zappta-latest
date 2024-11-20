@@ -27,7 +27,7 @@ class Home extends BaseController
         // return view('site/27-aug/home');
         // return view('site/landing');
         $data = $this->homeTrait();
-        $data['assets_url'] = base_url() . '/new-landing/assets';
+        $data['assets_url'] = base_url() . 'new-landing/assets';
         return view('site/newLanding/index', $data);
     }
     

@@ -54,8 +54,8 @@ class Api1 extends BaseController
         $pid = (new ProductsModel())->getProductByUrlOnPlay(filtreData($product));
         $data['pid'] = $pid;
         $data['product'] = (new ProductsModel())->getSinglePlayCompaignProducts($data['pid']);
-        $data['product']['pcover'] = base_url().'/upload/products/'.$data['product']['pcover'];
-        $data['product']['store_logo'] = base_url().'/upload/media/'.$data['product']['store_logo'];
+        $data['product']['pcover'] = base_url().'upload/products/'.$data['product']['pcover'];
+        $data['product']['store_logo'] = base_url().'upload/media/'.$data['product']['store_logo'];
         $data['compaign'] = (new ProductsModel())->getAllPlayCompaignProducts($data['pid']);
         $data['coins_played'] = ( (new \App\Models\CompainModel())->getZapptaPlay($wheel, $pid)?(new \App\Models\CompainModel())->getZapptaPlay($wheel, $pid):0 );
         $data['points_won'] = ( (new \App\Models\CompainModel())->getZapptaWinPlay($wheel, $pid)?(new \App\Models\CompainModel())->getZapptaWinPlay($wheel, $pid):0 );

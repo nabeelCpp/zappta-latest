@@ -18,7 +18,7 @@ if (!empty($store)) { ?>
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="<?php print base_url();?>">Home</a></li>
 								<li class="breadcrumb-item">Store</li>
-								<li class="breadcrumb-item active" aria-current="page"><a href="<?php print base_url().'/stores/'.strtolower($store['store_slug'])?>"><?php print $store['store_name'];?></a></li>
+								<li class="breadcrumb-item active" aria-current="page"><a href="<?php print base_url().'stores/'.strtolower($store['store_slug'])?>"><?php print $store['store_name'];?></a></li>
 							</ol>
 						</nav>
 
@@ -46,7 +46,7 @@ if (!empty($store)) { ?>
 						<li><span class="filter <?= !isset($_GET['cat']) ? 'active' : '' ?>" data-filter="*"><a href="<?php print '/stores/'.$store['store_slug'];?>">Home</a></span></li>
 						
 						<?php foreach ($categories as $key => $cat) { ?>
-							<li><span class="filter <?= isset($_GET['cat']) && my_decrypt($_GET['p']) == $cat['id'] ? 'active' : '' ?>" data-slug="<?= $cat['cat_url'] ?>"><a href="<?= base_url("/stores/{$store['store_slug']}?cat={$cat['cat_url']}&p=".my_encrypt($cat['id'])) ?>"><?= $cat['cat_name']?></a></span></li>
+							<li><span class="filter <?= isset($_GET['cat']) && my_decrypt($_GET['p']) == $cat['id'] ? 'active' : '' ?>" data-slug="<?= $cat['cat_url'] ?>"><a href="<?= base_url("stores/{$store['store_slug']}?cat={$cat['cat_url']}&p=".my_encrypt($cat['id'])) ?>"><?= $cat['cat_name']?></a></span></li>
 						<?php } ?>
 					</ul>
 
@@ -157,7 +157,7 @@ if (!empty($store)) { ?>
 		</div>
 	</section>
 	<script>
-		currentUrl = "<?php print base_url().'/stores/'.$store['store_slug'];?>";
+		currentUrl = "<?php print base_url().'stores/'.$store['store_slug'];?>";
 	</script>
 <?php
 } else {

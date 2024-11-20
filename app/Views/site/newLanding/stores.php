@@ -7,13 +7,13 @@
           Earn free Zapptas (coins to spin the wheel) for every minute you
           browse products.
         </p>
-        <a href="<?= base_url() ?>/stores" class="btn btn-link zappta-red-color">See All</a>
+        <a href="<?= base_url() ?>stores" class="btn btn-link zappta-red-color">See All</a>
       </div>
 
     </div>
     <div class="clientLogos">
       <?php foreach ($store as $key => $st) { ?>
-        <div class="logoItem" onclick="location.href='<?php print base_url() . '/stores/' . $st['store_slug']; ?>'">
+        <div class="logoItem" onclick="location.href='<?php print base_url() . 'stores/' . $st['store_slug']; ?>'">
           <div class="shop-thumb text-center">
             <img src="<?= $st['store_logo'] ?>" class="img img-responsive" alt="">
           </div>

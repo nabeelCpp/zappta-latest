@@ -210,8 +210,8 @@ class Cart extends BaseController
             ],
             'line_items' => [$product],
             'mode' => 'payment',
-            'success_url' => base_url().'/payments/success?order='.$this->request->getUri()->getSegment(3).'&session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url' => base_url().'/payments/cancel?order='.$this->request->getUri()->getSegment(3).'&session_id={CHECKOUT_SESSION_ID}',
+            'success_url' => base_url().'payments/success?order='.$this->request->getUri()->getSegment(3).'&session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => base_url().'payments/cancel?order='.$this->request->getUri()->getSegment(3).'&session_id={CHECKOUT_SESSION_ID}',
         ]);
         return redirect()->to( $session->url );
     }
@@ -400,9 +400,9 @@ class Cart extends BaseController
             get_cart_destroy();
                 if ( !empty($product->cover) ) {
                     $value_img_ext_product = explode('.', $product->cover);
-                    $cover = base_url().'/images/product/'.$value_img_ext_product[0].'/'.end($value_img_ext_product).'/250';
+                    $cover = base_url().'images/product/'.$value_img_ext_product[0].'/'.end($value_img_ext_product).'/250';
                 } else { 
-                    $cover = base_url().'/images/product/img-not-found/jpg/100';
+                    $cover = base_url().'images/product/img-not-found/jpg/100';
                 }
             $datacart = [];
             $result = [];

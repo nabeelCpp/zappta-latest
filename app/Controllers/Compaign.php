@@ -142,9 +142,9 @@ class Compaign extends BaseController
         foreach ($products as $key => $value) {
             if( ! empty( $value['cover'] ) ) { 
                 $ext_name = explode('.',$value['cover']);
-                $value['cover']  = base_url().'/images/product/'.$ext_name[0].'/'.$ext_name[1].'/250';
+                $value['cover']  = base_url().'images/product/'.$ext_name[0].'/'.$ext_name[1].'/250';
             } else {
-                $value['cover']  = base_url().'/images/product/img-not-found/jpg/100';
+                $value['cover']  = base_url().'images/product/img-not-found/jpg/100';
             }
             // $value['brand_logo'] = $CompainModel->getBrandLogo($value['id']);
 

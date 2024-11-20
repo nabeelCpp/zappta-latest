@@ -501,9 +501,9 @@ function printTree($tree, $class='parentlink', $r = 0, $p = null) {
     foreach ($tree as $i => $t) {
         $dash = ($t['parent_id'] == 0) ? '' : str_repeat('', $r) .' ';
         // printf("\t<li><a href='%s'>%s%s</a></li>\n", $t['cat_url'], $dash, $t['cat_name']);
-        $url .= '<li><a href="'.base_url().'/categories/'.$t['cat_url'].'">'.$t['cat_name'].'</a></li>';    
+        $url .= '<li><a href="'.base_url().'categories/'.$t['cat_url'].'">'.$t['cat_name'].'</a></li>';    
         if (isset($t['_children'])) {
-            $url .= '<li><a href="'.base_url().'/categories/'.$t['cat_url'].'">'.$t['cat_name'].'</a>';
+            $url .= '<li><a href="'.base_url().'categories/'.$t['cat_url'].'">'.$t['cat_name'].'</a>';
             $url .= printTree($t['_children'],'sublinks',++$r, $t['parent_id']);
             $url .= '</li>';
             --$r;
