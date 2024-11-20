@@ -1,4 +1,4 @@
-<?php print view('site/header');?>
+<?php print view('site/~header');?>
 <?php 
 	if( !empty($store_id) ) {
 ?>
@@ -236,4 +236,4 @@
 <?php } else { ?>
 	<?php print view('site/404');?>
 <?php }?>
-<?php print view('site/footer');?>
+<?php print view('site/~footer');?>

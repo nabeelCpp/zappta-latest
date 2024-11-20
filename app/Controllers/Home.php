@@ -82,5 +82,18 @@ class Home extends BaseController
         $response = ['spree' => $sprees, 'spreeDetail' => $spreeDetail[0], 'token' => csrf_hash()];
         return $this->response->setJSON($response);
     }
+
+    /**
+     * Display all live and upcoming compaigns
+     * @author M Nabeel Arshad
+     */
+    public function compaigns() {
+        $data['compaign'] = (new VendorModel())->getSpreesToDisplayOngoing(10);
+        $data['compaign_upcoming'] = (new VendorModel())->getSpreesToDisplayUpcoming(10);
+        $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
+        $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
+        $data['see_all_btn'] = false;
+        return view('site/campaigns', $data);
+    }
     
 }

@@ -74,3 +74,41 @@ $(document).ready(function () {
     }
   });
 });
+
+// live and upcoming tabs//
+$(function () {
+  $(".tabs-nav a").click(function () {
+    // Check for active
+    $(".tabs-nav li").removeClass("active");
+    $(this).parent().addClass("active");
+
+    // Display active tab
+    let currentTab = $(this).attr("href");
+    $(".tabs-content > div").hide();
+    $(currentTab).show();
+
+    return false;
+  });
+});
+
+// filter by tabs/
+// Isotop
+$(function () {
+  var filterList = {
+    init: function () {
+      // https://mixitup.kunkalabs.com/
+      $("#gallery").mixItUp({
+        selectors: {
+          target: ".gallery-item",
+          filter: ".filter",
+        },
+        load: {
+          filter: ".shirts, .shoes", // show all items on page load.
+        },
+      });
+    },
+  };
+
+  // Filter ALL the things
+  filterList.init();
+});

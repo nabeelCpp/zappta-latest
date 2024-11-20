@@ -574,7 +574,13 @@ class VendorModel extends Model
                     ->getResultArray();
             cache()->save('getSpreesToDisplayUpcoming', $result ?? [], ZapptaHelper::CACHE_SECONDS);
         }
-        return cache()->get('getSpreesToDisplayUpcoming');
+        $results = [];
+        foreach (cache()->get('getSpreesToDisplayUpcoming') as $key => $value) {
+            $value['store_logo'] = getImageThumg('media', $value['store_logo'], 250);
+            $value['cover'] = getImageThumg('media/spree', $value['cover'], 250);
+            $results[] = $value;
+        }
+        return $results;
     }
 
 
