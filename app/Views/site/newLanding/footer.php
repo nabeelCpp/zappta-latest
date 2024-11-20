@@ -7,7 +7,7 @@
         <div class="footer-widget">
           <div class="widget-header">
             <a href="<?php print base_url(); ?>">
-              <img src="<?= base_url() . '/upload/logo/' . $globalSettings[0]['var_detail'] ?>" alt="Logo" style="width: 150px; height: 100px" />
+              <img src="<?= base_url() . 'upload/logo/' . $globalSettings[0]['var_detail'] ?>" alt="Logo" style="width: 150px; height: 100px" />
             </a>
           </div>
           <ul class="schedule-list">
@@ -32,9 +32,9 @@
             <h3 class="widget-title">COMPANY</h3>
           </div>
           <ul class="footer-list">
-            <li><a href="<?php print base_url() . '/about-us'; ?>">About Us</a></li>
-            <li><a href="<?php print base_url() . '/contact-us'; ?>">Contact Us</a></li>
-            <li><a href="<?= getUserId() > 0 ? base_url() . '/dashboard/history' : '#' ?>" <?= getUserId() == 0 ? 'data-bs-toggle="modal" data-bs-target="#accountModal"' : '' ?>>Order History</a></li>
+            <li><a href="<?php print base_url() . 'about-us'; ?>">About Us</a></li>
+            <li><a href="<?php print base_url() . 'contact-us'; ?>">Contact Us</a></li>
+            <li><a href="<?= getUserId() > 0 ? base_url() . 'dashboard/history' : '#' ?>" <?= getUserId() == 0 ? 'data-bs-toggle="modal" data-bs-target="#accountModal"' : '' ?>>Order History</a></li>
           </ul>
         </div>
       </div>
@@ -44,10 +44,10 @@
             <h3 class="widget-title">MY ACCOUNT</h3>
           </div>
           <ul class="footer-list">
-            <li><a href="<?php print base_url() . '/cart'; ?>">View Cart</a></li>
+            <li><a href="<?php print base_url() . 'cart'; ?>">View Cart</a></li>
             <li><a href="#" onclick="showLogin('login');">Sign In</a></li>
-            <li><a href="<?= base_url() . (getUserId() > 0 ? '/dashboard/help' : '/help') ?>">Help</a></li>
-            <li><a href="<?= getUserId() > 0 ? base_url() . '/dashboard/wishlist' : '#' ?>" <?= getUserId() == 0 ? 'data-bs-toggle="modal" data-bs-target="#accountModal"' : '' ?>>Wishlist</a></li>
+            <li><a href="<?= base_url() . (getUserId() > 0 ? 'dashboard/help' : 'help') ?>">Help</a></li>
+            <li><a href="<?= getUserId() > 0 ? base_url() . 'dashboard/wishlist' : '#' ?>" <?= getUserId() == 0 ? 'data-bs-toggle="modal" data-bs-target="#accountModal"' : '' ?>>Wishlist</a></li>
 
           </ul>
         </div>
@@ -58,8 +58,8 @@
             <h3 class="widget-title">CUSTOMER SERVICE</h3>
           </div>
           <ul class="footer-list">
-            <li><a href="<?php print base_url() . '/payment-method'; ?>">Payment Methods </a></li>
-            <li><a href="<?php print base_url() . '/return-policy'; ?>">Products Returns</a></li>
+            <li><a href="<?php print base_url() . 'payment-method'; ?>">Payment Methods </a></li>
+            <li><a href="<?php print base_url() . 'return-policy'; ?>">Products Returns</a></li>
           </ul>
         </div>
       </div>
@@ -70,8 +70,8 @@
       <div class="row copyright-content">
         <div class="col-lg-6">
           <div class="footer-img-wrap">
-            <span><a href="<?php print base_url() . '/terms-conditions'; ?>">Terms & Conditions</a></span>
-            <span><a href="<?php print base_url() . '/privacy-policy'; ?>">Privacy Policy</a></span>
+            <span><a href="<?php print base_url() . 'terms-conditions'; ?>">Terms & Conditions</a></span>
+            <span><a href="<?php print base_url() . 'privacy-policy'; ?>">Privacy Policy</a></span>
           </div>
         </div>
         <div class="col-lg-6">
@@ -104,7 +104,7 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
 
       <div class="modalLogo">
         <a href="<?php print base_url(); ?>">
-          <img src="<?= base_url() . '/upload/logo/' . $globalSettings[0]['var_detail'] ?>" alt="Logo" style="width: 150px; height: 100px" />
+          <img src="<?= base_url() . 'upload/logo/' . $globalSettings[0]['var_detail'] ?>" alt="Logo" style="width: 150px; height: 100px" />
         </a>
       </div>
 
@@ -158,7 +158,7 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
               </div>
 
               <div class="text-center vendorText">
-                <p><a href="<?php print base_url() . '/vendor-login'; ?>">Log In as a vendor?</a></p>
+                <p><a href="<?php print base_url() . 'vendor-login'; ?>">Log In as a vendor?</a></p>
               </div>
               <div class="signInBySocial mb-2">
                 <a href="<?php print filter_var(google_login_url($refer_user), FILTER_SANITIZE_URL); ?>"><img src="<?= $assets_url ?>/img/google.svg" alt="" /> Sign In with Google</a>
@@ -210,7 +210,7 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
               </div>
 
               <div class="text-center vendorText">
-                <p><a href="<?php print base_url() . '/vendor-registration'; ?>">Signup as a vendor?</a></p>
+                <p><a href="<?php print base_url() . 'vendor-registration'; ?>">Signup as a vendor?</a></p>
               </div>
               <div class="signInBySocial mb-2">
                 <a href="<?php print filter_var(google_login_url($refer_user), FILTER_SANITIZE_URL); ?>"><img src="<?= $assets_url ?>/img/google.svg" alt="" /> Sign Up with Google</a>
@@ -242,7 +242,7 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
             <button type="button" style="right:20px" class="btn-close position-absolute" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="lg-form-head">
-            <img src="<?= base_url() . '/upload/logo/' . $globalSettings[0]['var_detail'] ?>" alt="" />
+            <img src="<?= base_url() . 'upload/logo/' . $globalSettings[0]['var_detail'] ?>" alt="" />
           </div>
           <div class="lg-form-tabs">
             <div class="lg-form-field">
@@ -297,7 +297,7 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
               </style>
 
               <?php if (getUserId()) {
-                $referral_link = base_url() . '/signup/' . my_encrypt(getUserId()); ?>
+                $referral_link = base_url() . 'signup/' . my_encrypt(getUserId()); ?>
                 <div class="social-media">
                   <div class="share-icon-div btn btn-primary" style="background: #3B5998 !important"><i class="fa-brands fa-facebook"></i><a href="http://www.facebook.com/sharer.php?u=<?= $referral_link ?>" target="__blank" onclick="addZaptaCoins('facebook')" style="color: white">Share on facebook</a> </div>
                   <div class="share-icon-div btn btn-primary" style="background: #00acee;"><i class="fa-brands fa-twitter"></i><a style="color: white" target="__blank" href="http://twitter.com/share?text=Join zappta via my referal link! &url=<?= $referral_link ?>&hashtags=Zappta,Join Zappta,Referral Link" onclick="addZaptaCoins('twitter')">Share on twitter</a></div>
@@ -330,7 +330,7 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
             <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="lg-form-head">
-            <img src="<?= base_url() . '/upload/logo/' . $globalSettings[0]['var_detail'] ?>" alt="" />
+            <img src="<?= base_url() . 'upload/logo/' . $globalSettings[0]['var_detail'] ?>" alt="" />
           </div>
           <div class="lg-form-tabs">
             <div class="lg-form-field">
@@ -434,7 +434,7 @@ if ($playgive !== 0) {
 
   function addZaptaCoins(sm) {
     $.ajax({
-      url: '<?= base_url() ?>/api/socialMediaZapptas',
+      url: '<?= base_url() ?>api/socialMediaZapptas',
       type: 'POST',
       dataType: 'json',
       data: {
@@ -462,7 +462,7 @@ if ($playgive !== 0) {
         btn.text('Checking...');
         btn.attr('disabled', true);
         $.ajax({
-          url: '<?= base_url() ?>/home/fetchSpree',
+          url: '<?= base_url() ?>home/fetchSpree',
           data: {
             store_id: localStorage.store_id,
             com_id: localStorage.com_id,
@@ -692,7 +692,7 @@ if ($playgive !== 0) {
       if (localStorage.store_url) {
         if ((localStorage.timer / 60).toFixed() > 0) {
           $.ajax({
-            url: '<?= base_url() ?>/dashboard/wallet/saveZapptas',
+            url: '<?= base_url() ?>dashboard/wallet/saveZapptas',
             data: {
               minutes: (localStorage.timer / 60).toFixed(),
               store_url: localStorage.store_url,
@@ -730,7 +730,7 @@ if ($playgive !== 0) {
 
   function fetchSprees() {
     $.ajax({
-      url: '<?= base_url() ?>/home/fetchSpree',
+      url: '<?= base_url() ?>home/fetchSpree',
       type: 'POST',
       dataType: 'json',
       data: {
@@ -775,7 +775,7 @@ if ($playgive !== 0) {
       <?= csrf_token() ?>: localStorage.csrf
     };
     $.ajax({
-      url: '<?= base_url() ?>/home/spree',
+      url: '<?= base_url() ?>home/spree',
       type: 'POST',
       dataType: 'json',
       beforeSend: function() {

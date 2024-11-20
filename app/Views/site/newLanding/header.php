@@ -75,10 +75,10 @@ $total_list = (new App\Models\WishlistModel)->getUserTotalList();
 
                         <div class="header-logo">
                             <a href="<?php print base_url(); ?>">
-                                <img src="<?= base_url() . '/upload/logo/' . $globalSettings[0]['var_detail'] ?>" alt="Logo" style="width: 150px; height: 100px" />
+                                <img src="<?= base_url() . 'upload/logo/' . $globalSettings[0]['var_detail'] ?>" alt="Logo" style="width: 150px; height: 100px" />
                             </a>
                         </div>
-                        <form class="searchSection" method="get" action="<?php print base_url() . '/search'; ?>" id="searchHeaderForm">
+                        <form class="searchSection" method="get" action="<?php print base_url() . 'search'; ?>" id="searchHeaderForm">
                             <input type="hidden" name="secure" value="<?php print csrf_hash(); ?>">
                             <div class="serchdrop">
                                 <?php
@@ -97,15 +97,15 @@ $total_list = (new App\Models\WishlistModel)->getUserTotalList();
 
                         <div class="header-middle-right">
                             <div class="mright">
-                                <div class="circleBg" <?= getUserId() > 0 ? "onclick=\"location.href='" . base_url() . "/dashboard/wishlist'\"" : 'data-bs-toggle="modal" data-bs-target="#accountModal"' ?>>
+                                <div class="circleBg" <?= getUserId() > 0 ? "onclick=\"location.href='" . base_url() . "dashboard/wishlist'\"" : 'data-bs-toggle="modal" data-bs-target="#accountModal"' ?>>
                                     <img src="<?= $assets_url ?>/img/Link.svg" alt="" />
                                     <?= getUserId() > 0 && $total_list ? '<span class="smCircle">' . $total_list . '</span>' : '' ?>
                                 </div>
-                                <div class="circleBg" onclick="location.href='<?= base_url() . '/cart' ?>'">
+                                <div class="circleBg" onclick="location.href='<?= base_url() . 'cart' ?>'">
                                     <img src="<?= $assets_url ?>/img/whishlist.svg" alt="" />
                                     <span class="smCircle" id="cartList"> <?= get_total_items() ?? '' ?></span>
                                 </div>
-                                <div class="zCoin" onclick="<?= getUserId() > 0 ? "location.href='" . base_url() . "/dashboard/wallet'" : 'data-bs-toggle="modal" data-bs-target="#accountModal"' ?>">
+                                <div class="zCoin" onclick="<?= getUserId() > 0 ? "location.href='" . base_url() . "dashboard/wallet'" : 'data-bs-toggle="modal" data-bs-target="#accountModal"' ?>">
                                     <img src="<?= $assets_url ?>/img/z-coin.svg" alt="" />
                                     <div class="colVert">
                                         <p>Coins</p>
@@ -132,11 +132,11 @@ $total_list = (new App\Models\WishlistModel)->getUserTotalList();
                                         </a>
                                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                             <li><span>Welcome back!</span></li>
-                                            <li><a class="dropdown-item" href="<?php print base_url() . '/dashboard'; ?>"> <img src="<?= $assets_url ?>/images/dashboard.svg" alt="" /> Dashboard</a></li>
+                                            <li><a class="dropdown-item" href="<?php print base_url() . 'dashboard'; ?>"> <img src="<?= $assets_url ?>/images/dashboard.svg" alt="" /> Dashboard</a></li>
                                             <li>
                                                 <hr class="dropdown-divider">
                                             </li>
-                                            <li><a class="dropdown-item" href="<?php print base_url() . '/logout'; ?>"><img src="<?= $assets_url ?>/images/logout.svg" alt="" /> Logout</a></li>
+                                            <li><a class="dropdown-item" href="<?php print base_url() . 'logout'; ?>"><img src="<?= $assets_url ?>/images/logout.svg" alt="" /> Logout</a></li>
                                         </ul>
                                     </li>
 
