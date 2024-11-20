@@ -80,7 +80,6 @@ class Filters extends BaseFilters
                     'vendors/design/upload',
                     'vendors/design/status',
                     'cart/add',
-                    'cart/address',
                     'cart/delete_item_cart',
                     'cart/update_cart',
                     'admincp/categories/getajaxbrand',
