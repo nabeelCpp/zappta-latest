@@ -61,6 +61,8 @@ class OrderModel extends Model
 	protected $beforeDelete         = [];
 	protected $afterDelete          = [];
 
+	private $bgColor = '#EE3186';
+
 	public function getAllResult($limit=1)
     {
         $limits = 20;
@@ -726,10 +728,10 @@ class OrderModel extends Model
         }
         (new \App\Models\Setting())->insertDollor('ZAPPTA_BUYING','Buy Item',4,$final_total);
 		// Notification to user!
-		$link = base_url().'/dashboard/history/status?order_id='.my_encrypt($order_id).'&key='.csrf_hash();
-        (new UsersModel())->saveNotification("Your Order <b style='color: #FB5000;'>{$order_serial}</b> has been placed!", getUserId(), $link, 'order-placed');
-		$link = base_url().'/dashboard/wallet';
-        (new UsersModel())->saveNotification("You won {$total_zapptas} Zappta dollars bonus via your Order <b style='color: #FB5000;'>{$order_serial}</b>", getUserId(), $link, 'order-bonus');
+		$link = '/dashboard/history/status?order_id='.my_encrypt($order_id).'&key='.csrf_hash();
+        (new UsersModel())->saveNotification("Your Order <b style='color: {$this->bgColor};'>{$order_serial}</b> has been placed!", getUserId(), $link, 'order-placed');
+		$link = '/dashboard/wallet';
+        (new UsersModel())->saveNotification("You won {$total_zapptas} Zappta dollars bonus via your Order <b style='color: {$this->bgColor};'>{$order_serial}</b>", getUserId(), $link, 'order-bonus');
         return $order_id;
     }
 

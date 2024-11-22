@@ -883,10 +883,10 @@ function askQuestion()
 		$('#askQuestion').modal('show');
 }
 
-function add_item_wish(dd,ss,id=0)
+function add_item_wish(dd,ss, _this, id=0)
 {
-		$('.loader').show();
-		$.ajaxSetup({
+	$('.loader').show();
+	$.ajaxSetup({
         beforeSend: function(xhr) {
             xhr.setRequestHeader('X-CSRF-TOKEN', $('#_tt_cc').val());
         }
@@ -897,7 +897,6 @@ function add_item_wish(dd,ss,id=0)
 				data : { 'dd': dd, 'ss': ss },
 				dataType: 'JSON',
 				success: function(resp){
-						console.log(resp);
 						$('#_tt_cc').val(resp._cc);
 						if ( resp.error == 2 ) {
 								if ( id > 0 ) {
@@ -908,6 +907,8 @@ function add_item_wish(dd,ss,id=0)
 									);
 								}
 			 					$('.errorBlock').html('<p class="alert alert-success">'+resp.msg+'</p>');
+								$(_this).addClass('active');
+								$(_this).attr('onclick', `remove_item_wish(this, '${resp.wishlist_id}')`);
 			 					setTimeout(function(){
 			 						$('.errorBlock p').remove();
 			 					}, 3000);
@@ -930,6 +931,58 @@ function add_item_wish(dd,ss,id=0)
 			 					}, 3000);
 						}
 						$('.loader').hide();
+				}
+		});
+}
+/**
+ * Remove item from wishlist
+ * @param {Element} _this
+ * @param {string} id 
+ */
+function remove_item_wish(_this, id)
+{
+		$('.loader').show();
+		let pid = $(_this).attr('data-pid');
+		let pds = $(_this).attr('data-pds');
+		let key = $(_this).attr('data-key');
+		$.ajax({
+				url: baseUrl+'dashboard/wishlist/remove/'+id,
+				type: 'GET',
+				dataType: 'JSON',
+				success: function(resp){
+					if ( resp.error == 2 ) {
+							if ( id > 0 ) {
+								$.notify(
+									""+resp.msg+"", 
+									"success", 
+									{ position:"right middle" }
+								);
+							}
+							$('.errorBlock').html('<p class="alert alert-success">'+resp.msg+'</p>');
+							$(_this).removeClass('active');
+							$(_this).attr('onclick', `add_item_wish('${pid}', '${pds}', this, ${key})`);
+							setTimeout(function(){
+								$('.errorBlock p').remove();
+							}, 3000);
+					} else if ( resp.error == 3 ) {
+							if ( id > 0 ) {
+								$.notify(
+									""+resp.msg+"", 
+									{ position:"right middle" }
+								);
+							}
+							$('.errorBlock').html('<p class="alert alert-danger">There is some problem, please try again later</p>');
+							setTimeout(function(){
+								$('.errorBlock p').remove();
+							}, 3000);
+					}else {
+							$('#accountModal').modal('show');
+							$('.errorBlock').html('<p class="alert alert-danger">There is some problem, please try again later</p>');
+							setTimeout(function(){
+								$('.errorBlock p').remove();
+							}, 3000);
+					}
+					$('.loader').hide();
 				}
 		});
 }

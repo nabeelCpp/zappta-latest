@@ -1053,6 +1053,9 @@ class ProductsModel extends Model
         }
 
         $sql->where('products.deleteStatus', 0);
+        if(!empty($filter['v'])) {
+            $sql->whereIn('products.store_id', $filter['v']);
+        }
         $sql->like('products.name', $word);
         $sql->groupBy('products.id');
         $sql->limit($limits, $result_limit);
@@ -1134,6 +1137,10 @@ class ProductsModel extends Model
 
         if ($catid  > 0) {
             $sql->where('product_category.catid', $catid);
+        }
+
+        if(!empty($filter['v'])) {
+            $sql->whereIn('products.store_id', $filter['v']);
         }
 
         $sql->where('products.deleteStatus', 0);

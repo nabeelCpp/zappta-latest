@@ -229,9 +229,12 @@
   top: 20px;
   background: url(/new-landing/assets/images/heart.svg) no-repeat center center #fff;
 }
-.productPostWraps .heartSelection:active,
+/* .productPostWraps .heartSelection:active,
 .productPostWraps .heartSelection:focus
 {
+  background: url(/new-landing/assets/images/heartActive.svg) no-repeat center center #fff;
+} */
+.productPostWraps .heartSelection.active {
   background: url(/new-landing/assets/images/heartActive.svg) no-repeat center center #fff;
 }
 .productPostWraps .productPostInfo

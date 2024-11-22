@@ -5,6 +5,7 @@ namespace App\Controllers\Dashboard;
 use App\Controllers\BaseController;
 use App\Models\OrderModel;
 use App\Models\ReviewModel;
+use App\Models\UsersNotification;
 use App\Traits\Dashboard\HistoryTrait;
 
 class History extends BaseController
@@ -31,6 +32,8 @@ class History extends BaseController
 
     public function status()
     {
+        $url = get_current_url(false);
+        (new UsersNotification())->markAsRead($url, getUserId());
         $db = \Config\Database::connect();
         $ReviewModel = new ReviewModel;
         $order_id = my_decrypt($this->request->getVar('order_id'));

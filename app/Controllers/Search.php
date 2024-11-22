@@ -7,10 +7,12 @@ use App\Models\AttributeModel;
 use App\Models\BrandModel;
 use App\Models\ProductsModel;
 use App\Models\VendorModel;
+use App\Traits\ZapptaTrait;
 use Google\Service\AdExchangeBuyerII\Product;
 
 class Search extends BaseController
 {
+    use ZapptaTrait;
     public function index()
     {
         // if ( ! $this->request->getVar('searchq')  ) {
@@ -23,12 +25,14 @@ class Search extends BaseController
         $color = isset($_GET['color']) ? $_GET['color'] : ''; 
         $dimension = isset($_GET['dimension']) ? $_GET['dimension'] : ''; 
         $paper_type = isset($_GET['paper_type']) ? $_GET['paper_type'] : ''; 
-        $p = isset($_GET['p']) ? $_GET['p'] : ''; 
+        $p = isset($_GET['p']) ? $_GET['p'] : '';
         $data['filter'] = isset($_GET) ? $_GET : [];
+        $data['vendors_selected'] = isset($_GET['v']) && !empty($_GET['v']) ? explode('|', filtreData($_GET['v'])) : [];
+        $data['filter']['v'] = $data['vendors_selected'];
         $data['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
 
         $data['attrbutes'] = (new AttributeModel())->getAttributesValues(); 
-        $data['products'] = (new ProductsModel())->getSearchProducts($data['search_cat'],$data['searchq'],$data['filter'],$data['page']);
+        $data['products'] = $this->wishlistStatusOnProducts((new ProductsModel())->getSearchProducts($data['search_cat'],$data['searchq'],$data['filter'],$data['page']));
         $data['total_products'] = (new ProductsModel())->getSearchProductsCounts($data['search_cat'],$data['searchq'],$data['filter']);
         $data['limit'] = ProductsModel::LIMIT;
         $data['categories'] = getHomeCategory();

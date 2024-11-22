@@ -41,9 +41,9 @@ trait CustomerTrait {
      */
     public static function removeWishlist($id) : array {
         if((new WishlistModel())->deleteR($id)) {
-            return ['msg' => 'Product successfully removed from wishlist'];
+            return ['error' => 2, 'msg' => 'Product successfully removed from wishlist'];
         }else {
-            return ['msg' => 'Error while removing Product from wishlist'];
+            return ['error' => 3, 'msg' => 'Error while removing Product from wishlist'];
         }
     }
 
@@ -57,8 +57,8 @@ trait CustomerTrait {
     public static function addItemToWishList($store_id, $product_id) : array {
         $wishlist = new WishlistModel();
         if ( $wishlist->checkWishList( $store_id,$product_id,getUserId() ) == false ) {
-            $wishlist->add(['product_id' => $product_id,'store_id' => $store_id,'user_id' => getUserId() , 'created_at' => date('Y-m-d H:i:s')]);
-            $data = ['error' => 2, 'msg' => 'Product successfully added in your wishlist'];
+            $wid = $wishlist->add(['product_id' => $product_id,'store_id' => $store_id,'user_id' => getUserId() , 'created_at' => date('Y-m-d H:i:s')]);
+            $data = ['error' => 2, 'msg' => 'Product successfully added in your wishlist', 'wishlist_id' => my_encrypt($wid)];
         } else {
             $data = ['error' => 3, 'msg' => 'Product already Added in your wishlist'];
         }

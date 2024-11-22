@@ -13,6 +13,7 @@ use App\Models\Setting;
 use App\Models\ProductsModel;
 use App\Models\ReviewModel;
 use App\Models\VendorDesignModel;
+use App\Models\WishlistModel;
 use Config\Pager;
 
 trait ZapptaTrait
@@ -74,7 +75,7 @@ trait ZapptaTrait
         $data['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
         $data['product_limit'] = $_GET['limit'] ?? ProductsModel::LIMIT;
 
-        $data['products'] = (new ProductsModel())->getProductByCategory((int)$data['category_id']['id'], $data['page'], $data['filter']);
+        $data['products'] = $this->wishlistStatusOnProducts((new ProductsModel())->getProductByCategory((int)$data['category_id']['id'], $data['page'], $data['filter']));
         $data['total_products'] = (new ProductsModel())->getTotalProductByCategory((int)$data['category_id']['id'], $data['filter']);
         if ($data['total_products'] >  $data['product_limit']) {
             $data['pager'] = service('pager');
@@ -83,6 +84,32 @@ trait ZapptaTrait
         $data['getCatAttr'] = (new AttributeModel())->getCatAttr((int)$data['category_id']['id']);
         $data['meta'] = ZapptaHelper::createMeta($data['page'], $data['total_products'], $data['product_limit']);
         return $data;
+    }
+
+    /**
+     * Append products data with is_wishlist
+     * @param array $products
+     * @return array
+     * @author M nabeel Arshad
+     */
+    protected function wishlistStatusOnProducts($products) : array {
+        $wishlist = getUserId() > 0 ? (new WishlistModel())->getAllResultByUserId(getUserId()) : [];
+        // Extract product_ids from wishlist
+        $wishlistProductIds = !empty($wishlist) ? array_column($wishlist, 'product_id') : [];
+        foreach ($products as $key => $product) {
+            $wish = array_values(array_filter($wishlist, function($w) use ($product) {
+                return $product['pid'] == $w['product_id'];
+            }));
+            if($wish) {
+                $wish = $wish[0];
+                $products[$key]['is_wishlist'] = true;
+                $products[$key]['wishlist_id'] = $wish['id'];
+            }else{
+                $products[$key]['is_wishlist'] = false;
+                $products[$key]['wishlist_id'] = null;
+            }
+        }
+        return $products;
     }
 
     /**

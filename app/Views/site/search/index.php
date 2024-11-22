@@ -1,5 +1,7 @@
 <?= view('site/newLanding/header', ['globalSettings' => $globalSettings, 'css' => $css]); ?>
-
+<script>
+	var current_url = '<?=$current_url?>';
+</script>
 <!-- section dividie Layout// -->
 <section class="py-5">
 	<div class="container">
@@ -44,7 +46,7 @@
 									<?php 
 									foreach ($vendors as $key => $vendor) { ?>
 										<div class="form-check mb-3">
-											<input class="form-check-input" id="seasonOne<?=$vendor['id']?>" type="checkbox">
+											<input class="form-check-input" id="seasonOne<?=$vendor['id']?>" type="checkbox" onclick="makeUrl('v', <?=$vendor['id']?>, this.checked)" <?= in_array($vendor['id'], $vendors_selected) ? 'checked' : '' ?>>
 											<label class="form-check-label" for="seasonOne<?=$vendor['id']?>">
 												<?=$vendor['store_name']?>
 											</label>
@@ -53,7 +55,7 @@
 								</div>
 							</div>
 						</li>
-						<li class="nav-item">
+						<?php /* <li class="nav-item">
 							<a class="nav-link dropdown-toggle mb-3" data-bs-toggle="collapse" href="#seasonCollapse2" aria-expanded="true">
 								Brands
 							</a>
@@ -72,7 +74,7 @@
 									<!-- <a class="seeAllBtn" href="#">See All</a> -->
 								</div>
 							</div>
-						</li>
+						</li>*/ ?>
 						<li class="nav-item">
 							<h6 class="mb-5">Price ($)</h6>
 							<div id="price-slider" class="my-3"></div>

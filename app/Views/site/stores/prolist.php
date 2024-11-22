@@ -50,7 +50,7 @@
                             <img src="<?php print base_url() . 'images/product/img-not-found/jpg/100'; ?>" alt="">
                         <?php } ?>
                     </a>
-                    <button class="btn heartSelection" onclick="add_item_wish('<?= my_encrypt($p['pid']) ?>','<?= my_encrypt($p['pds']) ?>',<?= $sr ?>);">
+                    <button class="btn heartSelection <?=$p['is_wishlist']?'active':''?>" onclick="<?= !$p['is_wishlist'] ? 'add_item_wish(\''.my_encrypt($p['pid']).'\',\''.my_encrypt($p['pds']).'\',this,'.$sr.');':'remove_item_wish(this, \''.my_encrypt($p['wishlist_id']).'\');'?>" data-pid="<?= my_encrypt($p['pid']) ?>" data-pds="<?= my_encrypt($p['pds']) ?>" data-key="<?= $sr ?>">
                         whishlist
                     </button>
                 </div>

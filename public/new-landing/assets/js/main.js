@@ -433,3 +433,50 @@ const fetchFreshCsrfToken = () => {
         }
     })
 }
+
+/**
+ * Used by search and categories page for filtering products
+ * @param {*} key 
+ * @param {*} value 
+ * @param {*} isChecked 
+ */
+const makeUrl = (key, value, isChecked) => {
+    const searchParams = new URLSearchParams(window.location.search);
+
+    // Check if the key exists in the query parameters
+    if (searchParams.has(key)) {
+        let currentValue = searchParams.get(key);
+        let values = currentValue.split('|'); // Split the parameter values by '|'
+
+        if (isChecked) {
+            // Add the value if not already present
+            if (!values.includes(value.toString())) {
+                values.push(value.toString());
+            }
+        } else {
+            // Remove the value if it exists (for unchecked case)
+            values = values.filter(val => val !== value.toString());
+        }
+
+        // Update the query parameter
+        if (values.length > 0) {
+            searchParams.set(key, values.join('|')); // Join values back with '|'
+        } else {
+            searchParams.delete(key); // Remove the key if no values are left
+        }
+    } else {
+        // If the key doesn't exist and the checkbox is checked, add it
+        if (isChecked) {
+            searchParams.set(key, value);
+        }
+    }
+
+    // Recreate the URL with updated query parameters
+    let newUrl = `${current_url.split('?')[0]}?${searchParams.toString()}`;
+
+    // Decode the URL for readability
+    let decodedUrl = decodeURIComponent(newUrl);
+
+    // Optionally navigate to the new URL
+    window.location.href = decodedUrl;
+};

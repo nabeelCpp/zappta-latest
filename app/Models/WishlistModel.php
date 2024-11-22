@@ -44,9 +44,15 @@ class WishlistModel extends Model
         return $this->orderBy('id ASC')->paginate($limit);
     }
 
-    public function getAllResultByUserId($user_id,$limit=20)
+    public function getAllResultByUserId($user_id,$limit=null)
     {
-        return $this->where('user_id',$user_id)->orderBy('id ASC')->paginate($limit);
+        $sql =  $this->where('user_id',$user_id)->orderBy('id ASC');
+        if($limit) {
+            $data = $sql->paginate($limit);
+        }else{
+            $data = $sql->get()->getResultArray();
+        }
+        return $data;
     }
 
 

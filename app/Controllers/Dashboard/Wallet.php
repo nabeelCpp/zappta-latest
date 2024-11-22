@@ -4,12 +4,14 @@ namespace App\Controllers\Dashboard;
 
 use App\Controllers\BaseController;
 use App\Models\Setting;
+use App\Models\UsersNotification;
 
 class Wallet extends BaseController
 {
     
     public function index()
     {
+        (new UsersNotification())->markAsRead('dashboard/wallet');
         $data['pagetitle'] = 'Wallet';
         $data['total_zappta']['zapta_earn'] = userTotalZappta();
         // $data['total_zappta'] = (new Setting())->totalZapptaDollor();

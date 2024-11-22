@@ -25,6 +25,9 @@ class Wishlist extends BaseController
     {
         $id = my_decrypt($this->request->getUri()->getSegment(4));
         $response = CustomerTrait::removeWishlist($id);
+        if ($this->request->isAJAX()) {
+            return response()->setJSON($response);
+        }
         $this->session->setFlashdata('error', $response['msg']);
         return redirect()->to('/dashboard/wishlist'); 
     }

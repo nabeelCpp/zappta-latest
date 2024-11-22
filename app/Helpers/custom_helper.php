@@ -775,7 +775,7 @@ function getNotifications($limit = null){
 
 /**
  * Save notification for different users types
- * 
+ * its not functional yet
  */
 function saveNotification($message, $type, $order_id=null, $user_id = null, $vendor_id = null) {
     $data = [
@@ -851,4 +851,17 @@ function getImageDimensions($type = null) {
  */
 function count_notifications() {
     return $result = (new UsersNotification())->where('user_id', getUserId())->where('is_read', 0)->countAllResults();
+}
+
+/**
+ * Get current url
+ */
+function get_current_url($addHost = true) {
+    $currentUrl = current_url(); // Base URL without query parameters
+    $queryString = $_SERVER['QUERY_STRING'];
+    $fullUrl = $queryString ? $currentUrl . '?' . $queryString : $currentUrl;
+    if(!$addHost) {
+        $fullUrl = str_replace(base_url(), '', $fullUrl);
+    }
+    return $fullUrl;
 }

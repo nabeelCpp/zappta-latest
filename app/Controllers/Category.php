@@ -17,6 +17,8 @@ class Category extends BaseController
     {
         if(isset($_GET['c'])) {
             $cid = my_decrypt($_GET['c']);
+        }else {
+            return redirect('/');
         }
         $category = (new CategoriesModel)->where('id', $cid)->first();
         if($category) {
@@ -50,29 +52,22 @@ class Category extends BaseController
             $data['max_price'] = $price[1];
         }
         return view('site/category/index',$data);
-        // dd($data['products']);
-        // print '<pre>';
-        // print_r(count($data['products']));
-        // print '</pre>'; 
-        // print '<pre>';
-        // print_r($data['products']);
-        // print '</pre>';
     }
 
-    public function singlee($slug)
-    {
-        $data = $this->categoryTrait($slug);
-        $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
-        $data['css'] = ZapptaHelper::loadModifiedThemeCss();
-        $data['exclude_attr'] = [''];
-        return view('site/category/~index',$data);
-        // dd($data['products']);
-        // print '<pre>';
-        // print_r(count($data['products']));
-        // print '</pre>'; 
-        // print '<pre>';
-        // print_r($data['products']);
-        // print '</pre>';
-    }
+    // public function singlee($slug)
+    // {
+    //     $data = $this->categoryTrait($slug);
+    //     $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
+    //     $data['css'] = ZapptaHelper::loadModifiedThemeCss();
+    //     $data['exclude_attr'] = [''];
+    //     return view('site/category/~index',$data);
+    //     // dd($data['products']);
+    //     // print '<pre>';
+    //     // print_r(count($data['products']));
+    //     // print '</pre>'; 
+    //     // print '<pre>';
+    //     // print_r($data['products']);
+    //     // print '</pre>';
+    // }
         
 }

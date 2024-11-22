@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\ZapptaHelper;
 use CodeIgniter\Model;
 
 
@@ -291,7 +292,10 @@ class CategoriesModel extends Model
 
     public function getAllCategoryForTree($parent = 0)
     {
-        return $this->where('deleteStatus', 0)->where('type', 1)->where('parent_id', $parent)->orderBy('cat_name ASC')->findAll();
+        if ( ! cache()->get('getAllCategoryForTree') ) {
+            cache()->save('getAllCategoryForTree',$this->where('deleteStatus', 0)->where('type', 1)->where('parent_id', $parent)->orderBy('cat_name ASC')->findAll(),ZapptaHelper::CACHE_SECONDS);
+        }
+        return cache()->get('getAllCategoryForTree');
     }
 
     public function getAllCategoryTree()

@@ -28,7 +28,7 @@ if (isset($category_id) && ! empty($category_id['cat_img'])) {
 						<ol class="breadcrumb">
 							<li class="breadcrumb-item"><a href="<?php print base_url(); ?>">Home</a></li>
 							<li class="breadcrumb-item" aria-current="page">
-								<a href="<?php print base_url() . '/categories'; ?>">Categories</a>
+								<a href="<?php print base_url() . 'categories'; ?>">Categories</a>
 							</li>
 							<?php if (isset($category_id)) { ?>
 								<li> / </li>
@@ -37,7 +37,7 @@ if (isset($category_id) && ! empty($category_id['cat_img'])) {
 						</ol>
 					</nav>
 					<div>
-						<form method="get" action="<?php print base_url() . '/categories/'.$category_id['cat_url']; ?>" class="category-form-wrap">
+						<form method="get" action="<?php print base_url() . 'categories/'.$category_id['cat_url']; ?>" class="category-form-wrap">
 							<input class="form-control" type="text" name="q" placeholder="Search...">
 							<input type="submit" class="searchIcon" />
 						</form>
@@ -47,7 +47,7 @@ if (isset($category_id) && ! empty($category_id['cat_img'])) {
 					if (isset($_GET['b']) || isset($_GET['size']) || isset($_GET['color']) || isset($_GET['dimension']) || isset($_GET['paper_type']) || isset($_GET['p'])) {
 					?>
 						<div class="clearfilter">
-							<a href="<?php print base_url() . '/categories/' . $category_id['cat_url']; ?>">Clear Filter</a>
+							<a href="<?php print base_url() . 'categories/' . $category_id['cat_url']; ?>">Clear Filter</a>
 						</div>
 					<?php
 					}
@@ -63,7 +63,7 @@ if (isset($category_id) && ! empty($category_id['cat_img'])) {
 									<div class="form-group form-group-overflow mb-6" id="seasonGroup" data-simplebar="init">
 										<?php foreach ($allcat as $cat) { ?>
 											<div class="form-check mb-3">
-												<input class="form-check-input" id="<?= $cat['cat_url'] ?>" type="checkbox" <?= $category_id['cat_url'] == $cat['cat_url'] ? 'checked' : '' ?> onclick="location.href='<?php print base_url() . '/categories/' . $cat['cat_url']; ?>'">
+												<input class="form-check-input" id="<?= $cat['cat_url'] ?>" type="checkbox" <?= $category_id['cat_url'] == $cat['cat_url'] ? 'checked' : '' ?> onclick="location.href='<?php print base_url() . 'categories/' . $cat['cat_url']; ?>'">
 												<label class="form-check-label" for="<?= $cat['cat_url'] ?>">
 													<?php print ucfirst($cat['cat_name']); ?>
 												</label>
@@ -82,7 +82,7 @@ if (isset($category_id) && ! empty($category_id['cat_img'])) {
 									<div class="form-group form-group-overflow mb-6" id="seasonGroup2" data-simplebar="init">
 										<?php foreach ($brands as $bra) { ?>
 											<div class="form-check mb-3">
-												<input class="form-check-input" id="seasonOne2" type="checkbox" onclick="location.href='<?php print base_url() . '/categories/' . $category_id['cat_url'] . '/?b=' . my_encrypt($bra['id']) . $size_link . $color_link . $dimension_link . $paper_type_link . $pf; ?>'">
+												<input class="form-check-input" id="seasonOne2" type="checkbox" onclick="location.href='<?php print base_url() . 'categories/' . $category_id['cat_url'] . '/?b=' . my_encrypt($bra['id']) . $size_link . $color_link . $dimension_link . $paper_type_link . $pf; ?>'">
 												<label class="form-check-label" for="seasonOne2">
 													<?php print $bra['name']; ?>
 												</label>
