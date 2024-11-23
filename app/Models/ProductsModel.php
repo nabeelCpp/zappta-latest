@@ -555,9 +555,33 @@ class ProductsModel extends Model
         if (!empty($sql)) {
             $sql['attributes'] = $this->getStoreAttrbute($sql['store_id'], $sql['product_id']);
             $sql['gallery'] = (new \App\Models\ProductsGalleryModel())->getAllById($sql['product_id']);
+            $wish = $this->checkIfIsWishlistItem($sql['product_id']);
+            $sql['is_wishlist'] = $wish['is_wishlist'];
+            $sql['wishlist_id'] = $wish['wishlist_id'];
             return $sql;
         }
         return NULL;
+    }
+    
+    /**
+     * Check if product is marked as wishlist
+     * @param int $pid
+     * @return array
+     * @author M Nabeel Arshad
+     */
+    public function checkIfIsWishlistItem($pid) : array {
+        $response = [
+            'is_wishlist' => false,
+            'wishlist_id' => null
+        ];
+        if(getUserId() > 0) {
+            $wishlist = (new WishlistModel())->where('product_id', $pid)->where('user_id', getUserId())->first();
+            if($wishlist) {
+                $response['is_wishlist'] = true;
+                $response['wishlist_id'] = $wishlist['id'];
+            }
+        }
+        return $response;
     }
 
     public function getProductById($id)

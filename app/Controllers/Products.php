@@ -27,7 +27,7 @@ class Products extends BaseController
         $pc = filtreData($request->getUri()->getSegment(4));
         $sd_row = filtreData($request->getVar('sd_row'));
         $pds = filtreData($request->getVar('pds'));
-        $data = ZapptaTrait::productTrait($url, $pc, $sd_row, $pds);
+        $data = $this->productTrait($url, $pc, $sd_row, $pds);
         $data['image_path'] = 'products/';
         $data['pagetitle'] = 'Adidas';
         // dd($data);
@@ -48,6 +48,7 @@ class Products extends BaseController
             $category_id = $this->request->getGet('cat_id');  // Product IDs (if needed)
             $proids = (new CategoriesModel())->getRelatedCategories($category_id,$pid);
             $related = (new ProductsModel())->getRelatedProduct($proids, $offset);
+            $related['products'] = $this->wishlistStatusOnProducts($related['products']);
             $product = (new ProductsModel())->getProductById($pid);
             $data['store'] = (new VendorModel())->findStoreById($product['store_id']);
             $data['count'] = $related['products'];
@@ -71,7 +72,7 @@ class Products extends BaseController
         $pc = filtreData($request->getUri()->getSegment(4));
         $sd_row = filtreData($request->getVar('sd_row'));
         $pds = filtreData($request->getVar('pds'));
-        $data = ZapptaTrait::productTrait($url, $pc, $sd_row, $pds);
+        $data = $this->productTrait($url, $pc, $sd_row, $pds);
         $data['image_path'] = 'products/';
         $data['pagetitle'] = 'Adidas';
         // dd($data);

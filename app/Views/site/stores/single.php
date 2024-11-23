@@ -20,9 +20,9 @@
         opacity: 0;
     }
 </style>
-<link type="text/css" rel="stylesheet" href="<?= base_url() ?>/theme/zoomer/style.css" />
+<link type="text/css" rel="stylesheet" href="<?= base_url() ?>theme/zoomer/style.css" />
 <script>
-    currentUrl = "<?php print base_url() . '/stores/' . $single['store_slug']; ?>";
+    currentUrl = "<?php print base_url() . 'stores/' . $single['store_slug']; ?>";
 </script>
 <!-- section dividie Layout// -->
 <section class="py-3">
@@ -31,8 +31,8 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="<?php print base_url(); ?>">Home</a></li>
-                    <li class="breadcrumb-item"><a href="<?php print base_url() . '/stores/' . $single['store_slug']; ?>">Stores</a></li>
-                    <li class="breadcrumb-item"><a href="<?php print base_url() . '/stores/' . $single['store_slug']; ?>"><?php print $single['store_name']; ?></a></li>
+                    <li class="breadcrumb-item"><a href="<?php print base_url() . 'stores/' . $single['store_slug']; ?>">Stores</a></li>
+                    <li class="breadcrumb-item"><a href="<?php print base_url() . 'stores/' . $single['store_slug']; ?>"><?php print $single['store_name']; ?></a></li>
                 </ol>
             </nav>
         </div>
@@ -53,7 +53,7 @@
             <div class="col-md-5">
                 <div class="singleProductDescription">
                     <h2><?= ucfirst($single['name']) ?></h2>
-                    <p class="visitStore"><a href="<?php print base_url() . '/stores/' . $single['store_slug']; ?>" class="visit">Visit the Store</a></p>
+                    <p class="visitStore"><a href="<?php print base_url() . 'stores/' . $single['store_slug']; ?>" class="visit">Visit the Store</a></p>
                     <div class="p-ratings">
                         <?php
                         if (isset($overal_ratings->average_ratings) && $overal_ratings->average_ratings) {
@@ -200,7 +200,7 @@
 
 
                     <div class="productSelectionFinal">
-                        <button class="btn heartSelection" onclick="add_item_wish('<?php print my_encrypt($single['product_id']); ?>','<?php print my_encrypt($single['pds']); ?>',1);">
+                        <button class="btn heartSelection <?=$single['is_wishlist']?'active':''?>" onclick="<?= !$single['is_wishlist'] ? 'add_item_wish(\''.my_encrypt($single['product_id']).'\',\''.my_encrypt($single['pds']).'\',this,1);':'remove_item_wish(this, \''.my_encrypt($single['wishlist_id']).'\');'?>" data-pid="<?= my_encrypt($single['product_id']) ?>" data-pds="<?= my_encrypt($single['pds']) ?>" data-key="1">
                             whishlist
                         </button>
                         <?php
@@ -329,7 +329,7 @@
             e.preventDefault();
             $('#addtocard').click();
             $(document).ajaxStop(function() {
-                window.location.href = '<?= base_url() ?>/cart';
+                window.location.href = '<?= base_url() ?>cart';
             })
         });
         $('#addtocard').click(function(e) {

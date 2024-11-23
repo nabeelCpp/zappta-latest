@@ -578,10 +578,13 @@ li hr.dropdown-divider
  
   background: url(/new-landing/assets/images/heart.svg) no-repeat center center #F3F3F3;
 }
-.productSelectionFinal .heartSelection:active,
+/* .productSelectionFinal .heartSelection:active,
 .productSelectionFinal .heartSelection:focus
 {
   background: url(/new-landing/assets/images/heartActive.svg) no-repeat center center #F3F3F3;
+} */
+.productSelectionFinal .heartSelection.active {
+  background: url(/new-landing/assets/images/heartActive.svg) no-repeat center center #fff;
 }
 .productSelectionFinal .cartBtn
 {

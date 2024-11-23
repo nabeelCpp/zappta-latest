@@ -8,7 +8,7 @@ const viewMoreProducts = (cat_id, pid, offset) => {
         offset: offset,
     }
     $.ajax({
-        url: baseUrl+"/products/load/more",
+        url: baseUrl+"products/load/more",
         type: "GET",
         data,
         beforeSend: function() {

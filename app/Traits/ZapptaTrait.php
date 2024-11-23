@@ -170,7 +170,7 @@ trait ZapptaTrait
      * @param
      * @return array
      */
-    public static function productTrait($url, $pc, $sd_row, $pds) : array {
+    public function productTrait($url, $pc, $sd_row, $pds) : array {
         $request = request();
         $ReviewModel = new ReviewModel;
         $complete_link = implode('/',$request->getUri()->getSegments()).'?'.http_build_query($_GET);
@@ -180,7 +180,9 @@ trait ZapptaTrait
         $data['single'] = (new ProductsModel())->getProductByUrl($url,$pc,$sd_row,$pds);
         if ( !empty($data['single']) ) {
             $data['proids'] = (new CategoriesModel())->getRelatedCategories($data['single']['product_category'],$data['single']['id']);
-            $data['related'] = (new ProductsModel())->getRelatedProduct($data['proids']);
+            $related = (new ProductsModel())->getRelatedProduct($data['proids']);
+            $related['products'] = $this->wishlistStatusOnProducts($related['products']);
+            $data['related'] = $related;
             // $data['store'] = $this->db->table('vendor')->where('id', $data['single']['store_id'])->get()->first();
             $data['store'] = (new VendorModel())->findStoreById($data['single']['store_id']);
             $data['single']['cover'] = getImageThumg('products', $data['single']['cover'], 100);

@@ -29,7 +29,7 @@ class Home extends BaseController {
         $request = request();
         $sd_row = filtreData($request->getVar('sd_row'));
         $pds = filtreData($request->getVar('pds'));
-        $data = ZapptaTrait::productTrait($url, $pc, $sd_row, $pds);
+        $data = $this->productTrait($url, $pc, $sd_row, $pds);
         return response()->setJSON(ZapptaHelper::response('Product details fetched successfully!', $data));
     }
 
