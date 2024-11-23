@@ -139,9 +139,9 @@ trait ZapptaTrait
             $data['pagetitle'] = $store['store_name'];
             if (!empty($store) && !empty($data['proids'])) {
                 if (!empty($searchq)) {
-                    $data['products'] = (new ProductsModel())->getStoreListingByProBySearch($store['id'], $searchq, $data['proids']);
+                    $data['products'] = $this->wishlistStatusOnProducts((new ProductsModel())->getStoreListingByProBySearch($store['id'], $searchq, $data['proids']));
                 } else {
-                    $data['products'] = (new ProductsModel())->getStoreListingByPro($store['id'], $data['proids']);
+                    $data['products'] = $this->wishlistStatusOnProducts((new ProductsModel())->getStoreListingByPro($store['id'], $data['proids']));
                 }
             } else {
                 $data['products'] = [];
@@ -151,9 +151,9 @@ trait ZapptaTrait
             $data['pagetitle'] = $store['store_name'];
             if (!empty($store)) {
                 if (!empty($searchq)) {
-                    $data['products'] = (new ProductsModel())->getStoreListingBySearch($store['id'], $searchq);
+                    $data['products'] = $this->wishlistStatusOnProducts((new ProductsModel())->getStoreListingBySearch($store['id'], $searchq));
                 } else {
-                    $data['products'] = (new ProductsModel())->getStoreListing($store['id']);
+                    $data['products'] = $this->wishlistStatusOnProducts((new ProductsModel())->getStoreListing($store['id']));
                 }
             } else {
                 $data['products'] = [];

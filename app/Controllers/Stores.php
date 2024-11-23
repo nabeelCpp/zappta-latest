@@ -48,7 +48,6 @@ class Stores extends BaseController
             return redirect()->to('/');
         }
         $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
-        $data['css'] = ZapptaHelper::loadModifiedThemeCss();
         $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
         $data['categories'] = buildTree($data['categories']);
         $data['sticky_header'] = true;

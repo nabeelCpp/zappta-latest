@@ -50,7 +50,9 @@ class UsersNotification extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function markAsRead($link, $user_id) {
-        $this->set('is_read', 1)->like('link', $link)->where('user_id', $user_id)->update();
+    public function markAsRead($link) {
+        if(getUserId() > 0) {
+            $this->set('is_read', 1)->like('link', $link)->where('user_id', getUserId())->update();
+        }
     }
 }
