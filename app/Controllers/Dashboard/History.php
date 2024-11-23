@@ -33,7 +33,7 @@ class History extends BaseController
     public function status()
     {
         $url = get_current_url(false);
-        (new UsersNotification())->markAsRead($url, getUserId());
+        (new UsersNotification())->markAsRead($url);
         $db = \Config\Database::connect();
         $ReviewModel = new ReviewModel;
         $order_id = my_decrypt($this->request->getVar('order_id'));
