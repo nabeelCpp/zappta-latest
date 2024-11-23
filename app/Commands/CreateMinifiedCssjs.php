@@ -16,7 +16,7 @@ class CreateMinifiedCssjs extends BaseCommand
     protected $group = 'App';
     protected $theme = 'public/theme/';
     protected $newLanding = 'public/new-landing/assets/';
-    protected $version = '1.0.33';
+    protected $version = '1.0.34';
 
     /**
      * The Command's Name
