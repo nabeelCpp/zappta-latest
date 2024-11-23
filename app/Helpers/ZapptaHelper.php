@@ -12,6 +12,8 @@ class ZapptaHelper {
 
     const HASHING_ALGO = 'HS256';
 
+    const ZAPPTA_TAX = '2.5%';
+
     /**
      * Customized response pattern for all API endpoints
      * @param 

@@ -24,7 +24,7 @@
 									<div class="row">
 										<div class="col-md-4 form-group">
 											<label for="firstname">First Name<span>*</span></label>
-											<input type="text" name="address[billing][first_name]" class="form-control required" data-msg-required="Please enter your First name" placeholder="First Name" />
+											<input type="text" name="address[billing][first_name]" class="form-control required" data-msg-required="Please enter your First name" placeholder="First Name" value="<?= $saved_session_details['billing']->first_name??'' ?>" />
 											<div class="invalid-feedback">
 												<!-- Valid first name is required. -->
 											</div>
@@ -32,21 +32,21 @@
 
 										<div class="col-md-4 form-group">
 											<label>Last name<span>*</span></label>
-											<input type="text" name="address[billing][last_name]" class="form-control required" placeholder="Last Name" data-msg-required="Please enter your Last name" />
+											<input type="text" name="address[billing][last_name]" class="form-control required" placeholder="Last Name" data-msg-required="Please enter your Last name" value="<?= $saved_session_details['billing']->last_name??'' ?>" />
 											<div class="invalid-feedback">
 												<!-- Valid last name is required. -->
 											</div>
 										</div>
 										<div class="col-md-4 form-group">
 											<label for="companyname">Company Name <span>(Optional)</span></label>
-											<input type="text" name="address[billing][company_name]" class="form-control" placeholder="Company Name" />
+											<input type="text" name="address[billing][company_name]" class="form-control" placeholder="Company Name" value="<?= $saved_session_details['billing']->company_name??'' ?>" />
 
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-md-12 form-group">
 											<label for="address">Address <span>*</span></label>
-											<input type="text" class="form-control" id="address" name="address[billing][stree_address]" placeholder="Address">
+											<input type="text" class="form-control" id="address" name="address[billing][stree_address]"  value="<?= $saved_session_details['billing']->stree_address??'' ?>" placeholder="Address">
 											<div class="invalid-feedback">
 												Address required.
 											</div>
@@ -55,8 +55,8 @@
 									<div class="row">
 										<div class="col-md-4 form-group">
 											<label for="Country">Country</label>
-											<input type="text" class="form-control" id="country" placeholder="Country" name="address[billing][country]">
-											<div class="invalid-feedback">
+											<input type="text" class="form-control" id="country" placeholder="Country" name="address[billing][country]" value="<?= $saved_session_details['billing']->country??'' ?>">
+											<div class="invalid-feedback" >
 												Country is required.
 											</div>
 										</div>
@@ -64,14 +64,14 @@
 
 										<div class="col-md-4 form-group">
 											<label for="City">Town / City<span>*</span></label>
-											<input type="text" name="address[billing][town_city]" class="form-control required" data-msg-required="Please enter Town / City" id="City" placeholder="City" />
+											<input type="text" name="address[billing][town_city]" class="form-control required" data-msg-required="Please enter Town / City" id="City" placeholder="City" value="<?= $saved_session_details['billing']->town_city??'' ?>" />
 											<div class="invalid-feedback">
 												City is required.
 											</div>
 										</div>
 										<div class="col-md-4 form-group">
 											<label for="zipCode">Postcode<span>*</span></label>
-											<input type="text" name="address[billing][postcode]" class="form-control required" id="zipCode" placeholder="Zip Code" data-msg-required="Please enter Postcode" minlength="5" maxlength="7" />
+											<input type="text" name="address[billing][postcode]" class="form-control required" id="zipCode" placeholder="Zip Code" data-msg-required="Please enter Postcode" minlength="5" maxlength="7" value="<?= $saved_session_details['billing']->postcode??'' ?>" />
 											<div class="invalid-feedback">
 												Zip Code is required.
 											</div>
@@ -80,32 +80,32 @@
 									<div class="row">
 										<div class="col-md-6 form-group">
 											<label for="email">Email</label>
-											<input type="text" class="form-control" name="address[billing][email]" id="email" placeholder="Email" data-rule-email="true" data-msg-required="Please enter your email address" data-msg-email="Please enter a valid email address">
+											<input type="text" class="form-control" name="address[billing][email]" id="email" placeholder="Email" data-rule-email="true" data-msg-required="Please enter your email address" data-msg-email="Please enter a valid email address" value="<?= $saved_session_details['billing']->email??'' ?>">
 											<div class="invalid-feedback">
 												Email required.
 											</div>
 										</div>
 										<div class="col-md-6 form-group">
 											<label for="phoneNumber">Phone Number</label>
-											<input type="text" class="form-control" id="phoneNumber" name="address[billing][phone]" placeholder="Phone Number" data-msg-required="Please enter Phone">
+											<input type="text" class="form-control" id="phoneNumber" name="address[billing][phone]"  value="<?= $saved_session_details['billing']->phone??'' ?>" placeholder="Phone Number" data-msg-required="Please enter Phone">
 											<div class="invalid-feedback">
 												Phone Number required.
 											</div>
 										</div>
 									</div>
 									<div class="form-check my-4">
-										<input class="form-check-input" type="checkbox" id="same_shipping" name="address[billing][same_shipping]" value="2">
+										<input class="form-check-input" type="checkbox" id="same_shipping" name="address[billing][same_shipping]" value="2" <?= isset($saved_session_details['billing']->same_shipping) ? 'checked' : ''?>>
 										<label class="form-check-label" for="same_shipping">
 											Ship into different address
 										</label>
 									</div>
 
-									<div class="paymentInfo" id="shipping_fields" style="display: none;">
+									<div class="paymentInfo" id="shipping_fields" style="display: <?= isset($saved_session_details['billing']->same_shipping) ? 'block' : 'none'?>;">
 										<h2 class="card-title mb-4">Shipping detail</h2>
 										<div class="row">
 											<div class="col-md-4 form-group">
 												<label for="firstname">First Name<span>*</span></label>
-												<input type="text" name="address[shipping][first_name]" class="form-control required" data-msg-required="Please enter your First name" placeholder="First Name" />
+												<input type="text" name="address[shipping][first_name]" value="<?= $saved_session_details['shipping']->first_name??'' ?>" class="form-control required" data-msg-required="Please enter your First name" placeholder="First Name" />
 												<div class="invalid-feedback">
 													<!-- Valid first name is required. -->
 												</div>
@@ -113,21 +113,21 @@
 
 											<div class="col-md-4 form-group">
 												<label>Last name<span>*</span></label>
-												<input type="text" name="address[shipping][last_name]" class="form-control required" placeholder="Last Name" data-msg-required="Please enter your Last name" />
+												<input type="text" name="address[shipping][last_name]" value="<?= $saved_session_details['shipping']->last_name??'' ?>" class="form-control required" placeholder="Last Name" data-msg-required="Please enter your Last name" />
 												<div class="invalid-feedback">
 													<!-- Valid last name is required. -->
 												</div>
 											</div>
 											<div class="col-md-4 form-group">
 												<label for="companyname">Company Name <span>(Optional)</span></label>
-												<input type="text" name="address[shipping][company_name]" class="form-control" placeholder="Company Name" />
+												<input type="text" name="address[shipping][company_name]" value="<?= $saved_session_details['shipping']->company_name??'' ?>" class="form-control" placeholder="Company Name" />
 
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-md-12 form-group">
 												<label for="address">Address <span>*</span></label>
-												<input type="text" class="form-control" id="address" name="address[shipping][stree_address]" placeholder="Address">
+												<input type="text" value="<?= $saved_session_details['shipping']->stree_address??'' ?>" class="form-control" id="address" name="address[shipping][stree_address]" placeholder="Address">
 												<div class="invalid-feedback">
 													Address required.
 												</div>
@@ -136,7 +136,7 @@
 										<div class="row">
 											<div class="col-md-4 form-group">
 												<label for="Country">Country</label>
-												<input type="text" class="form-control" id="country" placeholder="Country" name="address[shipping][country]">
+												<input type="text" value="<?= $saved_session_details['shipping']->country??'' ?>" class="form-control" id="country" placeholder="Country" name="address[shipping][country]">
 												<div class="invalid-feedback">
 													Country is required.
 												</div>
@@ -145,14 +145,14 @@
 
 											<div class="col-md-4 form-group">
 												<label for="City">Town / City<span>*</span></label>
-												<input type="text" name="address[shipping][town_city]" class="form-control required" data-msg-required="Please enter Town / City" id="City" placeholder="City" />
+												<input type="text" name="address[shipping][town_city]" value="<?= $saved_session_details['shipping']->town_city??'' ?>" class="form-control required" data-msg-required="Please enter Town / City" id="City" placeholder="City" />
 												<div class="invalid-feedback">
 													City is required.
 												</div>
 											</div>
 											<div class="col-md-4 form-group">
 												<label for="zipCode">Postcode<span>*</span></label>
-												<input type="text" name="address[shipping][postcode]" class="form-control required" id="zipCode" placeholder="Zip Code" data-msg-required="Please enter Postcode" minlength="5" maxlength="7" />
+												<input type="text" name="address[shipping][postcode]" value="<?= $saved_session_details['shipping']->postcode??'' ?>" class="form-control required" id="zipCode" placeholder="Zip Code" data-msg-required="Please enter Postcode" minlength="5" maxlength="7" />
 												<div class="invalid-feedback">
 													Zip Code is required.
 												</div>
@@ -161,14 +161,14 @@
 										<div class="row">
 											<div class="col-md-6 form-group">
 												<label for="email">Email</label>
-												<input type="text" class="form-control" name="address[shipping][email]" id="email" placeholder="Email" data-rule-email="true" data-msg-required="Please enter your email address" data-msg-email="Please enter a valid email address">
+												<input type="text" class="form-control" name="address[shipping][email]" value="<?= $saved_session_details['shipping']->email??'' ?>" id="email" placeholder="Email" data-rule-email="true" data-msg-required="Please enter your email address" data-msg-email="Please enter a valid email address">
 												<div class="invalid-feedback">
 													Email required.
 												</div>
 											</div>
 											<div class="col-md-6 form-group">
 												<label for="phoneNumber">Phone Number</label>
-												<input type="text" class="form-control" id="phoneNumber" name="address[shipping][phone]" placeholder="Phone Number" data-msg-required="Please enter Phone">
+												<input type="text" class="form-control" id="phoneNumber" name="address[shipping][phone]" value="<?= $saved_session_details['shipping']->phone??'' ?>" placeholder="Phone Number" data-msg-required="Please enter Phone">
 												<div class="invalid-feedback">
 													Phone Number required.
 												</div>
@@ -180,7 +180,7 @@
 										<div class="col-md-12 form-group mb-3">
 											<label for="notes">Order Notes <span>(Optional)</span></label>
 
-											<textarea class="form-control" cols="5" rows="5" id="notes" placeholder="Notes about your order, e.g. special notes for delivery" name="address[billing][order_notes]"></textarea>
+											<textarea class="form-control" cols="5" rows="5" id="notes" placeholder="Notes about your order, e.g. special notes for delivery" name="address[billing][order_notes]"><?= $saved_session_details['billing']->order_notes??'' ?></textarea>
 										</div>
 									</div>
 								</div>
@@ -197,6 +197,7 @@
 										<?php
 										$grand_sub_total = [];
 										$grand_shipp_total = [];
+										$zapptas = 0;
 										foreach (get_cart_contents() as $cart) {
 											$total_attr_price = [];
 											if (is_array($cart['options']) && count($cart['options']) > 0) {
@@ -205,6 +206,7 @@
 												}
 											}
 											$single_item = (new \App\Models\ProductsDetailModel())->getById($cart['id']);
+											$store = (new \App\Models\VendorModel())->findStoreById($single_item['store_id']);
 											if ($single_item['deal_enable'] > 0) {
 												$new_total_price = ($single_item['deal_final_price'] + array_sum($total_attr_price));
 											} else {
@@ -227,9 +229,12 @@
 											$grand_shipp_total[] = $handle_ship; ?>
 											<div class="d-flex justify-content-between mb-3">
 												<span class="sbHeading"><?php print ucfirst($cart['name']); ?></span>
-												<span class="sbPrice">$<?php print number_format($sub_total_price, 2) ?></span>
+												<span class="sbPrice">$<?php print $subtotal = number_format($sub_total_price, 2) ?></span>
 											</div>
-										<?php } ?>
+											<?php if (isset($store['earn_zappta']) && $store['earn_zappta']) { 
+												$zapptas += $store['earn_zappta'] * $store['per_dollar'] * $sub_total_price;
+											}
+										} ?>
 										<h5 class="card-title mb-4">Order Summary</h5>
 										<div class="d-flex justify-content-between mb-3">
 											<span class="sbHeading">Sub-total</span>
@@ -239,21 +244,23 @@
 											<span class="sbHeading">Shipping</span>
 											<span class="sbPrice"><?= is_array($grand_shipp_total) && count($grand_shipp_total) > 0 ? '$' . number_format(array_sum($grand_shipp_total), 2) : 'Free Shipping' ?></span>
 										</div>
-										<!-- <div class="d-flex justify-content-between mb-3">
+										<?php /*"<div class="d-flex justify-content-between mb-3">
 											<span class="sbHeading">Discount</span>
 											<span class="sbPrice">$24</span>
-										</div>
+										</div>"*/?>
 										<div class="d-flex justify-content-between mb-3">
-											<span class="sbHeading">Tax</span>
-											<span class="sbPrice">$61.99</span>
-										</div> -->
+											<span class="sbHeading">Tax <small>(<?=$tax?>)</small></span>
+											<span class="sbPrice">$<?php echo $totalTax =  calculateSubtotalTax($subtotal, $tax) ?></span>
+										</div>
 										<hr>
 										<div class="d-flex justify-content-between mb-1">
 											<strong class="totalHeading">Total</strong>
-											<strong class="totalCost">$<?php print number_format(array_sum($grand_sub_total) + array_sum($grand_shipp_total), 2); ?> USD</strong>
+											<strong class="totalCost">$<?php print number_format(array_sum($grand_sub_total) + array_sum($grand_shipp_total) + $totalTax, 2); ?> USD</strong>
 
 										</div>
-										<p class="earnTag mb-5">Earn <img src="./assets/images/zIcon.svg" alt=""> 15 per $1 spent</p>
+										<?php if ($zapptas > 0) { ?>
+											<p class="earnTag mb-5">Earn <img src="<?=$assets_url?>/images/zIcon.svg" alt=""> <?= number_format($zapptas, 2) ?> Overall</p>
+										<?php } ?>
 										<?php if (count($coupons) > 0) { ?>
 											<div class="card">
 												<div class="card-header">
@@ -291,7 +298,7 @@
 										<?php if ( getUserId() > 0 ) { ?>
 											<button type="submit" class="btn btn-primary w-100">Place Order</button>
 										<?php } else { ?>
-											<button type="button" data-bs-toggle="modal" data-bs-target="#accountModal" class="btn btn-primary w-100">Place Order</button>
+											<button type="button" data-bs-toggle="modal" data-bs-target="#accountModal" class="btn btn-primary w-100" onclick="saveCheckoutData()">Place Order</button>
 										<?php } ?>
 									</div>
 								</div>
@@ -342,5 +349,47 @@
 				}
 			}
 		})
-	})
+	});
+
+	
+	const saveCheckoutData = async () => {
+		let form = $('#checkoutform');
+
+		// Serialize the form data
+		let formData = {};
+		form.serializeArray().forEach(field => {
+			// Handle nested keys (e.g., "address[billing][first_name]")
+			const keys = field.name.match(/[^\[\]]+/g); // Extract keys
+			let temp = formData;
+
+			keys.forEach((key, index) => {
+				if (index === keys.length - 1) {
+					temp[key] = field.value; // Assign the value to the final key
+				} else {
+					temp[key] = temp[key] || {}; // Create the object if it doesn't exist
+					temp = temp[key];
+				}
+			});
+		});
+
+		console.log('Form Data as Nested Object:', formData);
+
+		// Send the data to your API
+		try {
+			let response = await fetch(baseUrl+'cart/save_checkout_details', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(formData) // Send as JSON string
+			});
+
+			let data = await response.json();
+			console.log('API Response:', data);
+		} catch (error) {
+			console.error('Error:', error);
+		}
+	};
+
+
 </script>

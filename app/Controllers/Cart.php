@@ -21,6 +21,7 @@ class Cart extends BaseController
         $data['pagetitle'] = 'Cart';
         $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
         $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
+        $data['tax'] = ZapptaHelper::ZAPPTA_TAX;
         return view('site/cart/index',$data);
     }
 
@@ -66,10 +67,14 @@ class Cart extends BaseController
                     }
                 }
             }
+            $data['tax'] = ZapptaHelper::ZAPPTA_TAX;
             $data['coupons'] = $allCoupons;
             $data['country'] = (new CountryModel())->getAll();
             $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
             $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
+            if(session()->has('checkout_form_data')) {
+                $data['saved_session_details'] = session()->get('checkout_form_data');
+            }
             return view('site/cart/checkout',$data);
         } else {
             return redirect()->to('/');
@@ -567,6 +572,35 @@ class Cart extends BaseController
         }
         return redirect()->to('/');
     }
+
+    /**
+     * Save checkout details when user is not logged in
+     * 
+     */
+    public function saveCheckoutDetails() {
+        // Get the request data
+        $requestData = $this->request->getVar();
+    
+        // Extract only the billing and shipping data
+        $billingData = $requestData->address->billing ?? [];
+        $shippingData = $requestData->address->shipping ?? [];
+    
+        // Prepare the data for flash session
+        $checkoutData = [
+            'billing' => $billingData,
+            'shipping' => $shippingData,
+        ];
+    
+        // Save the data to the flash session
+        session()->set('checkout_form_data', $checkoutData);
+    
+        // Return a response
+        return $this->response->setJSON([
+            'status' => 'success',
+            'message' => 'Checkout billing and shipping details saved successfully.',
+            'data' => $checkoutData
+        ]);
+    }    
 
 
 }

@@ -149,16 +149,20 @@
 								<h5 class="card-title mb-4">Cart Totals</h5>
 								<div class="d-flex justify-content-between mb-3">
 									<span class="sbHeading">Sub-total</span>
-									<span class="sbPrice">$<?php print number_format(array_sum($grand_sub_total), 2); ?></span>
+									<span class="sbPrice">$<?php print $subtotal = number_format(array_sum($grand_sub_total), 2); ?></span>
 								</div>
 								<div class="d-flex justify-content-between mb-3">
 									<span class="sbHeading">Shipping</span>
 									<span class="sbPrice" id="shippingTotal"><?= is_array($grand_shipp_total) && count($grand_shipp_total) > 0 ? '$'.number_format(array_sum($grand_shipp_total), 2) : 'Free' ?></span>
 								</div>
+								<div class="d-flex justify-content-between mb-3">
+									<span class="sbHeading">Tax <small>(<?=$tax?>)</small></span>
+									<span class="sbPrice">$<?php echo $totalTax =  calculateSubtotalTax($subtotal, $tax) ?></span>
+								</div>
 								<hr>
 								<div class="d-flex justify-content-between mb-1">
 									<strong class="totalHeading">Total</strong>
-									<strong class="totalCost">$<?php print number_format(array_sum($grand_sub_total) + array_sum($grand_shipp_total), 2); ?> USD</strong>
+									<strong class="totalCost">$<?php print number_format(array_sum($grand_sub_total) + array_sum($grand_shipp_total) + $totalTax, 2); ?> USD</strong>
 
 								</div>
 								<?php if ($zapptas > 0) { ?>
@@ -170,7 +174,7 @@
 									<button class="btn btn-primary w-100" type="button" onclick="checkPlayAndWin()">Play & Win</button>
 									<button class="btn btn-primary w-100" type="button" onclick="window.location.href='<?php print base_url() . '/cart/checkout'; ?>'">Proceed to Checkout</button>
 								<?php } else { ?>
-									<button  type="button" onclick="window.location.href='<?php print base_url() . '/cart/checkout'; ?>'" class="btn btn-primary w-100">Proceed to Checkout</button>
+									<button  type="button" onclick="window.location.href='<?php print base_url() . 'cart/checkout'; ?>'" class="btn btn-primary w-100">Proceed to Checkout</button>
 								<?php } ?>
 							</div>
 						</div>

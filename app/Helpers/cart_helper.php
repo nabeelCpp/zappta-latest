@@ -90,6 +90,11 @@ function GetCartRowId($id)
 	return $result;
 }
 
+function calculateSubtotalTax($amount, $tax){
+	$tax = (int) $tax;
+	return number_format($amount * $tax / 100, 2);
+}
+
 
 
 

@@ -428,8 +428,8 @@ const fetchFreshCsrfToken = () => {
         url: baseUrl+'csrf_token',
         type: 'GET',
         success: function(data) {
-            console.log(data);
-            $('#_tt_cc').val(data.token)
+            $('#_tt_cc').val(data.token);
+            $('#_cc').val(data.token);
         }
     })
 }

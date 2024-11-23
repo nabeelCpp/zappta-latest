@@ -91,7 +91,8 @@ class Filters extends BaseFilters
                     'compaign/playresult',
                     'compaign/latestresult',
                     'page-feedback',
-                    'api/*'
+                    'api/*',
+                    'cart/save_checkout_details'
                 ]
             ],
             // 'invalidchars',
