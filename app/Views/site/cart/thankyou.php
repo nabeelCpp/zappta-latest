@@ -16,7 +16,7 @@
 
                 <div class="productSelectionFinal">
 
-                    <a href="<?=base_url('dashboard/history')?>" class="cartBtn">
+                    <a href="<?=base_url('dashboard/history/status?order_id='.$order_id)?>" class="cartBtn">
                         Track order</a>
                     <a href="<?=base_url()?>" class="buyNowBtn">Continue Shopping</a>
                 </div>

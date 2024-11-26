@@ -61,7 +61,7 @@ class OrderModel extends Model
 	protected $beforeDelete         = [];
 	protected $afterDelete          = [];
 
-	private $bgColor = '#EE3186';
+	public $bgColor = '#EE3186';
 
 	public function getAllResult($limit=1)
     {
@@ -601,6 +601,7 @@ class OrderModel extends Model
         $order_id = $this->add($orderData);
         $order_serial = 'Z'.date('Ymd').'-'.$order_id;
         $total_zapptas = 0;
+		$earnedZapptas = [];
         foreach( $orderCart as $cart ) {
     		$total_attr_price = [];
             if ( is_array($cart['options']) && count($cart['options']) > 0 ) {
@@ -693,19 +694,11 @@ class OrderModel extends Model
 			if(isset($store['earn_zappta'])){
 				$zapptas = $store['earn_zappta']*$store['per_dollar']*$sub_total_price;
 				$total_zapptas += $zapptas;
-				$product = $this->db->table('products')
-							->where('id', $single_item['product_id'])
-							->get()
-							->getResultArray();
-				$this->db->table('zappta_earn')
-					 ->set('user_id',getUserId())
-					 ->set('zapta_earn',$zapptas)
-					//  ->set('visit_link','Purchased product '.$product[0]['name'])
-					 ->set('visit_link', $order_serial)
-					 ->set('type',6)
-					 ->set('visit_date',date('Y-m-d'))
-					 ->set('created_at', date('Y-m-d H:i:s'))
-					 ->insert();
+				if($order_status == 1){
+					$this->zapptaEarned($zapptas, $order_serial);
+				}else {
+					$earnedZapptas[] = $zapptas;
+				}
 			}
         }
 
@@ -728,12 +721,33 @@ class OrderModel extends Model
         }
         (new \App\Models\Setting())->insertDollor('ZAPPTA_BUYING','Buy Item',4,$final_total);
 		// Notification to user!
-		$link = '/dashboard/history/status?order_id='.my_encrypt($order_id).'&key='.csrf_hash();
-        (new UsersModel())->saveNotification("Your Order <b style='color: {$this->bgColor};'>{$order_serial}</b> has been placed!", getUserId(), $link, 'order-placed');
-		$link = '/dashboard/wallet';
-        (new UsersModel())->saveNotification("You won {$total_zapptas} Zappta dollars bonus via your Order <b style='color: {$this->bgColor};'>{$order_serial}</b>", getUserId(), $link, 'order-bonus');
-        return $order_id;
+		if($order_status == 1){
+			$link = '/dashboard/history/status?order_id='.my_encrypt($order_id).'&key='.csrf_hash();
+			(new UsersModel())->saveNotification("Your Order <b style='color: {$this->bgColor};'>{$order_serial}</b> has been placed!", getUserId(), $link, 'order-placed');
+			$link = '/dashboard/wallet';
+			(new UsersModel())->saveNotification("You won {$total_zapptas} Zappta dollars bonus via your Order <b style='color: {$this->bgColor};'>{$order_serial}</b>", getUserId(), $link, 'order-bonus');
+		}
+        return ['order_id' => $order_id, 'zapptas' => $earnedZapptas, 'order_serial' => $order_serial];
     }
+	
+	/**
+	 * Save earned zapptas to user wallet
+	 * @param int $zapptas
+	 * @param string $order_serial
+	 * @return void
+	 * @author M Nabeel Arshad
+	 */
+	public function zapptaEarned($zapptas, $order_serial) {
+		$this->db->table('zappta_earn')
+			->set('user_id',getUserId())
+			->set('zapta_earn',$zapptas)
+			//  ->set('visit_link','Purchased product '.$product[0]['name'])
+			->set('visit_link', $order_serial)
+			->set('type',6)
+			->set('visit_date',date('Y-m-d'))
+			->set('created_at', date('Y-m-d H:i:s'))
+			->insert();
+	}
 
     public function updateItemOrderStatus($order_id,$status)
     {

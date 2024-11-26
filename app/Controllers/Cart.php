@@ -9,7 +9,7 @@ use App\Models\ProductsModel;
 use App\Models\OrderModel;
 use App\Models\Setting;
 use App\Models\RegisterModel;
-
+use App\Models\UsersModel;
 use Stripe\Stripe;
 
 
@@ -83,6 +83,7 @@ class Cart extends BaseController
 
     public function address()
     {
+        session()->remove('order_metadata');
         if ( is_array(get_cart_contents()) && count(get_cart_contents()) > 0 ) {
             $postdata = $this->request->getPost();
             $ip = $this->request->getIPAddress();
@@ -104,7 +105,9 @@ class Cart extends BaseController
                     return redirect()->back();
                 }
             }
-            $ord = (new OrderModel())->insertOrder($ip,$postdata,$orderCart);
+            $response = (new OrderModel())->insertOrder($ip,$postdata,$orderCart);
+            $ord = $response['order_id'];
+            session()->set('order_metadata', $response);
             if($postdata['gateway'] == 'coupon_code'){
                 $db = \Config\Database::connect();
                 $db->table("coupons")->set('is_used', 1)->set('used_at', date('Y-m-d H:i:s'))->where('coupon_code', $postdata['coupon_code'])->update();
@@ -217,6 +220,9 @@ class Cart extends BaseController
             'mode' => 'payment',
             'success_url' => base_url().'payments/success?order='.$this->request->getUri()->getSegment(3).'&session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => base_url().'payments/cancel?order='.$this->request->getUri()->getSegment(3).'&session_id={CHECKOUT_SESSION_ID}',
+            'metadata' => [
+                'order' => json_encode(session()->get('order_metadata'))
+            ],
         ]);
         return redirect()->to( $session->url );
     }
@@ -230,10 +236,28 @@ class Cart extends BaseController
         $payment_response = serialize($session);
         $payment_confirmation = $session->payment_status;
         $payment_intent = $stripe->paymentIntents->retrieve($session->payment_intent);
+        $order_metadata = isset($session->metadata->order) 
+        ? json_decode($session->metadata->order, true) 
+        : null;
         switch ($payment_intent->status) {
             case 'succeeded':
                     (new OrderModel())->add(['id' => filtreData($order), 'status' => 1, 'payment_confirmation' => $payment_intent->status , 'payment_response' => $payment_response]);
                     (new OrderModel())->updateItemOrderStatus(filtreData($order),1);
+                    // Process zappta_coins if present
+                    $total_zapptas = 0;
+                    if ($order_metadata && isset($order_metadata['zapptas'])) {
+                        foreach ($order_metadata['zapptas'] as $zappta) {
+                            (new OrderModel())->zapptaEarned($zappta, $order_metadata['order_serial']);
+                            $total_zapptas += $zappta;
+                        }
+                    }
+                    // Notification to user!
+                    $link = '/dashboard/history/status?order_id='.my_encrypt($order).'&key='.csrf_hash();
+                    (new UsersModel())->saveNotification("Your Order <b style='color: ".(new OrderModel())->bgColor.";'>{$order_metadata['order_serial']}</b> has been placed!", getUserId(), $link, 'order-placed');
+                    if($total_zapptas > 0){
+                        $link = '/dashboard/wallet';
+                        (new UsersModel())->saveNotification("You won {$total_zapptas} Zappta dollars bonus via your Order <b style='color: ".(new OrderModel())->bgColor.";'>{$order_metadata['order_serial']}</b>", getUserId(), $link, 'order-bonus');
+                    }
                 break;
             
             case 'processing':
@@ -565,6 +589,8 @@ class Cart extends BaseController
     public function thankyou() {
         if ( session()->has('checkout_success')  ) {
             session()->remove('checkout_success');
+            $order_data = session()->get('order_metadata');
+            $data['order_id'] = my_encrypt($order_data['order_id']);
             $data['title'] = 'Thank You';
             $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
             $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);

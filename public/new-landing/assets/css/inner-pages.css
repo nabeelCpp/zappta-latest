@@ -191,6 +191,7 @@
   height: 320px;
   overflow: hidden;
   position: relative;
+  margin-bottom: 5px;
 
 }
 .productPostWraps .productPostThumbnail img
@@ -655,17 +656,18 @@ background: linear-gradient(90deg, rgba(26,197,203,1) 0%, rgba(70,226,231,1) 100
 }
 .singleProductDescription .selectionSize .form-check label
 {
-  width: 56px;
+  width: 64px;
   height: 56px;
   border-radius: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 18px;
-  font-weight: 400;
+  font-size: 14px;
+  font-weight: 500;
   border: 1px solid #D6D6D6;
   cursor: pointer;
   position: relative;
+  text-align: center;
 }
 .singleProductDescription .selectionSize .form-check input {
   position: absolute;
@@ -1702,6 +1704,19 @@ ul li.viewMoreNotifaction
     
     width: 50%;
   }
+  .filterSectionTab ul li
+  {
+    font-size: 14px;
+  }
+  .filterSectionTab ul
+  {
+    flex-flow: wrap;
+  }
+  .singleProductDescription .selectionSize .requiredAttributes
+  {
+    flex-flow: wrap;
+
+  }
 }
 
 @media (max-width: 570px) {
@@ -1759,11 +1774,7 @@ ul li.viewMoreNotifaction
   {
     gap: 9px;
   }
-  .singleProductDescription .selectionSize .form-check label
-  {
-    width: 42px;
-    height: 42px;
-  }
+
   .singleProductDescription .selectionSize label input:checked + span,
   .singleProductDescription .selectionSize label input:checked+span,
 .singleProductDescription .selectionSize label input:checked + span::before
