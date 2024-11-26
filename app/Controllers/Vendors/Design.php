@@ -69,7 +69,7 @@ class Design extends BaseController
                     echo json_encode([
                         'status' => 'ok',
                         'path' => $newName,
-                        'medium' => base_url().'/images/media/'.$img_ext[0].'/'.$img_ext[1].'/600',
+                        'medium' => base_url().'images/media/'.$img_ext[0].'/'.$img_ext[1].'/600',
                         // 'csrf_token' => csrf_hash()
                     ]);
                 }

@@ -7,9 +7,9 @@
 		if ( $vendor_design > 0 && !empty($vendor_design['header_banner']) ) {
 			$img_ext = explode('.',$vendor_design['header_banner']);
 	?>
-	<section class="storeBanner animate" style="background-image: url('<?php print base_url().'/images/media/'.$img_ext[0].'/'.$img_ext[1].'/1980';?>');"></section>
+	<section class="storeBanner animate" style="background-image: url('<?php print base_url().'images/media/'.$img_ext[0].'/'.$img_ext[1].'/1980';?>');"></section>
 	<?php } else { ?>
-	<section class="storeBanner animate" style="background-image: url('<?php print base_url().'/upload/stores/Image-10.jpg';?>');"></section>
+	<section class="storeBanner animate" style="background-image: url('<?php print base_url().'upload/stores/Image-10.jpg';?>');"></section>
 	<?php } ?>
 	<section class="bread bg-white">
 		<div class="container">
@@ -22,7 +22,7 @@
 							</li>
 							<li>/</li>
 							<li>
-								<a href="<?php print base_url().'/stores/'.strtolower($store['store_slug']);?>">Stores</a>
+								<a href="<?php print base_url().'stores/'.strtolower($store['store_slug']);?>">Stores</a>
 							</li>
 							<li>/</li>
 							<li><?php print $store['store_name'];?></li>
@@ -75,7 +75,7 @@
 		</div>
 	</section>
 	<script>
-		currentUrl = "<?php print base_url().'/stores/'.$store['store_slug'];?>";
+		currentUrl = "<?php print base_url().'stores/'.$store['store_slug'];?>";
 	</script>
 <?php } else { ?>
 	<?php print view('site/404');?>

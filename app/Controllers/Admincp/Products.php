@@ -67,9 +67,9 @@ class Products extends BaseController
                             <td>'.$row['id'].'</td>';
                     if( ! empty( $row['cover'] ) ) {
                         $ext_name = explode('.',$row['cover']);
-                        $html .=    '<td class="lo-stats__image"><img class="border rounded" src="'.base_url().'/images/product/'.$ext_name[0].'/'.$ext_name[1].'/100" class="border rounded" alt=""></td>';
+                        $html .=    '<td class="lo-stats__image"><img class="border rounded" src="'.base_url().'images/product/'.$ext_name[0].'/'.$ext_name[1].'/100" class="border rounded" alt=""></td>';
                     } else {
-                        $html .=    '<td class="lo-stats__image"><img class="border rounded" src="'.base_url().'/images/product/img-not-found/jpg/100" alt=""/></td>';
+                        $html .=    '<td class="lo-stats__image"><img class="border rounded" src="'.base_url().'images/product/img-not-found/jpg/100" alt=""/></td>';
                     }
                 $html .=    '<td>'.short($row['name'],50).'</td>';
                 $html .=    '<td>'.$row['store_name'].'</td>';
@@ -79,10 +79,10 @@ class Products extends BaseController
                 $html .=    '<td>'.$row['total_items'].'</td>';
                 $html .=    '<td>';
                 if ( $data['perm']->view == 1 ) {
-                    $html .= '<a href="'.base_url().'/admincp/products/edit/'.my_encrypt($row['id']).'" class="mb-2 btn btn-sm btn-success mr-1">View</a>';
+                    $html .= '<a href="'.base_url().'admincp/products/edit/'.my_encrypt($row['id']).'" class="mb-2 btn btn-sm btn-success mr-1">View</a>';
                 }     
                 if ( $data['perm']->deletep == 1 ) {
-                    $html .= '<a href="'.base_url().'/admincp/products/delete/'.my_encrypt($row['id']).'" class="mb-2 btn btn-sm btn-danger mr-1" onclick="return confirm(Are you sure to delete this?);">Delete</a>';
+                    $html .= '<a href="'.base_url().'admincp/products/delete/'.my_encrypt($row['id']).'" class="mb-2 btn btn-sm btn-danger mr-1" onclick="return confirm(Are you sure to delete this?);">Delete</a>';
                 }      
                 $html .= '</td>
                         </tr>';  
@@ -96,9 +96,9 @@ class Products extends BaseController
                                 <td>'.$row['id'].'</td>';
                         if( ! empty( $row['cover'] ) ) {
                             $ext_name = explode('.',$row['cover']);
-                            $html .=    '<td class="lo-stats__image"><img class="border rounded" src="'.base_url().'/images/product/'.$ext_name[0].'/'.$ext_name[1].'/100" class="border rounded" alt=""></td>';
+                            $html .=    '<td class="lo-stats__image"><img class="border rounded" src="'.base_url().'images/product/'.$ext_name[0].'/'.$ext_name[1].'/100" class="border rounded" alt=""></td>';
                         } else {
-                            $html .=    '<td class="lo-stats__image"><img class="border rounded" src="'.base_url().'/images/product/img-not-found/jpg/100" alt=""/></td>';
+                            $html .=    '<td class="lo-stats__image"><img class="border rounded" src="'.base_url().'images/product/img-not-found/jpg/100" alt=""/></td>';
                         }
                     $html .=    '<td>'.short($row['name'],50).'</td>';
                     $html .=    '<td>'.$row['store_name'].'</td>';
@@ -108,10 +108,10 @@ class Products extends BaseController
                     $html .=    '<td>'.$row['total_items'].'</td>';
                     $html .=    '<td>';
                     if ( $data['perm']->view == 1 ) {
-                        $html .= '<a href="'.base_url().'/admincp/products/edit/'.my_encrypt($row['id']).'" class="mb-2 btn btn-sm btn-success mr-1">View</a>';
+                        $html .= '<a href="'.base_url().'admincp/products/edit/'.my_encrypt($row['id']).'" class="mb-2 btn btn-sm btn-success mr-1">View</a>';
                     }     
                     if ( $data['perm']->deletep == 1 ) {
-                        $html .= '<a href="'.base_url().'/admincp/products/delete/'.my_encrypt($row['id']).'" class="mb-2 btn btn-sm btn-danger mr-1" onclick="return confirm(Are you sure to delete this?);">Delete</a>';
+                        $html .= '<a href="'.base_url().'admincp/products/delete/'.my_encrypt($row['id']).'" class="mb-2 btn btn-sm btn-danger mr-1" onclick="return confirm(Are you sure to delete this?);">Delete</a>';
                     }      
                     $html .= '</td>
                             </tr>';  

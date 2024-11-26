@@ -33,9 +33,9 @@ class Products extends BaseController
                 $product_detail = ( new \App\Models\ProductsDetailModel())->getById($q['id']);
                 if( ! empty( $q['cover'] ) ) { 
                     $ext_name = explode('.',$q['cover']);
-                    $url = base_url().'/images/product/'.$ext_name[0].'/'.$ext_name[1].'/100';
+                    $url = base_url().'images/product/'.$ext_name[0].'/'.$ext_name[1].'/100';
                 } else {
-                    $url = base_url().'/images/product/img-not-found/jpg/100';
+                    $url = base_url().'images/product/img-not-found/jpg/100';
                 }
                 if ( !empty($product_detail['retail_price_notax']) ) {
                     $price = !empty($product_detail) ? number_format($product_detail['retail_price_notax'],2) : '0.00';
@@ -169,10 +169,10 @@ class Products extends BaseController
         $searchproduct = (new ProductsModel())->searchproduct($postForm);
         if ( is_array($searchproduct) && count($searchproduct) > 0 ) {
             foreach( $searchproduct as $product ) {
-                $image = base_url().'/images/product/img-not-found/jpg/100';
+                $image = base_url().'images/product/img-not-found/jpg/100';
                 if ( !empty($product['cover']) ) {
                     $ext_fimg = explode('.',$product['cover']);
-                    $image = base_url().'/images/product/'.$ext_fimg[0].'/'.$ext_fimg[1].'/100';
+                    $image = base_url().'images/product/'.$ext_fimg[0].'/'.$ext_fimg[1].'/100';
                 }
                 $result[] = [ 'id' => $product['id'] , 'text' => $product['name'] , 'image' => $image  ];
             }
@@ -212,7 +212,7 @@ class Products extends BaseController
                 if ( $rr['value_opt'] == 2 ) {
                     if($rr['value_img']) {
                         $img_ext = explode('.', $rr['value_img']);
-                        $img = '<span class="color"><img src="'.base_url().'/images/product/'.$img_ext[0].'/'.$img_ext[1].'/100" alt="" class="rounded"></span>';
+                        $img = '<span class="color"><img src="'.base_url().'images/product/'.$img_ext[0].'/'.$img_ext[1].'/100" alt="" class="rounded"></span>';
                     }else{
                         $img = '<span class="color" style="background-color: #'.$rr['color_code'].';"></span>';
                     }

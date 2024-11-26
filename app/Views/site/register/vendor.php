@@ -82,7 +82,7 @@
 					<div class="form-group row">
 						<div class="col-sm-3 col-form-label"></div>
 						<div class="col-sm-9 position-relative">
-							<p class="link-tag"><a href="<?php print base_url().'/vendor-login';?>">Already have an Account?</a></p>
+							<p class="link-tag"><a href="<?php print base_url().'vendor-login';?>">Already have an Account?</a></p>
 						</div>
 					</div>
 				</div>

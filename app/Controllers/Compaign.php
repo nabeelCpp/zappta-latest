@@ -66,7 +66,7 @@ class Compaign extends BaseController
         $cookie_value = my_encrypt($pid);
         setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
         // $url = base_url().'/compaign/play/'.$single['purl'].'/p/'.$single['pc'].'/'.'?sd_row='.$single['sd_row'].'&pds='.$single['pds'].'&playgive=1';
-        $url = base_url().'/compaign/play';
+        $url = base_url().'compaign/play';
         return redirect()->to($url);
     }
 

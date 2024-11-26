@@ -22,7 +22,7 @@
 
     <div class="clientLogos">
       <?php foreach ($store as $st) { ?>
-        <a href="<?=base_url().'/stores/'.$st['store_slug']?>" class="logoItem">
+        <a href="<?=base_url().'stores/'.$st['store_slug']?>" class="logoItem">
           <div class="shop-thumb text-center" style="height: auto">
             <img
               src="<?=$st['store_logo']?>"

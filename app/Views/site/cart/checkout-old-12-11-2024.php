@@ -22,7 +22,7 @@
 ?>
 	<section class="cart mt-4 mb-4">
 		<div class="container">
-			<form method="post" action="<?php print base_url().'/cart/address';?>" id="checkoutform">
+			<form method="post" action="<?php print base_url().'cart/address';?>" id="checkoutform">
 				<input type="hidden" name="<?php print csrf_token() ?>" id="_cc" value="<?php print csrf_hash() ?>">
 				<div class="row flex-column flex-lg-row">
 					<div class="col-xl-8 col-lg-7 col-12">

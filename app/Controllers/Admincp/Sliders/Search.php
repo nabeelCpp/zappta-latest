@@ -25,7 +25,7 @@ class Search extends BaseController
         $post = [ 'name' => $name ];
         (new SearchSliderModel())->add($post);
         cache()->delete('cms_search_slider');
-        return redirect()->to(base_url().'/admincp/sliders/search');
+        return redirect()->to(base_url().'admincp/sliders/search');
     }
 
     public function edit()
@@ -42,7 +42,7 @@ class Search extends BaseController
         $post = [ 'id' => $id, 'name' => $name ];
         (new SearchSliderModel())->add($post);
         cache()->delete('cms_search_slider');
-        return redirect()->to(base_url().'/admincp/sliders/search');
+        return redirect()->to(base_url().'admincp/sliders/search');
     }
 
     public function delete()
@@ -50,7 +50,7 @@ class Search extends BaseController
         $id = $this->request->getUri()->getSegment(5);
         (new SearchSliderModel())->deleteR($id);
         cache()->delete('cms_search_slider');
-        return redirect()->to(base_url().'/admincp/sliders/search');
+        return redirect()->to(base_url().'admincp/sliders/search');
     }
 
 }

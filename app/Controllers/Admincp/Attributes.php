@@ -151,13 +151,13 @@ class Attributes extends BaseController
                $html .=    '<td>'.$row['total_items'].'</td>';
                $html .=    '<td>';
                 if ( $data['perm']->editp == 1 ) {
-                    $html .= '<a href="'.base_url().'/admincp/attributes/edit/'.my_encrypt($row['id']).'" class="mb-2 btn btn-sm btn-success mr-1">Edit</a>';
+                    $html .= '<a href="'.base_url().'admincp/attributes/edit/'.my_encrypt($row['id']).'" class="mb-2 btn btn-sm btn-success mr-1">Edit</a>';
                 }     
                 if ( $data['perm']->deletep == 1 ) {
-                    $html .= '<a href="'.base_url().'/admincp/attributes/delete/'.my_encrypt($row['id']).'" class="mb-2 btn btn-sm btn-danger mr-1" onclick="return confirm(Are you sure to delete this?);">Delete</a>';
+                    $html .= '<a href="'.base_url().'admincp/attributes/delete/'.my_encrypt($row['id']).'" class="mb-2 btn btn-sm btn-danger mr-1" onclick="return confirm(Are you sure to delete this?);">Delete</a>';
                 }       
                 if ( $attributesvalues->allview == 1 && $attributesvalues->view == 1 ) {
-                    $html .= '<a href="'.base_url().'/admincp/attributes/values/'.my_encrypt($row['id']).'?type='.$row['opt'].'" class="mb-2 btn btn-sm btn-warning mr-1">Values</a>';
+                    $html .= '<a href="'.base_url().'admincp/attributes/values/'.my_encrypt($row['id']).'?type='.$row['opt'].'" class="mb-2 btn btn-sm btn-warning mr-1">Values</a>';
                 }
                 $html .= '</td>
                         </tr>';  
@@ -174,13 +174,13 @@ class Attributes extends BaseController
                    $html .=    '<td>'.$row['total_items'].'</td>';
                    $html .=    '<td>';
                 if ( $data['perm']->editp == 1 ) {
-                    $html .= '<a href="'.base_url().'/admincp/attributes/edit/'.my_encrypt($row['id']).'" class="mb-2 btn btn-sm btn-success mr-1">Edit</a>';
+                    $html .= '<a href="'.base_url().'admincp/attributes/edit/'.my_encrypt($row['id']).'" class="mb-2 btn btn-sm btn-success mr-1">Edit</a>';
                 }     
                 if ( $data['perm']->deletep == 1 ) {
-                    $html .= '<a href="'.base_url().'/admincp/attributes/delete/'.my_encrypt($row['id']).'" class="mb-2 btn btn-sm btn-danger mr-1" onclick="return confirm(Are you sure to delete this?);">Delete</a>';
+                    $html .= '<a href="'.base_url().'admincp/attributes/delete/'.my_encrypt($row['id']).'" class="mb-2 btn btn-sm btn-danger mr-1" onclick="return confirm(Are you sure to delete this?);">Delete</a>';
                 }       
                 if ( $attributesvalues->allview == 1 && $attributesvalues->view == 1 ) {
-                    $html .= '<a href="'.base_url().'/admincp/attributes/values/'.my_encrypt($row['id']).'?type='.$row['opt'].'" class="mb-2 btn btn-sm btn-warning mr-1">Values</a>';
+                    $html .= '<a href="'.base_url().'admincp/attributes/values/'.my_encrypt($row['id']).'?type='.$row['opt'].'" class="mb-2 btn btn-sm btn-warning mr-1">Values</a>';
                 }  
                     $html .= '</td>
                             </tr>';  

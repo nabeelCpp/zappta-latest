@@ -352,15 +352,15 @@
 							<?php 
 								if( ! empty( $single['pcover'] ) ) { 
 			    					$ext_name = explode('.',$single['pcover']);
-			    					$dataimg  = base_url().'/images/product/'.$ext_name[0].'/'.$ext_name[1].'/250';
+			    					$dataimg  = base_url().'images/product/'.$ext_name[0].'/'.$ext_name[1].'/250';
 			    				} else {
-			    					$dataimg  = base_url().'/images/product/img-not-found/jpg/100';
+			    					$dataimg  = base_url().'images/product/img-not-found/jpg/100';
 			    				}
 								if( ! empty( $single['store_logo'] ) ) { 
 			    					$ext_names = explode('.',$single['store_logo']);
-			    					$store_logo  = base_url().'/images/media/'.$ext_names[0].'/'.$ext_names[1].'/250';
+			    					$store_logo  = base_url().'images/media/'.$ext_names[0].'/'.$ext_names[1].'/250';
 			    				} else {
-			    					$store_logo  = base_url().'/images/product/img-not-found/jpg/100';
+			    					$store_logo  = base_url().'images/product/img-not-found/jpg/100';
 			    				}
 							?>
 							<div class="pinim">
@@ -402,7 +402,7 @@
 					</div>
 				</div>
 				<div class="col-xl-1 col-lg-1 col-md-1 col-12 text-end">
-					<a href="<?php print base_url().'/compaign';?>" class="seeall">See All</a>
+					<a href="<?php print base_url().'compaign';?>" class="seeall">See All</a>
 				</div>
 			</div>
 		</div>
@@ -420,9 +420,9 @@
 	    				if( ! empty( $comp['store_logo'] ) ) { 
 	    					$ext_name = explode('.',$comp['store_logo']);
 	    			?>
-	    				<img src="<?php print base_url().'/images/media/'.$ext_name[0].'/'.$ext_name[1].'/250';?>" class="animate card-img-top" alt="">
+	    				<img src="<?php print base_url().'images/media/'.$ext_name[0].'/'.$ext_name[1].'/250';?>" class="animate card-img-top" alt="">
 	    			<?php } else { ?>
-	    				<img src="<?php print base_url().'/images/media/img-not-found/jpg/100';?>" class="animate card-img-top" alt="">
+	    				<img src="<?php print base_url().'images/media/img-not-found/jpg/100';?>" class="animate card-img-top" alt="">
 	    			<?php }?>
 
 					  <div class="card-body">
@@ -434,9 +434,9 @@
 	    				if( ! empty( $comp['pcover'] ) ) { 
 	    					$ext_cover = explode('.',$comp['pcover']);
 	    			?>
-	    				<img src="<?php print base_url().'/images/product/'.$ext_cover[0].'/'.$ext_cover[1].'/250';?>" class="animate card-img-middle" alt="">
+	    				<img src="<?php print base_url().'images/product/'.$ext_cover[0].'/'.$ext_cover[1].'/250';?>" class="animate card-img-middle" alt="">
 	    			<?php } else { ?>
-	    				<img src="<?php print base_url().'/images/media/img-not-found/jpg/100';?>" class="animate card-img-middle" alt="">
+	    				<img src="<?php print base_url().'images/media/img-not-found/jpg/100';?>" class="animate card-img-middle" alt="">
 	    			<?php }?>
 					  	</div>
 					  </div>
@@ -469,7 +469,7 @@
 			                </div>
 				            </div>
 					    </div>
-					    <a href="<?php print base_url().'/products/'.$comp['purl'].'/p/'.$comp['pc'].'/'.'?sd_row='.$comp['sd_row'].'&pds='.$comp['pds'].'&give=1';?>" class="btn btn-play">PLAY NOW</a>
+					    <a href="<?php print base_url().'products/'.$comp['purl'].'/p/'.$comp['pc'].'/'.'?sd_row='.$comp['sd_row'].'&pds='.$comp['pds'].'&give=1';?>" class="btn btn-play">PLAY NOW</a>
 					  </div>
 					</div>
 				</div>
@@ -776,14 +776,14 @@ function addValuesResult()
 		answerBox.style.display = 'block';
 		$('#spinbtn').attr('disabled', true);
 		setTimeout(function(){
-			window.location.href = '<?php print base_url().'/compaign';?>';
+			window.location.href = '<?php print base_url().'compaign';?>';
 		},5000);
 	}
 
 	if ( winpoerup == 1 ) {
 		
 
-		var url = '<?php print base_url().'/compaign/play/'.$single['purl'].'/p/'.$single['pc'].'/'.'?sd_row='.$single['sd_row'].'&pds='.$single['pds'].'&playgive=1&wh=2';?>';
+		var url = '<?php print base_url().'compaign/play/'.$single['purl'].'/p/'.$single['pc'].'/'.'?sd_row='.$single['sd_row'].'&pds='.$single['pds'].'&playgive=1&wh=2';?>';
 		var form = $('<form action="' + url + '" method="post">' +
 		  '<input type="hidden" name="<?=csrf_token()?>" value="<?=csrf_hash()?>" />' +
 		  '</form>');

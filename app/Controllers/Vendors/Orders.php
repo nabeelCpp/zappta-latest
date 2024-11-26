@@ -49,7 +49,7 @@ class Orders extends BaseController
             // Notification to user!
             $order = (new OrderModel())->getUserIdByOrder($oid)[0];
             $status = $this->request->getVar('ship');
-            $link = base_url().'/dashboard/history/status?order_id='.my_encrypt($order['id']).'&key='.csrf_hash();
+            $link = base_url().'dashboard/history/status?order_id='.my_encrypt($order['id']).'&key='.csrf_hash();
             (new UsersModel())->saveNotification("Your Order <b style='color: #FB5000;'>{$order['order_serial']}</b> has been {$status}!", $order['user_id'], $link, 'order-'.strtolower($status));
 
             return json_encode($data);

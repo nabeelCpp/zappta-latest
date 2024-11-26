@@ -71,8 +71,8 @@ class Media extends BaseController
                         'status' => 'ok',
                         'path' => $newName,
                         'id' => $media_id,
-                        'small' => base_url().'/images/product/'.$img_ext[0].'/'.$img_ext[1].'/100',//getImageThumg('products',$newName,100),
-                        'medium' => base_url().'/images/product/'.$img_ext[0].'/'.$img_ext[1].'/250',//getImageThumg('products',$newName,250),
+                        'small' => base_url().'images/product/'.$img_ext[0].'/'.$img_ext[1].'/100',//getImageThumg('products',$newName,100),
+                        'medium' => base_url().'images/product/'.$img_ext[0].'/'.$img_ext[1].'/250',//getImageThumg('products',$newName,250),
                         'csrf_token' => csrf_hash()
                     ]);
                 }

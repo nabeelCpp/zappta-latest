@@ -11,7 +11,7 @@
 							</li>
 							<li>/</li>
 							<li>
-								<a href="<?php print base_url().'/stores';?>">Stores</a>
+								<a href="<?php print base_url().'stores';?>">Stores</a>
 							</li>
 							<li>/</li>
 							<li><?php print $pagetitle;?></li>
@@ -26,7 +26,7 @@
 ?>
 	<section class="cart">
 		<div class="container">
-		<form method="post" action="<?php print base_url().'/cart/checkout';?>">
+		<form method="post" action="<?php print base_url().'cart/checkout';?>">
 			<input type="hidden" name="<?php print csrf_token() ?>" value="<?php print csrf_hash() ?>">
 			<div class="row">
 				<div class="col-xl-9 col-lg-9 col-md-9 col-12">

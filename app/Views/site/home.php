@@ -53,15 +53,15 @@
 										foreach( $store as $st ) { ?>
 											<div class="p-3 col-lg-2 my-2 comp-img-card" style="box-shadow: 0px 3px 6px #00000029;">
 												<div class="logo-img">
-													<a href="<?php print base_url().'/stores/'.$st['store_slug'];?>">
+													<a href="<?php print base_url().'stores/'.$st['store_slug'];?>">
 														<div class="lgimg">
 															<?php 
 																if( ! empty( $st['store_logo'] ) ) { 
 																	$ext_name = explode('.',$st['store_logo']);
 															?>
-																<img src="<?php print base_url().'/images/media/'.$ext_name[0].'/'.$ext_name[1].'/250';?>" class="animate" alt="">
+																<img src="<?php print base_url().'images/media/'.$ext_name[0].'/'.$ext_name[1].'/250';?>" class="animate" alt="">
 															<?php } else { ?>
-																<img src="<?php print base_url().'/images/media/img-not-found/jpg/100';?>" class="animate" alt="" >
+																<img src="<?php print base_url().'images/media/img-not-found/jpg/100';?>" class="animate" alt="" >
 															<?php }?>
 														</div>
 														<?php if($st['earn_zappta'] && $st['per_dollar']){ ?>
@@ -131,15 +131,15 @@
 					?>
 					<div class="col-xl-12">
 						<div class="homecat">
-							<a href="<?php print base_url().'/categories/'.$homecat['cat_url'];?>">
+							<a href="<?php print base_url().'categories/'.$homecat['cat_url'];?>">
 								<div class="cat-img">
 									<?php 
 					    				if( ! empty( $homecat['cat_icon'] ) ) { 
 					    					$ext_name = explode('.',$homecat['cat_icon']);
 					    			?>
-					    				<img src="<?php print base_url().'/images/media/'.$ext_name[0].'/'.$ext_name[1].'/350';?>" class="animate img-responsive" alt="">
+					    				<img src="<?php print base_url().'images/media/'.$ext_name[0].'/'.$ext_name[1].'/350';?>" class="animate img-responsive" alt="">
 					    			<?php } else { ?>
-					    				<img src="<?php print base_url().'/images/product/img-not-found/jpg/350';?>" class="animate img-responsive" alt="">
+					    				<img src="<?php print base_url().'images/product/img-not-found/jpg/350';?>" class="animate img-responsive" alt="">
 					    			<?php }?>
 								</div>
 								<h3><?php print $homecat['cat_name'];?></h3>
@@ -165,14 +165,14 @@
 					<?php foreach ($top_vendors as $key => $t_v) { ?>
 						<div class="col-xl-4 col-lg-4 col-md-4 col-12 mb-3">
 							<div class="h-vendor-detail">
-								<div class="h-vendor-top d-flex align-items-center" style="cursor: pointer;" onclick="location.href='<?php print base_url().'/stores/'.$t_v['store_slug'];?>'">
+								<div class="h-vendor-top d-flex align-items-center" style="cursor: pointer;" onclick="location.href='<?php print base_url().'stores/'.$t_v['store_slug'];?>'">
 									<div class="h-vendor-img">
 										<?php 
 											if( ! empty( $t_v['store_logo'] ) ) { 
 												$ext_name = explode('.',$t_v['store_logo']); ?>
-												<img src="<?php print base_url().'/images/media/'.$ext_name[0].'/'.$ext_name[1].'/250';?>">
+												<img src="<?php print base_url().'images/media/'.$ext_name[0].'/'.$ext_name[1].'/250';?>">
 											<?php } else { ?>
-												<img src="<?php print base_url().'/images/media/img-not-found/jpg/100';?>">
+												<img src="<?php print base_url().'images/media/img-not-found/jpg/100';?>">
 											<?php } ?>
 									</div>
 									<div class="h-vendor-text">
@@ -216,9 +216,9 @@
 													<div class="col-8 p-0" style="cursor: pointer;">
 														<?php if( ! empty( $t_v['top_products'][$p]['cover'] ) ) { 
 															$ext_name = explode('.',$t_v['top_products'][$p]['cover']); ?>
-															<img src="<?php print base_url().'/images/product/'.$ext_name[0].'/'.$ext_name[1].'/600';?>">
+															<img src="<?php print base_url().'images/product/'.$ext_name[0].'/'.$ext_name[1].'/600';?>">
 														<?php } else { ?>
-															<img src="<?php print base_url().'/images/media/img-not-found/jpg/600';?>" >
+															<img src="<?php print base_url().'images/media/img-not-found/jpg/600';?>" >
 														<?php } ?>
 													</div>
 												<?php continue; } ?>
@@ -228,9 +228,9 @@
 														<div class="rightvimg" style="cursor: pointer;" >
 															<?php if( ! empty( $t_v['top_products'][$p]['cover'] ) ) { 
 																$ext_name = explode('.',$t_v['top_products'][$p]['cover']); ?>
-																<img src="<?php print base_url().'/images/product/'.$ext_name[0].'/'.$ext_name[1].'/600';?>">
+																<img src="<?php print base_url().'images/product/'.$ext_name[0].'/'.$ext_name[1].'/600';?>">
 															<?php } else { ?>
-																<img src="<?php print base_url().'/images/media/img-not-found/jpg/600';?>" >
+																<img src="<?php print base_url().'images/media/img-not-found/jpg/600';?>" >
 															<?php } ?>
 														</div>
 												<?php if($p == count($t_v['top_products'])-1){ ?>

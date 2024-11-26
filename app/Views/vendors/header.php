@@ -11,11 +11,11 @@
 	<title>Welcome to Zappta!</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="<?php print base_url().'/theme/css/bundle.css'?>">
-	<link rel="stylesheet" type="text/css" href="<?php print base_url().'/theme/css/theme.css'?>">
-	<link rel="stylesheet" type="text/css" href="<?php print base_url().'/theme/css/admin.css'?>">
-	<link rel="stylesheet" type="text/css" href="<?php print base_url().'/theme/js/vendors/css/dataTables.min.css'?>">
-	<link rel="stylesheet" type="text/css" href="<?php print base_url().'/theme/css/responsive-.css'?>">
+	<link rel="stylesheet" type="text/css" href="<?php print base_url().'theme/css/bundle.css'?>">
+	<link rel="stylesheet" type="text/css" href="<?php print base_url().'theme/css/theme.css'?>">
+	<link rel="stylesheet" type="text/css" href="<?php print base_url().'theme/css/admin.css'?>">
+	<link rel="stylesheet" type="text/css" href="<?php print base_url().'theme/js/vendors/css/dataTables.min.css'?>">
+	<link rel="stylesheet" type="text/css" href="<?php print base_url().'theme/css/responsive-.css'?>">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script type="text/javascript">
 		var baseUrl = '<?php print base_url();?>/';
@@ -42,7 +42,7 @@
 					<div class="">
 						<div class="logo">
 							<a href="<?php print base_url();?>">
-								<img src="<?php print base_url().'/theme/image/logo.png'?>" alt="" />
+								<img src="<?php print base_url().'theme/image/logo.png'?>" alt="" />
 							</a>
 						</div>
 					</div>
@@ -81,7 +81,7 @@
 												<?php } ?>
 			
 											   <!--  <li>
-											    	<a class="dropdown-item" href="<?php print base_url().'/notifications';?>">
+											    	<a class="dropdown-item" href="<?php print base_url().'notifications';?>">
 											    		<span class="icon"><i class="fa-solid fa-right-from-bracket"></i></span>
 														<span style="color:#BF5000">See All Notifications</span>
 											    	</a>
@@ -95,7 +95,7 @@
 									</div>
 
 								<div class="carticon">
-									<a href="<?php print base_url().'/vendors/logout';?>" class="position-relative">
+									<a href="<?php print base_url().'vendors/logout';?>" class="position-relative">
 										<span>
 											<svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
 											  <g id="Icon_ionic-ios-log-out" data-name="Icon ionic-ios-log-out" transform="translate(0 0)">

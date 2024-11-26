@@ -3,7 +3,7 @@
 		if( isset($category_id) && ! empty( $category_id['cat_img'] ) ) { 
 			$ext_name = explode('.',$category_id['cat_img']);
 	?>
-		<section class="storeBanner animate" style="background-image: url('<?php print base_url().'/images/full/'.$ext_name[0].'/'.$ext_name[1];?>');"></section>
+		<section class="storeBanner animate" style="background-image: url('<?php print base_url().'images/full/'.$ext_name[0].'/'.$ext_name[1];?>');"></section>
 	<?php } ?>
 
 	<section class="bread bg-white">
@@ -17,7 +17,7 @@
 							</li>
 							<li>/</li>
 							<li>
-								<a href="<?php print base_url().'/brands';?>">Brands</a>
+								<a href="<?php print base_url().'brands';?>">Brands</a>
 							</li>
 						<?php if ( isset($category_id) ) { ?>
 							<li>/</li>
@@ -36,7 +36,7 @@
 				<div class="col-xl-3 col-lg-3 col-md-3 col-12">
 					<div class="cate-left">
 						<div class="left-block-link search">
-							<form method="get" action="<?php print base_url().'/categories';?>">
+							<form method="get" action="<?php print base_url().'categories';?>">
 								<label class="mb-1">Search Product</label>
 								<div class="position-relative">
 									<input type="text" name="q" placeholder="Search Product" class="form-control">
@@ -55,7 +55,7 @@
 								foreach( $allcat as $cat ) {
 						?>		
 								<li>
-									<a href="<?php print base_url().'/categories/'.$cat['cat_url'];?>"><?php print ucfirst($cat['cat_name']);?></a>
+									<a href="<?php print base_url().'categories/'.$cat['cat_url'];?>"><?php print ucfirst($cat['cat_name']);?></a>
 								</li>
 						<?php
 								}
@@ -72,7 +72,7 @@
 							<ul class="pagelink">
 								<?php foreach ( $brands as $bra ) { ?>
 									<li>
-										<a href="<?php print base_url().'/brands/'.$bra['urls'];?>"><?php print $bra['name'];?></a>
+										<a href="<?php print base_url().'brands/'.$bra['urls'];?>"><?php print $bra['name'];?></a>
 									</li>
 								<?php } ?>
 							</ul>
@@ -88,15 +88,15 @@
 							<?php foreach ( $brands as $br ) { ?>
 							<div class="col-xl-3 col-lg-3 col-md-3 col-12">
 								<div class="brb">
-									<a href="<?php print base_url().'/brands/'.$bra['urls'];?>">
+									<a href="<?php print base_url().'brands/'.$bra['urls'];?>">
 										<div class="brbimg">
 										<?php 
 											if( isset($br) && ! empty( $br['logo'] ) ) { 
 												$ext_name = explode('.',$br['logo']);
 										?>
-											<img src="<?php print base_url().'/images/product/'.$ext_name[0].'/'.$ext_name[1].'/250';?>" class="animate" alt="">
+											<img src="<?php print base_url().'images/product/'.$ext_name[0].'/'.$ext_name[1].'/250';?>" class="animate" alt="">
 										<?php } else { ?>
-											<img src="<?php print base_url().'/images/product/img-not-found/jpg/100';?>" class="animate" alt="">
+											<img src="<?php print base_url().'images/product/img-not-found/jpg/100';?>" class="animate" alt="">
 										<?php } ?>
 										</div>
 										<h3><?php print $br['name'];?></h3>

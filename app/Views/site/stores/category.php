@@ -1,5 +1,5 @@
 <?php print view('site/header');?>
-	<section class="storeBanner animate" style="background-image: url('<?php print base_url().'/upload/stores/Image-10.jpg';?>');"></section>
+	<section class="storeBanner animate" style="background-image: url('<?php print base_url().'upload/stores/Image-10.jpg';?>');"></section>
 	
 	<section class="bread bg-white">
 		<div class="container">
@@ -12,7 +12,7 @@
 							</li>
 							<li>/</li>
 							<li>
-								<a href="<?php print base_url().'/stores';?>">Stores</a>
+								<a href="<?php print base_url().'stores';?>">Stores</a>
 							</li>
 							<li>/</li>
 							<li><?php print $pagetitle;?></li>
@@ -88,7 +88,7 @@
 			<div class="cat-coll-m mt-4 mb-4">
 				<div class="row">
 					<div class="col-12">
-						<div class="store-cat-banner-left" style="background-image:url('<?php print base_url().'/upload/stores/cat-banner.png';?>');">
+						<div class="store-cat-banner-left" style="background-image:url('<?php print base_url().'upload/stores/cat-banner.png';?>');">
 							<div class="catname">
 								<h3>Men's Collection</h3>
 							</div>

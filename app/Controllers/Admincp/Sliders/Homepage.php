@@ -32,7 +32,7 @@ class Homepage extends BaseController
             (new SliderModel())->add($post);
             cache()->delete('homeslider');
         }
-        return redirect()->to(base_url().'/admincp/sliders/homepage');
+        return redirect()->to(base_url().'admincp/sliders/homepage');
     }
 
     public function edit()
@@ -56,7 +56,7 @@ class Homepage extends BaseController
             (new SliderModel())->add($post);
             cache()->delete('homeslider');
         }
-        return redirect()->to(base_url().'/admincp/sliders/homepage');
+        return redirect()->to(base_url().'admincp/sliders/homepage');
     }
 
     public function delete()
@@ -66,7 +66,7 @@ class Homepage extends BaseController
         removeImage('slider',$file);
         (new SliderModel())->deleteR($id);
         cache()->delete('homeslider');
-        return redirect()->to(base_url().'/admincp/sliders/homepage');
+        return redirect()->to(base_url().'admincp/sliders/homepage');
     }
 
 }

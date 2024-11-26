@@ -59,7 +59,7 @@ class Orders extends BaseController
                 $html .=    '<td>'.$row['total_stores'].'</td>';
                 $html .=    '<td>';
                 if ( $data['perm']->view == 1 ) {
-                    $html .= '<a href="'.base_url().'/admincp/orders/view/'.my_encrypt($row['id']).'" class="mb-2 btn btn-sm btn-success mr-1">View</a>';
+                    $html .= '<a href="'.base_url().'admincp/orders/view/'.my_encrypt($row['id']).'" class="mb-2 btn btn-sm btn-success mr-1">View</a>';
                 }      
                 $html .= '</td>
                         </tr>';  
@@ -79,7 +79,7 @@ class Orders extends BaseController
                 $html .=    '<td>'.$row['total_stores'].'</td>';
                 $html .=    '<td>';
                 if ( $data['perm']->view == 1 ) {
-                    $html .= '<a href="'.base_url().'/admincp/orders/view/'.my_encrypt($row['id']).'" class="mb-2 btn btn-sm btn-success mr-1">View</a>';
+                    $html .= '<a href="'.base_url().'admincp/orders/view/'.my_encrypt($row['id']).'" class="mb-2 btn btn-sm btn-success mr-1">View</a>';
                 }      
                 $html .= '</td>
                         </tr>';  

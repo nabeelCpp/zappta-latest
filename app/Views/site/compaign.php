@@ -93,9 +93,9 @@
 		    				if( ! empty( $comp['store_logo'] ) ) { 
 		    					$ext_name = explode('.',$comp['store_logo']);
 		    			?>
-		    				<img src="<?php print base_url().'/images/media/'.$ext_name[0].'/'.$ext_name[1].'/250';?>" class="animate card-img-top" alt="" style="height: 85px;">
+		    				<img src="<?php print base_url().'images/media/'.$ext_name[0].'/'.$ext_name[1].'/250';?>" class="animate card-img-top" alt="" style="height: 85px;">
 		    			<?php } else { ?>
-		    				<img src="<?php print base_url().'/images/media/img-not-found/jpg/100';?>" class="animate card-img-top" alt="" style="height: 85px;">
+		    				<img src="<?php print base_url().'images/media/img-not-found/jpg/100';?>" class="animate card-img-top" alt="" style="height: 85px;">
 		    			<?php }?>
 
 						  <div class="card-body">
@@ -107,9 +107,9 @@
 		    				if( ! empty( $comp['cover'] ) ) { 
 		    					$ext_cover = explode('.',$comp['cover']);
 		    			?>
-		    				<img src="<?php print base_url().'/upload/media/spree/'.$comp['cover'];?>" class="card-img-middle" alt="">
+		    				<img src="<?php print base_url().'upload/media/spree/'.$comp['cover'];?>" class="card-img-middle" alt="">
 		    			<?php } else { ?>
-		    				<img src="<?php print base_url().'/images/media/img-not-found/jpg/100';?>" class="card-img-middle" alt="">
+		    				<img src="<?php print base_url().'images/media/img-not-found/jpg/100';?>" class="card-img-middle" alt="">
 		    			<?php }?>
 						  	</div>
 						  </div>
@@ -143,7 +143,7 @@
 					            </div>
 						    </div>
 
-						    <!-- <a href="<?php //print base_url().'/products/'.$comp['purl'].'/p/'.$comp['pc'].'/'.'?sd_row='.$comp['sd_row'].'&pds='.$comp['pds'].'&give=1';?>" class="btn btn-play">PLAY NOW</a> -->
+						    <!-- <a href="<?php //print base_url().'products/'.$comp['purl'].'/p/'.$comp['pc'].'/'.'?sd_row='.$comp['sd_row'].'&pds='.$comp['pds'].'&give=1';?>" class="btn btn-play">PLAY NOW</a> -->
 						    <!-- <a href="#" class="btn btn-play">PLAY NOW</a> -->
 							<button class="btn btn-play upcoming_select_store" data-href="<?=base_url()?>/stores/<?=$comp['store_slug']?>" data-comp="<?=my_encrypt($comp['com_id'])?>" <?=getUserId() == 0?'onclick="showLogin(\'login\');"':''?> data-url="<?=base_url()?>/compaign/verify/<?=my_encrypt($comp['id'])?>" data-id="<?=my_encrypt($comp['vendor_id'])?>" data-button="play">PLAY NOW</button>
 						  </div>
@@ -204,9 +204,9 @@
 								if( ! empty( $comp['store_logo'] ) ) { 
 									$ext_name = explode('.',$comp['store_logo']);
 							?>
-								<img src="<?php print base_url().'/images/media/'.$ext_name[0].'/'.$ext_name[1].'/250';?>" class="animate card-img-top" alt="" style="height: 85px;">
+								<img src="<?php print base_url().'images/media/'.$ext_name[0].'/'.$ext_name[1].'/250';?>" class="animate card-img-top" alt="" style="height: 85px;">
 							<?php } else { ?>
-								<img src="<?php print base_url().'/images/media/img-not-found/jpg/100';?>" class="animate card-img-top" alt="" style="height: 85px;">
+								<img src="<?php print base_url().'images/media/img-not-found/jpg/100';?>" class="animate card-img-top" alt="" style="height: 85px;">
 							<?php }?>
 
 							<div class="card-body">
@@ -218,9 +218,9 @@
 								if( ! empty( $comp['cover'] ) ) { 
 									$ext_cover = explode('.',$comp['cover']);
 							?>
-								<img src="<?php print base_url().'/upload/media/spree/'.$comp['cover'];?>" class="card-img-middle" alt="">
+								<img src="<?php print base_url().'upload/media/spree/'.$comp['cover'];?>" class="card-img-middle" alt="">
 							<?php } else { ?>
-								<img src="<?php print base_url().'/images/media/img-not-found/jpg/100';?>" class="card-img-middle" alt="">
+								<img src="<?php print base_url().'images/media/img-not-found/jpg/100';?>" class="card-img-middle" alt="">
 							<?php }?>
 								</div>
 							</div>
