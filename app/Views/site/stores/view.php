@@ -50,7 +50,7 @@ if (!empty($store)) { ?>
 						<?php } ?>
 					</ul>
 
-					<!-- <div id="gallery">
+					<?php /* '<div id="gallery">
 
 						<a class="gallery-item shirts" href="#" data-cat="shirts">
 							<div class="productPostWraps">
@@ -139,7 +139,7 @@ if (!empty($store)) { ?>
 
 
 
-					</div> -->
+					</div>'*/ ?>
 				</div>
 				<div class="row" id="newGalaDetails">
 				

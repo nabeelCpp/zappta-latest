@@ -359,7 +359,7 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
 <!--scrollup-->
 </div>
 <!-- JS here -->
- <script src="<?= base_url('minified/js/scripts-1.0.35.min.js')?>"></script>
+ <script src="<?= base_url('minified/js/scripts-1.0.36.min.js')?>"></script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
@@ -466,7 +466,7 @@ if ($playgive !== 0) {
           data: {
             store_id: localStorage.store_id,
             com_id: localStorage.com_id,
-            <?= csrf_token() ?>: localStorage.csrf
+            <?= csrf_token() ?>: $('#_tt_cc').val()
           },
           type: 'POST',
           dataType: 'json',
@@ -475,6 +475,7 @@ if ($playgive !== 0) {
             btn.attr('disabled', false);
             if (data.token) {
               localStorage.setItem('csrf', data.token);
+              $('#_tt_cc').val(data.token);
             }
             if (data.spree.length > 0) {
               window.location.href = url;
@@ -696,7 +697,7 @@ if ($playgive !== 0) {
             data: {
               minutes: (localStorage.timer / 60).toFixed(),
               store_url: localStorage.store_url,
-              <?= csrf_token() ?>: '<?= csrf_hash() ?>'
+              <?= csrf_token() ?>: $('#_tt_cc').val()
             },
             dataType: 'json',
             type: 'POST',
@@ -736,7 +737,7 @@ if ($playgive !== 0) {
       data: {
         store_id: localStorage.store_id,
         com_id: localStorage.com_id,
-        <?= csrf_token() ?>: localStorage.csrf
+        <?= csrf_token() ?>: $('#_tt_cc').val()
       },
       success: function(res) {
         if (res.token) {
@@ -772,7 +773,7 @@ if ($playgive !== 0) {
       com_id: localStorage.com_id,
       pid: pid,
       status: status,
-      <?= csrf_token() ?>: localStorage.csrf
+      <?= csrf_token() ?>: $('#_tt_cc').val()
     };
     $.ajax({
       url: '<?= base_url() ?>home/spree',

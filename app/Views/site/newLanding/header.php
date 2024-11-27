@@ -22,13 +22,14 @@ $total_list = (new App\Models\WishlistModel)->getUserTotalList();
 
     <!-- CSS here -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
-    <link rel="stylesheet" href="<?= base_url('minified/css/styles-1.0.35.min.css')?>" />
+    <link rel="stylesheet" href="<?= base_url('minified/css/styles-1.0.36.min.css')?>" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <?= $css ?? null ?>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script type="text/javascript">
         var baseUrl = '<?php print base_url(); ?>';
         var currentUrl = window.location.origin + window.location.pathname;
+        var isLoggedIn = <?= getUserId() ?>;
     </script>
     <?php print csrf_meta() ?>
     <meta name="csrf_token_name" content="<?php print csrf_token() ?>">
@@ -64,7 +65,7 @@ $total_list = (new App\Models\WishlistModel)->getUserTotalList();
                         class="top-bar-inner text-center d-block">
                         <div class="top-bar-middle">
                             <span>Winners For Compaign Has been Announced
-                                <a href="<?= base_url() . route_to('compaign.winners') ?>" class="btn btn-link text-muted">click here</a></span>
+                                <a href="<?= route_to('compaign.winners') ?>" class="btn btn-link text-muted">click here</a></span>
                         </div>
                     </div>
                 </div>

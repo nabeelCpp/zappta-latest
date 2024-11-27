@@ -128,9 +128,9 @@ trait ZapptaTrait
         $searchq = isset($_GET['searchq']) ? filtreData(urldecode($_GET['searchq'])) : '';
         $cat = isset($_GET['cat']) ? filtreData($_GET['cat']) : '';
         $p_cat = isset($_GET['p']) ? filtreData(my_decrypt($_GET['p'])) : '';
-        $data['search_url'] = base_url() . '/stores/' . $slug;
+        $data['search_url'] = base_url() . 'stores/' . $slug;
         if (!empty($cat)) {
-            $data['search_url'] = base_url() . '/stores/' . $slug . '/?cat=' . $cat . '&p=' . $_GET['p'];
+            $data['search_url'] = base_url() . 'stores/' . $slug . '/?cat=' . $cat . '&p=' . $_GET['p'];
         }
         $data['categories'] = (new CategoriesModel())->getStoreSelectedCat($store['id']);
         if (!empty($cat)) {

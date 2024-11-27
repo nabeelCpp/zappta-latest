@@ -21,5 +21,7 @@ const fetchNotifications = () => {
 }
 
 $(document).ready(function() {
-    fetchNotifications();
+    if(isLoggedIn) {
+        fetchNotifications();
+    }
 });

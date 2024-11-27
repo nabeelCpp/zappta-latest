@@ -187,21 +187,14 @@
 			<div class="row" id="newGalaDetails">
 				
 			</div>
-			<div class="cat-pro-list mt-4 mb-4">
-				<div class="cat-pro-head">
-					<!-- <h2 class="text-center">Best Selling</h2> -->
-				</div>
-				<div class="row flex-wrap">
-					<?php print view('site/stores/prolist',['count' => 8]);?>
-				</div>
-			</div>
+			
 
 			<div class="cat-pro-list mt-4 mb-4">
 				<div class="cat-pro-head">
 					<h2 class="text-center" id="storesProList">Top Trending</h2>
 				</div>
 				<div class="row flex-wrap justify-content-center">
-					<?php print view('site/stores/prolist',['count' => $products, 'store'=>$store_id]);?>
+					<?php print view('site/stores/~prolist',['count' => $products, 'store'=>$store_id]);?>
 				</div>
 				<!-- <div class="row align-items-center justify-content-center marg-cst-50">
 					<div class="col-12">
