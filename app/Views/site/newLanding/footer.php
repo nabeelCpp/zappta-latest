@@ -673,8 +673,8 @@ if ($playgive !== 0) {
             localStorage.removeItem('store_id');
             localStorage.removeItem('com_id');
             clearInterval(localStorageInterval);
-            if (!$('#remained_on_store_page_timer').parents('.carticon').hasClass('d-none')) {
-              $('#remained_on_store_page_timer').parents('.carticon').addClass('d-none');
+            if (!$('#remained_on_store_page_timer').parents('li').hasClass('d-none')) {
+              $('#remained_on_store_page_timer').parents('li').addClass('d-none');
             }
             return false;
           }
@@ -683,8 +683,8 @@ if ($playgive !== 0) {
           let hours = Math.floor(timer / 60);
           let minutes = timer % 60;
           $('#remained_on_store_page_timer').html(('0' + hours).slice(-2) + ":" + ('0' + minutes).slice(-2));
-          if ($('#remained_on_store_page_timer').parents('.carticon').hasClass('d-none')) {
-            $('#remained_on_store_page_timer').parents('.carticon').removeClass('d-none');
+          if ($('#remained_on_store_page_timer').parents('li').hasClass('d-none')) {
+            $('#remained_on_store_page_timer').parents('li').removeClass('d-none');
           }
         }
       }, 1000)
@@ -720,13 +720,14 @@ if ($playgive !== 0) {
   <?php } ?>
 
   function addSpreeButtons() {
-    let products = $('.pro-detail');
+    let products = $('.productPostWraps');
+    let spreeBtnHtml = `<button type="button" class="btn btn-block zappta-red-bg btn-danger w-100" data-status='add'><i class="fa fa-cart-arrow-down"></i> Add to Spin Cart</button>`;
     products.each(function() {
       let btn = $(this).find('.add_To_Spree');
-      let html = `<button type="button" class="btn btn-dark btn-sm" data-status='add'>Add to Spin Cart</button>`;
+      let html = spreeBtnHtml;
       btn.html(html);
     });
-    $('#spreeOptBtn').html(`<button type="button" class="btn btn-dark btn-sm" data-status='add'>Add to Spin Cart</button>`);
+    $('#spreeOptBtn').html(spreeBtnHtml);
   }
 
   function fetchSprees() {
@@ -746,12 +747,12 @@ if ($playgive !== 0) {
         if (res.spree) {
           res.spree.forEach(sp => {
             let spree = $(`.add_To_Spree[data-id="${sp.pid}"]`);
-            spree.find('button').removeClass('btn-dark');
-            spree.find('button').addClass('btn-danger');
+            spree.find('button').removeAttr('class');
+            spree.find('button').attr('class', 'btn btn-block btn-dark w-100');
             spree.find('button').text('Remove');
             spree.find('button').attr('data-status', 'remove');
-            $('#spreeOptBtn[data-id="' + sp.pid + '"]').find('button').removeClass('btn-dark');
-            $('#spreeOptBtn[data-id="' + sp.pid + '"]').find('button').addClass('btn-danger');
+            $('#spreeOptBtn[data-id="' + sp.pid + '"]').find('button').removeAttr('class');
+            $('#spreeOptBtn[data-id="' + sp.pid + '"]').find('button').attr('class', 'btn btn-block btn-dark w-100');
             $('#spreeOptBtn[data-id="' + sp.pid + '"]').find('button').text('Remove');
             $('#spreeOptBtn[data-id="' + sp.pid + '"]').attr('data-status', 'remove');
           })
@@ -780,8 +781,8 @@ if ($playgive !== 0) {
       type: 'POST',
       dataType: 'json',
       beforeSend: function() {
-        btn.parents('.pro-list').css('opacity', '0.4');
-        btn.parents('.pro-list').css('pointer-events', 'none');
+        btn.parents('.productPostWraps').css('opacity', '0.4');
+        btn.parents('.productPostWraps').css('pointer-events', 'none');
         $('#spreeOptBtn').css('opacity', '0.4')
         $('#spreeOptBtn').css('pointer-events', 'none')
       },
@@ -789,17 +790,18 @@ if ($playgive !== 0) {
       success: function(res) {
         if (res.token) {
           localStorage.setItem('csrf', res.token);
+          $('#_tt_cc').val(res.token);
         }
         if (res.status) {
           if (res.spree) {
-            btn.removeClass('btn-dark');
-            btn.addClass('btn-danger');
+            btn.removeAttr('class');
+            btn.attr('class', 'btn btn-block btn-dark w-100');
             btn.text('Remove')
             btn.attr('data-status', 'remove');
             notyf.success(`Product added successfully to spin to win cart. <a href="<?= base_url('dashboard/spree') ?>"><b>Click here</b></a> to view your selected items.`);
           } else {
-            btn.removeClass('btn-danger');
-            btn.addClass('btn-dark');
+            btn.removeAttr('class');
+            btn.attr('class', 'btn btn-block zappta-red-bg btn-danger w-100');
             btn.text('Add to Spin Cart');
             btn.attr('data-status', 'add');
             notyf.error("Product removed from spin to win cart.");
@@ -808,7 +810,7 @@ if ($playgive !== 0) {
         if (!res.status) {
           notyf.error(res.msg);
         }
-        btn.parents('.pro-list').removeAttr('style');
+        btn.parents('.productPostWraps').removeAttr('style');
         $('#spreeOptBtn').removeAttr('style')
       }
     });

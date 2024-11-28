@@ -66,6 +66,7 @@
                         <p class="earnTag">Earn <img src="<?=$assets_url?>/images/zIcon.svg" alt="" /> <?=$store['earn_zappta']?> per $<?=$store['per_dollar']?> spent</p>
                     <?php } ?>
                 </a>
+                <div class="add_To_Spree" data-id="<?=$p['pid']?>"></div>
             </div>
         </div>
         <?php }

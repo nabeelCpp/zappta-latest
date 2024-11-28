@@ -73,7 +73,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button class="btn btn-info w-100 text-white mt-4 py-3 upcoming_select_store" data-href="<?=base_url()?>storess/<?=$comp['store_slug']?>" data-comp="<?=my_encrypt($comp['com_id'])?>" <?=getUserId() == 0?'onclick="showLogin(\'login\');"':''?> data-url="<?=base_url()?>compaign/verify/<?=my_encrypt($comp['id'])?>" data-id="<?=my_encrypt($comp['vendor_id'])?>" data-button="play">
+                                            <button class="btn btn-info w-100 text-white mt-4 py-3 upcoming_select_store" data-href="<?=base_url()?>stores/<?=$comp['store_slug']?>" data-comp="<?=my_encrypt($comp['com_id'])?>" <?=getUserId() == 0?'onclick="showLogin(\'login\');"':''?> data-url="<?=base_url()?>compaign/verify/<?=my_encrypt($comp['id'])?>" data-id="<?=my_encrypt($comp['vendor_id'])?>" data-button="play">
                                                 PLAY NOW
                                             </button>
                                         </div>
@@ -141,7 +141,7 @@
                                                 </div>
                                             </div>
                                             <div class="w-100">
-                                                <a type="button" data-url="<?=base_url('storess/'.$comp['store_slug'])?>" data-id="<?=my_encrypt($comp['vendor_id'])?>" data-comp="<?=my_encrypt($comp['com_id'])?>" <?=getUserId() == 0?'onclick="showLogin(\'login\');"':''?> class="btn btn-info w-100 text-white mt-4 py-3 upcoming_select_store" style="font-size: 16px;">SELECT ITEMS</a>
+                                                <a type="button" data-url="<?=base_url('stores/'.$comp['store_slug'])?>" data-id="<?=my_encrypt($comp['vendor_id'])?>" data-comp="<?=my_encrypt($comp['com_id'])?>" <?=getUserId() == 0?'onclick="showLogin(\'login\');"':''?> class="btn btn-info w-100 text-white mt-4 py-3 upcoming_select_store" style="font-size: 16px;">SELECT ITEMS</a>
                                             </div>
                                             <div class="w-100">
                                                 <a class="btn btn-zCoin w-100 mt-3" href="#"><img src="<?=$assets_url?>/images/zIcon.svg" alt=""> 15 Per Minute</a>

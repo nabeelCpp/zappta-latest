@@ -140,6 +140,11 @@ $total_list = (new App\Models\WishlistModel)->getUserTotalList();
                                             <li><a class="dropdown-item" href="<?php print base_url() . 'logout'; ?>"><img src="<?= $assets_url ?>/images/logout.svg" alt="" /> Logout</a></li>
                                         </ul>
                                     </li>
+                                    <?php if (getUserId() > 0) { ?>
+                                        <li class="d-none">
+                                            <a type="button" class="btn btn-success btn-sm"> <strong id="remained_on_store_page_timer">02:10</strong></a>
+                                        </li>
+                                    <?php } ?>
 
                                 <?php } ?>
 

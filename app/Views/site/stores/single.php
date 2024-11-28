@@ -69,10 +69,8 @@
                     $item_price = 0;
                     if ($single['outofstockorder'] == 2) { ?>
                         <h3>In Stock</h3>
-                        <div id="spreeOptBtn" class="m-2 add_To_Spree" data-id="<?= $single['product_id'] ?>"></div>
                     <?php } elseif ($single['outofstockorder'] == 1 && $single['quantity'] > 0) { ?>
                         <h3>In Stock</h3>
-                        <div id="spreeOptBtn" class="m-2 add_To_Spree" data-id="<?= $single['product_id'] ?>"></div>
                     <?php } else { ?>
                         <h3 class="text-danger">Out of Stock</h3>
                     <?php } ?>
@@ -213,6 +211,7 @@
                         <?php } ?>
                         <button type="button " class="buyNowBtn" id="buynow">Buy Now</button>
                     </div>
+                    <div id="spreeOptBtn" class="m-2 add_To_Spree" data-id="<?= $single['product_id'] ?>"></div>
                 </div>
             </div>
         </div>

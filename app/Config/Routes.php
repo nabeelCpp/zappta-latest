@@ -58,7 +58,7 @@ $routes->group('dashboard', ['namespace' => 'App\Controllers\Dashboard'], functi
 // store routes
 $routes->get('stores', 'Stores::index');
 $routes->get('stores/(:any)', 'Stores::view');
-$routes->get('storess/(:any)', 'Stores::view_old');
+// $routes->get('storess/(:any)', 'Stores::view_old');
 $routes->get('categories', 'Category::index');
 $routes->get('categories/(:any)', 'Category::single/$1');
 // $routes->get('categories_old/(:any)', 'Category::singlee/$1');
