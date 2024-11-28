@@ -171,13 +171,14 @@ class OrderModel extends Model
     	return $result;
    	}
 	
-    public function updateOrderPrice($order_id,$final_subtotal,$total_amount,$shipping,$order_serial)
+    public function updateOrderPrice($order_id,$final_subtotal,$total_amount,$shipping,$order_serial, $tax)
     {
       	$this->db->table($this->table)
 			   	 ->set('final_subtotal',$final_subtotal)
 			   	 ->set('total_amount',$total_amount)
 			     ->set('shipping',$shipping)
 			     ->set('order_serial',$order_serial)
+				 ->set('tax',$tax)
 			     ->where('id',$order_id)
 			     ->update();
 		return true;
@@ -701,10 +702,11 @@ class OrderModel extends Model
 				}
 			}
         }
+		$subtotal = array_sum($grand_sub_total);
+		$tax = calculateSubtotalTax($subtotal, get_zappta_tax());
+        $final_total = ($subtotal + array_sum($grand_shipp_total) + $tax);
 
-        $final_total = (array_sum($grand_sub_total) + array_sum($grand_shipp_total));
-
-        $this->updateOrderPrice($order_id,array_sum($grand_sub_total),$final_total,array_sum($grand_shipp_total),$order_serial);
+        $this->updateOrderPrice($order_id,array_sum($grand_sub_total),$final_total,array_sum($grand_shipp_total),$order_serial, $tax);
 
         $shipping_address = isset($data['address']['billing']['same_shipping']) ? $data['address']['billing']['same_shipping'] : 1;
 

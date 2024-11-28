@@ -865,3 +865,10 @@ function get_current_url($addHost = true) {
     }
     return $fullUrl;
 }
+
+/**
+ * Get zappta vat/tax from settings
+ */
+function get_zappta_tax() {
+    return ZapptaHelper::getGlobalSettings(['vat'])[0]['var_detail']??ZapptaHelper::ZAPPTA_TAX;
+}

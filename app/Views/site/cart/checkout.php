@@ -229,7 +229,7 @@
 											$grand_shipp_total[] = $handle_ship; ?>
 											<div class="d-flex justify-content-between mb-3">
 												<span class="sbHeading"><?php print ucfirst($cart['name']); ?></span>
-												<span class="sbPrice">$<?php print $subtotal = number_format($sub_total_price, 2) ?></span>
+												<span class="sbPrice">$<?= number_format($sub_total_price, 2) ?></span>
 											</div>
 											<?php if (isset($store['earn_zappta']) && $store['earn_zappta']) { 
 												$zapptas += $store['earn_zappta'] * $store['per_dollar'] * $sub_total_price;
@@ -238,7 +238,7 @@
 										<h5 class="card-title mb-4">Order Summary</h5>
 										<div class="d-flex justify-content-between mb-3">
 											<span class="sbHeading">Sub-total</span>
-											<span class="sbPrice">$<?php print number_format(array_sum($grand_sub_total), 2); ?></span>
+											<span class="sbPrice">$<?php print $subtotal = number_format(array_sum($grand_sub_total), 2); ?></span>
 										</div>
 										<div class="d-flex justify-content-between mb-3">
 											<span class="sbHeading">Shipping</span>

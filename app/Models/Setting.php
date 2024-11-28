@@ -240,9 +240,8 @@ class Setting extends Model
                         ->set('var_detail',$value)
                         ->where('var_name',$key)
                         ->update();
-
-           
         }
+        cache()->delete('getGlobalSettings');
 
     }
 

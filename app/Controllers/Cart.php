@@ -21,7 +21,7 @@ class Cart extends BaseController
         $data['pagetitle'] = 'Cart';
         $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
         $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
-        $data['tax'] = ZapptaHelper::ZAPPTA_TAX;
+        $data['tax'] = ZapptaHelper::getGlobalSettings(['vat'])[0]['var_detail']??ZapptaHelper::ZAPPTA_TAX;
         return view('site/cart/index',$data);
     }
 
@@ -67,7 +67,7 @@ class Cart extends BaseController
                     }
                 }
             }
-            $data['tax'] = ZapptaHelper::ZAPPTA_TAX;
+            $data['tax'] = ZapptaHelper::getGlobalSettings(['vat'])[0]['var_detail']??ZapptaHelper::ZAPPTA_TAX;
             $data['coupons'] = $allCoupons;
             $data['country'] = (new CountryModel())->getAll();
             $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
