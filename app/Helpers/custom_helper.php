@@ -815,8 +815,8 @@ function getImageDimensions($type = null) {
             'height' => 300
         ],
         'store_products' => [
-            'width' => 512,
-            'height' => 512,
+            'width' => 800,
+            'height' => 800,
         ],
         'spree' => [
             'width' => 250,
