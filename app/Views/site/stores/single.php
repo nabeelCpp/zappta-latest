@@ -43,7 +43,7 @@
                         <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
                             <?php foreach ($single['gallery'] as $gal) { ?>
                                 <li data-thumb="<?= getImageThumg($image_path, $gal['fimg'], 100) ?>">
-                                        <img src="<?= getImageThumg($image_path, $gal['fimg'], 600) ?>">
+                                        <img src="<?= getImageThumg($image_path, $gal['fimg'], 800) ?>">
                                 </li>
                             <?php } ?>
                         </ul>

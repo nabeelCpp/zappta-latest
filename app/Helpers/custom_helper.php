@@ -47,7 +47,8 @@ function imageSize()
                100,
                250,
                350,
-               600, 
+               600,
+               800,
                1280,
                1980, 
             ];
@@ -116,7 +117,15 @@ function show_message()
 function getImageThumg($dir,$filename,$size)
 {
     $path = "upload/$dir/$size-$size-$filename";
-    return file_exists($path) && is_file($path) ? base_url().$path : base_url()."upload/img-not-found.jpg";
+    if($size == 800) {
+        $image = file_exists($path) && is_file($path) ? base_url().$path : null;
+        if(!$image) {
+            return $image = getImageThumg($dir,$filename,600);
+        }
+    }else {
+        $image = file_exists($path) && is_file($path) ? base_url().$path : base_url()."upload/img-not-found.jpg";
+    }
+    return $image;
 }
 
 function getImageFull($dir,$filename)
