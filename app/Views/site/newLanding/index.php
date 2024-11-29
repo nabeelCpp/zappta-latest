@@ -78,7 +78,7 @@
   </div>
 </section>
 <!-- WHY FREE? -->
-<section class="whyFree-section">
+<?php /* <section class="whyFree-section">
   <div class="container">
     <div class="section-heading text-center">
       <h2 class="section-title zappta-red-color">WHY FREE?</h2>
@@ -134,7 +134,7 @@
       </div>
     </div>
   </div>
-</section>
+</section> */ ?>
 
 <?= view('site/newLanding/campaigns') ?>
 

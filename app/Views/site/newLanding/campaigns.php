@@ -31,7 +31,7 @@
                                         <div class="category-item">
                                             <div class="row">
                                                 <div class="col-6">
-                                                    <img src="<?= $comp['store_logo'] ?>" class="img img-thumbnail bg-transparent py-3" style="width: 250px; height: 100px;">
+                                                    <img src="<?= $comp['store_logo'] ?>" class="img img-thumbnail bg-transparent py-3" style="width: 150px; height: 100px;">
                                                 </div>
                                                 <div class="col-6">
                                                     <h3 class="title"><a href="#"><?php print short($comp['store_name'], 20); ?></a></h3>
