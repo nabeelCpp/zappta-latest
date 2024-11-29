@@ -1290,7 +1290,7 @@ margin: 5px 0;
 .pageWrapper .ampSection .logoItem .shop-thumb img
 {
   width: 100%;
-  object-position: top;
+  /* object-position: top; */
   object-fit: contain;
 }
 .pageWrapper .swiper.sliderMain {

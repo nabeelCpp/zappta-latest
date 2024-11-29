@@ -359,7 +359,7 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
 <!--scrollup-->
 </div>
 <!-- JS here -->
- <script src="<?= base_url('minified/js/scripts-1.0.36.min.js')?>"></script>
+ <script src="<?= base_url('minified/js/scripts-1.0.37.min.js')?>"></script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
