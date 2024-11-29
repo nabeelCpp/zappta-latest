@@ -37,7 +37,7 @@
             </nav>
         </div>
         <div class="row no-gutters mt-5">
-            <div class="col-md-7 pr-2">
+            <div class="col-md-6 pr-2">
                 <?php if (is_array($single['gallery']) && count($single['gallery']) > 0) { ?>
                     <div class="sliderThumbnail">
                         <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
