@@ -8,6 +8,11 @@ use App\Traits\ZapptaTrait;
 class Home extends BaseController {
     use ZapptaTrait;
 
+    /**
+     * This constant is mainly for api, either to encrypt get parameter or not
+     */
+    protected const GET_VARIABLES_ENCRYPT = ['c'];
+
     public function __construct() {
         
     }
@@ -41,6 +46,19 @@ class Home extends BaseController {
     public function imageDimensions() {
         $data = getImageDimensions();
         $response = ZapptaHelper::response('Image dimensions fetched successfully!', $data);
+        return response()->setJSON($response);
+    }
+
+    /**
+     * Global search
+     */
+    public function search() {
+        if(isset($_GET['c']) && (int) $_GET['c'] > 0) {
+            ZapptaHelper::makeSelectedGetParamsEncrypt($this::GET_VARIABLES_ENCRYPT);
+        }
+        $get = $_GET;
+        $data = $this->globalSearchTrait($get);
+        $response = ZapptaHelper::response('Search data fetched successfully!', $data);
         return response()->setJSON($response);
     }
 }

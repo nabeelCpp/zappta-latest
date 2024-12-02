@@ -217,4 +217,28 @@ trait ZapptaTrait
         return $response;
     }
 
+    /**
+     * Get global search products
+     * @param array $get
+     * @return array
+     * @author M Nabeel Arshad
+     */
+    public function globalSearchTrait($get)
+    {
+        $data['searchq'] = isset($get['searchq']) ?( !empty(filtreData(urldecode($get['searchq']))) ? filtreData(urldecode($get['searchq'])) : '') : '';
+        $data['search_cat'] = !empty(filtreData(urldecode($get['c']))) ? my_decrypt( filtreData(urldecode($get['c'])) ) : 0;
+        $data['filter'] = isset($get) ? $get : [];
+        $data['vendors_selected'] = isset($get['v']) && !empty($get['v']) ? explode('|', filtreData($get['v'])) : [];
+        $data['filter']['v'] = $data['vendors_selected'];
+        $data['page'] = isset($get['page']) ? $get['page'] : 1;
+        $data['products'] = $this->wishlistStatusOnProducts((new ProductsModel())->getSearchProducts($data['search_cat'],$data['searchq'],$data['filter'],$data['page']));
+        $data['total_products'] = (new ProductsModel())->getSearchProductsCounts($data['search_cat'],$data['searchq'],$data['filter']);
+        $data['limit'] = ProductsModel::LIMIT;
+        if ( $data['total_products'] > ProductsModel::LIMIT ) {
+            $data['pager'] = service('pager');
+        }
+        $data['meta'] = ZapptaHelper::createMeta($data['page'], $data['total_products'], $data['limit']);
+        return $data;
+    }
+
 }
