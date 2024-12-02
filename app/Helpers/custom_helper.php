@@ -836,16 +836,16 @@ function getImageDimensions($type = null) {
             'height' => 250,
         ],
         'category_banner' => [
-            'width' => 1680,
-            'height' => 780,
+            'width' => 1920,
+            'height' => 600,
         ],
         'slider' => [
-            'width' => 1680,
-            'height' => 780,
+            'width' => 1920,
+            'height' => 600,
         ],
         'store_banner' => [
-            'width' => 1680,
-            'height' => 780,
+            'width' => 1920,
+            'height' => 600,
         ],
     ];
     if($type) {
