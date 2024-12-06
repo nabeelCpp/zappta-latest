@@ -881,3 +881,11 @@ function get_current_url($addHost = true) {
 function get_zappta_tax() {
     return ZapptaHelper::getGlobalSettings(['vat'])[0]['var_detail']??ZapptaHelper::ZAPPTA_TAX;
 }
+
+/**
+ * Check if client is API
+ */
+function is_client_api() {
+    return session()->get('is_api') ?? false;
+}
+

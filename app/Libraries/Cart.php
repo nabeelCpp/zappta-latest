@@ -1,6 +1,8 @@
 <?php 
 
 namespace App\Libraries;
+
+use App\Models\Cart as ModelsCart;
 use Config\Services;
 
 /**
@@ -52,7 +54,7 @@ class Cart
      *
      * @var \CodeIgniter\Session\Session $session
      */
-    protected $session;
+    protected $session, $cartModel;
 
     // ------------------------------------------------------------------------
 
@@ -64,9 +66,10 @@ class Cart
     public function __construct()
     {
         $this->session = session();
+        $this->cartModel = new ModelsCart();
 
         // Grab the shopping cart array from the session table
-        $this->cartContents = $this->session->get('cart_contents');
+        $this->cartContents = is_client_api() ? $this->cartModel->getCart(getUserId()) : $this->session->get('cart_contents');
         if ( $this->cartContents === null ) {
             // No cart exists so we'll set some base values
             $this->cartContents = [ 'cart_total' => 0, 'total_items' => 0 ];
@@ -335,7 +338,12 @@ class Cart
 
         // If we made it this far it means that our cart has data.
         // Let's pass it to the Session class so it can be stored
-        $this->session->set('cart_contents', $this->cartContents);
+        if(is_client_api()){
+            // If we're an API client, we'll save cart contents to Cart table in db
+            $this->cartModel->updateCart(getUserId(), $this->cartContents);
+        }else{
+            $this->session->set('cart_contents', $this->cartContents);
+        }
 
         // Woot!
         return true;

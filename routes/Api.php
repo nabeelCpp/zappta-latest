@@ -1,5 +1,5 @@
 <?php
-$routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes) {
+$routes->group('api', ['namespace' => 'App\Controllers\API', 'filter' => 'api.client'], function($routes) {
     $routes->get('image_dimensions', 'Home::imageDimensions');
     $routes->get('home', 'Home::index');
     $routes->get('search', 'Home::search');
@@ -18,8 +18,9 @@ $routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes) 
         $routes->get('', 'Store::index');
         $routes->get('(:any)', 'Store::single/$1');
     });
-    $routes->group('cart', function($routes) {
+    $routes->group('cart', ['filter' => 'api.customer'], function($routes) {
         $routes->get('', 'Cart::index');
+        $routes->post('', 'Cart::add');
     });
 
     $routes->group('customer', ['namespace' => 'App\Controllers\API\User'], function($routes) {

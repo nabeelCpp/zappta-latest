@@ -38,6 +38,7 @@ class Filters extends BaseFilters
         'customer'      => \App\Filters\Customer::class,
         'admin'         => \App\Filters\Admin::class,
         'api.customer' => \App\Filters\JWTAuthFilter::class,
+        'api.client' => \App\Filters\SetClientAsApi::class,
     ];
 
     /**

@@ -10,11 +10,13 @@ use App\Models\OrderModel;
 use App\Models\Setting;
 use App\Models\RegisterModel;
 use App\Models\UsersModel;
+use App\Traits\CartTrait;
 use Stripe\Stripe;
 
 
 class Cart extends BaseController
 {
+    use CartTrait;
     
     public function index()
     {
@@ -291,132 +293,8 @@ class Cart extends BaseController
         if ($this->request->isAJAX()) {
             // get_cart_destroy();
             // $postdata = json_decode($this->request->getPost());
-            $single = filtreData($this->request->getVar('single'));
-            $id = filtreData(my_decrypt($this->request->getVar('pid')));
-            $pname = filtreData($this->request->getVar('pname'));
-            $qtycart = filtreData($this->request->getVar('qtycart'));
-            $itemprice = filtreData($this->request->getVar('itemprice'));
-            $item_image = filtreData($this->request->getVar('item_image'));
-            $item_handle = filtreData($this->request->getVar('item_handle'));
-            $item_transfer = filtreData($this->request->getVar('item_transfer'));
-            $givewaytags = filtreData($this->request->getVar('givewaytags'));
-            $attr = $this->request->getVar('attr');
-            $datacart = [];
-            $result = [];
-            if ( $single == 1 ) {
-                $datacart['id'] = $id;
-                $datacart['qty'] = $qtycart;
-                $datacart['name'] = $pname;
-                $datacart['price'] = number_format((float)$itemprice, 2, '.', '');
-                $datacart['subtotal'] = number_format((float)$itemprice, 2, '.', '') * $qtycart;
-                $datacart['item_image'] = $item_image;
-                $datacart['item_handle'] = $item_handle;
-                $datacart['item_transfer'] = $item_transfer;
-                $datacart['givewaytags'] = $givewaytags;
-                if ( !empty($attr) && is_array($attr) && count($attr) > 0 ) {
-                    foreach( $attr as $rattribute ) {
-                        $explode_attr = explode('_',$rattribute);
-                        if ( is_array($explode_attr) && count($explode_attr) > 0 ) {
-                            if ( count($explode_attr) > 0 ) {
-                                if ( !is_numeric($explode_attr[0]) ) {
-                                    $new_attr = my_decrypt($explode_attr[0]);
-                                } else {
-                                    $new_attr = $explode_attr[0];
-                                }
-                            } else {
-                                $new_attr = '';
-                            }
-                            if ( count($explode_attr) > 1 ) {
-                                if ( !is_numeric($explode_attr[1]) ) {
-                                    $new_value_id = my_decrypt($explode_attr[1]);
-                                } else {
-                                    $new_value_id = $explode_attr[1];
-                                }
-                            } else {
-                                $new_value_id = '';
-                            }
-                            if ( count($explode_attr) > 2 ) {
-                                $atte_price_new = $explode_attr[2];
-                            } else {
-                                $atte_price_new = 0;
-                            }
-                        } else {
-                            $atte_price_new = 0;
-                            $new_value_id = '';
-                            $new_attr = '';
-                        }
-                        $result[] = [
-                                        'attribute_id' => $new_attr,
-                                        'value_id' => $new_value_id,
-                                        'attr_price' => $atte_price_new,
-                                        'value_name' => (new \App\Models\AttributeValueModel())->getValueNameWithAttr($new_value_id)
-                                    ];
-                    }
-                }
-            } else {
-                $datacart['id'] = $id;
-                $datacart['qty'] = $qtycart;
-                $datacart['name'] = $pname;
-                $datacart['price'] = number_format((float)$itemprice, 2, '.', '');
-                $datacart['subtotal'] = number_format((float)$itemprice, 2, '.', '') * $qtycart;
-                $datacart['item_image'] = $item_image;
-                $datacart['item_handle'] = $item_handle;
-                $datacart['item_transfer'] = $item_transfer;
-                $datacart['givewaytags'] = $givewaytags;
-                if ( !empty($attr) && is_array($attr) && count($attr) > 0 ) {
-                    foreach( $attr as $rattribute ) {
-                        $explode_attr = explode('_',$rattribute);
-                        if ( is_array($explode_attr) && count($explode_attr) > 0 ) {
-                            if ( count($explode_attr) > 0 ) {
-                                if ( !is_numeric($explode_attr[0]) ) {
-                                    $new_attr = my_decrypt($explode_attr[0]);
-                                } else {
-                                    $new_attr = $explode_attr[0];
-                                }
-                            } else {
-                                $new_attr = '';
-                            }
-                            if ( count($explode_attr) > 1 ) {
-                                if ( !is_numeric($explode_attr[1]) ) {
-                                    $new_value_id = my_decrypt($explode_attr[1]);
-                                } else {
-                                    $new_value_id = $explode_attr[1];
-                                }
-                            } else {
-                                $new_value_id = '';
-                            }
-                            if ( count($explode_attr) > 2 ) {
-                                $atte_price_new = $explode_attr[2];
-                            } else {
-                                $atte_price_new = 0;
-                            }
-                        } else {
-                            $atte_price_new = 0;
-                            $new_value_id = '';
-                            $new_attr = '';
-                        }
-                        $result[] = [
-                                        'attribute_id' => $new_attr,
-                                        'value_id' => $new_value_id,
-                                        'attr_price' => $atte_price_new,
-                                        'value_name' => (new \App\Models\AttributeValueModel())->getValueNameWithAttr($new_value_id)
-                                    ];
-                    }
-                }
-            }
-            $datacart['options'] = $result;
-            if ( in_array($datacart['id'],checkItemCart()) ) {
-                $rowid = GetCartRowId($datacart['id']);
-                if ( $single == 1 ) {
-                    $datacart['qty'] = $rowid[0][1] + 1;
-                }
-                $datacart['rowid'] = $rowid[0][0];
-                update_cart_contents($datacart);
-            } else {
-                insert_cart_contents($datacart);
-            }
-            return $this->response->setJSON(count(get_cart_contents()));
-        
+            $data = $this->addToCart($this->request->getVar());
+            return $this->response->setJSON(count($data));
         } else {
             return redirect()->to('/');
         }
