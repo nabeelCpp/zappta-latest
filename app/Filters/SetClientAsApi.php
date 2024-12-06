@@ -2,6 +2,7 @@
 
 namespace App\Filters;
 
+use App\Helpers\ZapptaHelper;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -26,6 +27,26 @@ class SetClientAsApi implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         session()->set('is_api', true);
+        $authHeader = $request->getHeaderLine('Authorization') ?? null;
+
+        if ($authHeader) {
+            // The Authorization header will contain "Bearer token"
+            $token = null;
+            if (strpos($authHeader, 'Bearer ') === 0) {
+                $token = substr($authHeader, 7); // Remove 'Bearer ' from the token
+            }
+            if ($token) {
+                try {
+                    $decoded = ZapptaHelper::decodeJwtToken($token);
+                    $request->customer = $decoded->customer; // Set customer info to request
+                } catch (\Exception $e) {
+                    
+                }
+            }
+        }
+
+        
+
     }
 
     /**
