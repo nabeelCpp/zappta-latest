@@ -8,6 +8,8 @@ use App\Traits\UserTrait;
 use App\Traits\CustomerTrait;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\Address;
+use App\Models\ProductsModel;
+
 class Home extends BaseController
 {
     use UserTrait, ResponseTrait, CustomerTrait;
@@ -58,8 +60,7 @@ class Home extends BaseController
     public function addToWishlist() {
         $post = request()->getVar();
         $rules = [
-            'product_id' => 'required',
-            'store_id' => 'required',
+            'product_id' => 'required'
         ];
 
         if (!$this->validate($rules)) {
@@ -67,8 +68,10 @@ class Home extends BaseController
             return response()->setJSON($response);
             // return $this->fail($this->validator->getErrors(), 400);
         }
-        $store_id = $post->store_id;
+
         $product_id = $post->product_id;
+        $product = (new ProductsModel())->find($product_id);
+        $store_id = $product['store_id'];
         $data = CustomerTrait::addItemToWishList($store_id, $product_id);
         $response = ZapptaHelper::response($data['msg']);
         return response()->setJSON($response);

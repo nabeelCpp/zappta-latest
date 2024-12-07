@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\ZapptaHelper;
+use App\Models\ProductsCategoriesModel;
 use App\Models\UsersNotification;
 
 function uuid_creat($values)
@@ -667,8 +668,10 @@ function getHomeCategory()
         cache()->save('getHomeCategory',(new App\Models\CategoriesModel())->getParentCategories(),ZapptaHelper::CACHE_SECONDS);
     }
     $results = [];
+    $productCategories = new ProductsCategoriesModel();
     foreach (cache()->get('getHomeCategory') as $key => $value) {
         $value['cat_icon'] = getImageThumg('media',$value['cat_icon'], 350);
+        $value['items'] = $productCategories->where('catid', $value['id'])->countAllResults();
         $results[] = $value;
     }
     return $results;
