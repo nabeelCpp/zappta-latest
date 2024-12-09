@@ -155,6 +155,7 @@ $total_list = (new App\Models\WishlistModel)->getUserTotalList();
                     </div>
                 </div>
                 <div class="greenBar py-2">
-                    Refer-a-friend & Get Z <?= (new \App\Models\Setting())->where('var_name', 'ZAPPTA_INVITE_FRIEND')->first()['var_detail'] ?> Coins
+                    <p class="me-1  text-nowrap" onclick="<?= getUserId() == 0 ? "showLogin('login');" : "showReferLogin('login');" ?>">Refer-a-friend & Get Z <?= (new \App\Models\Setting())->where('var_name', 'ZAPPTA_INVITE_FRIEND')->first()['var_detail'] ?> Coins</p>
+                            
                 </div>
         </header>

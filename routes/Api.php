@@ -11,6 +11,8 @@ $routes->group('api', ['namespace' => 'App\Controllers\API', 'filter' => 'api.cl
         $routes->get('(:any)', 'Category::single/$1');
     });
     $routes->get('products/(:any)/p/(:any)/', 'Home::product/$1/$2');
+
+    $routes->get('compaigns', 'Home::compaigns');
     /**
      * Stores API
      */
@@ -40,6 +42,8 @@ $routes->group('api', ['namespace' => 'App\Controllers\API', 'filter' => 'api.cl
                 $routes->post('add', 'Home::addToWishlist');
             });
             $routes->get('wallet', 'Home::wallet');
+            $routes->get('notifications', 'Profile::notifications');
+            $routes->get('referral', 'Profile::referral');
             $routes->get('addresses', 'Home::addresses');
             $routes->delete('addresses/(:num)', 'Home::removeAddress/$1');
             $routes->group('profile', function($routes) {

@@ -37,6 +37,16 @@ class Home extends BaseController {
         $data = $this->productTrait($url, $pc, $sd_row, $pds);
         return response()->setJSON(ZapptaHelper::response('Product details fetched successfully!', $data));
     }
+    
+    /**
+     * Get compaigns
+     * @author M Nabeel Arshad
+     * 
+     */
+    public function compaigns() {
+        $data = $this->compaignsTrait();
+        return response()->setJSON(ZapptaHelper::response('Compaigns fetched successfully!', $data));
+    }
 
     /**
      * Get image dimensions

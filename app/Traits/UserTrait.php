@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Models\RegisterModel;
 use App\Models\Setting;
+use App\Models\UsersModel;
 
 trait UserTrait
 {
@@ -42,17 +43,18 @@ trait UserTrait
      * @return array
      * @author M Nabeel Arshad
      */
-    public static function customerRegisterTrait($user): array
+    public function customerRegisterTrait($user): array
     {
         $ids = (new RegisterModel())->add($user);
+        $this->giveBalanceToReferredByUser($user['referred_by']);
         if ($ids > 0) {
             (new RegisterModel())->login_verify($user['email'], $user['password']);
             if (session()->get('userIsLoggedIn')) {
                 (new Setting())->insertDollor('ZAPPTA_REGISTER', 'Register', 3);
-                if (isset($user['user_refer_token']) && $user['user_refer_token'] !== 0) {
-                    $user_token = decodeToken($user['user_refer_token']);
-                    (new \App\Models\Setting())->insertDollorFriend($user_token, 'ZAPPTA_INVITE_JOIN');
-                }
+                // if (isset($user['user_refer_token']) && $user['user_refer_token'] !== 0) {
+                //     $user_token = decodeToken($user['user_refer_token']);
+                //     (new \App\Models\Setting())->insertDollorFriend($user_token, 'ZAPPTA_INVITE_JOIN');
+                // }
                 $data = ['code' => (int)2, 'msg' => 'Signup Successfully. ', 'token' => csrf_hash(), 'success' => true, 'register_id' => $ids];
                 return $data;
             } else {
@@ -63,5 +65,12 @@ trait UserTrait
             $data = ['code' => (int)1, 'msg' => 'There is some problem on creating account, please try again later.', 'token' => csrf_hash(), 'success' => false];
             return $data;
         }
+    }
+
+    public function giveBalanceToReferredByUser($id)
+    {
+        $total_zap = (new Setting())->insertDollorFriend($id, 'ZAPPTA_INVITE_FRIEND');
+        $link = base_url() . 'dashboard/wallet';
+        (new UsersModel())->saveNotification("You won {$total_zap} Zappta dollars bonus via your Referal link signup", $id, $link, 'referral');
     }
 }

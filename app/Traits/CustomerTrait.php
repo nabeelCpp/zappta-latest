@@ -88,4 +88,13 @@ trait CustomerTrait {
         return $data;
     }
 
+    /**
+     * Get referral Link
+     * @author M Nabeel Arshad
+     * @return string
+     */
+    public function getReferralLink() : string {
+        return '?ref='. my_encrypt(getUserId());
+    }
+
 }

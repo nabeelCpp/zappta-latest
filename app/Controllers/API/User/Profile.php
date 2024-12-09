@@ -15,6 +15,9 @@ class Profile extends BaseController
     public function index()
     {
         $customer = CustomerTrait::getLoggedInApiCustomer();
+        if($customer) {
+            $customer->ref_link = $this->getReferralLink();
+        }
         $response = ZapptaHelper::response('Customer details fetched successfully!', $customer);
         return response()->setJSON($response);
     }
@@ -105,4 +108,26 @@ class Profile extends BaseController
         }
         return response()->setJSON($response);
     }
+    
+    /**
+     * Get customer notifications
+     * @return ResponseInterface
+     * @author M Nabeel Arshad
+     */
+    public function notifications() {
+        $notifications = (new \App\Models\UsersNotification())->where('user_id', getUserId())->orderBy('id', 'DESC')->findAll(20);
+        $response = ZapptaHelper::response('Notifications fetched successfully!', $notifications);
+        return response()->setJSON($response);
+    }
+
+    /**
+     * Get customer referral link
+     * @author M Nabeel Arshad
+     */
+    public function referral() {
+        $referral_link = $this->getReferralLink();
+        $response = ZapptaHelper::response('Referral link fetched successfully!', ['referral_link' => $referral_link]);
+        return response()->setJSON($response);
+    }
+
 }

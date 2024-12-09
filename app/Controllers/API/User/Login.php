@@ -74,6 +74,8 @@ class Login extends BaseController
             return response()->setJSON($response);
             // return $this->fail($this->validator->getErrors(), 400);
         }
+        $referred_by = filtreData($this->request->getGet('ref'));
+        $referred_by = $referred_by ? my_decrypt($referred_by) : null;
         $arr = [
             'email' => $request->getVar('email'),
             'username' => $request->getVar('username'),
@@ -82,9 +84,9 @@ class Login extends BaseController
             'lname' => $request->getVar('lname'),
             'phone_code' => $request->getVar('phone_code') ?? null,
             'phone' => $request->getVar('phone'),
-            'user_refer_token' => $request->getVar('ref_token')??null
+            'referred_by' => $referred_by,
         ];
-        $response = UserTrait::customerRegisterTrait($arr);
+        $response = $this->customerRegisterTrait($arr);
         if($response['success']) {
             $response = self::sendOtpToPhone($response['register_id'], $response['msg']);
         }else {

@@ -88,8 +88,7 @@ class Home extends BaseController
      * @author M Nabeel Arshad
      */
     public function compaigns() {
-        $data['compaign'] = (new VendorModel())->getSpreesToDisplayOngoing(10);
-        $data['compaign_upcoming'] = (new VendorModel())->getSpreesToDisplayUpcoming(10);
+        $data = $this->compaignsTrait();
         $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
         $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
         $data['see_all_btn'] = false;

@@ -240,4 +240,15 @@ trait ZapptaTrait
         return $data;
     }
 
+    /**
+     * Get compaigns
+     * @return array
+     */
+    public function compaignsTrait()
+    {
+        $data['compaign'] = (new VendorModel())->getSpreesToDisplayOngoing(10);
+        $data['compaign_upcoming'] = (new VendorModel())->getSpreesToDisplayUpcoming(10);
+        return $data;
+    }
+
 }
