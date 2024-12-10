@@ -77,6 +77,7 @@ class Cart extends BaseController
             if(session()->has('checkout_form_data')) {
                 $data['saved_session_details'] = session()->get('checkout_form_data');
             }
+            $data['addresses'] = (new \App\Models\Address())->getAllResultByUser(getUserId(),10,2);
             return view('site/cart/checkout',$data);
         } else {
             return redirect()->to('/');

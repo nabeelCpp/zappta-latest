@@ -11,6 +11,31 @@
 			</nav>
 		</div>
 		<?php if (is_array(get_cart_contents()) && count(get_cart_contents()) > 0) { ?>
+			<?php if (is_array($addresses) && count($addresses) > 0) { ?>
+				<div class="bg-light">
+					<ul class="list-group">
+						<h5 class="list-group-item">
+							Recently Used Shipping Addresses
+						</h5>
+						<?php
+							foreach ($addresses as $address) { ?>
+								<li class="list-group-item">
+									<div class="d-flex justify-content-between">
+										<div>
+											<?= $address['first_name'] . ' ' . $address['last_name'] ?>
+										</div>
+										<div>
+											<?= $address['stree_address'] . ', ' . $address['town_city'] . ', ' . $address['postcode'] ?>
+										</div>
+										<div>
+											<button data-id="<?=$address['id']?>" data-json='<?= json_encode($address)?>' class="btn btn-sm btn-info" onclick="useAddress(this)">Use</button>
+										</div>
+									</div>
+								</li>
+							<?php } ?>
+					</ul>
+				</div>
+			<?php } ?>
 			<div class="cartSection ">
 				<form method="POST" action="<?php print base_url() . 'cart/address'; ?>" id="checkoutform">
 					<input type="hidden" name="<?php print csrf_token() ?>" id="_cc" value="<?php print csrf_hash() ?>">
@@ -390,6 +415,14 @@
 			console.error('Error:', error);
 		}
 	};
+
+	const useAddress = (_this) => {
+		let json = $(_this).data('json');
+		let id = $(_this).data('id');
+		$.each(json, function(key, value) {
+			$('[name="address[billing][' + key + ']"]').val(value);
+		});
+	}
 
 
 </script>
