@@ -42,6 +42,7 @@ $routes->group('api', ['namespace' => 'App\Controllers\API', 'filter' => 'api.cl
                 $routes->post('add', 'Home::addToWishlist');
             });
             $routes->get('wallet', 'Home::wallet');
+            $routes->post('review', 'Home::giveReview');
             $routes->get('notifications', 'Profile::notifications');
             $routes->get('referral', 'Profile::referral');
             $routes->get('addresses', 'Home::addresses');

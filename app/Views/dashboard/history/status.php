@@ -183,7 +183,7 @@ $give_review = false; ?>
 								<?php if(!$review){ ?>
 									<textarea name="review" id="review" class="form-control" placeholder="Enter your detailed review!"></textarea>
 									<input type="hidden" value="0" name="rating" id="rating">
-									<input type="hidden" value="<?=csrf_hash()?>" name="<?=csrf_token()?>">
+									<input type="hidden" value="<?=csrf_hash()?>" id="_cc" name="<?=csrf_token()?>">
 									<div class="text-center py-2 ratings"  data-clicked="0">
 										<span data-id="1"><i class="fa fa-star"></i></span>
 										<span data-id="2"><i class="fa fa-star"></i></span>

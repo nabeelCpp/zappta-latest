@@ -3,7 +3,9 @@
 namespace App\Traits;
 
 use App\Helpers\ZapptaHelper;
+use App\Models\OrderModel;
 use App\Models\RegisterModel;
+use App\Models\ReviewModel;
 use App\Models\WishlistModel;
 use CodeIgniter\HTTP\Response;
 
@@ -95,6 +97,33 @@ trait CustomerTrait {
      */
     public function getReferralLink() : string {
         return '?ref='. my_encrypt(getUserId());
+    }
+
+    /**
+     * Save customer review trait
+     * @param string|integer $order_id
+     * @return array
+     */
+    public static function giveReviewTrait($order_id, $post) : array {
+        $ReviewModel = new ReviewModel();
+        $order = (new OrderModel())->getUserSingleOrder($order_id);
+        $orderStatus = $order['order']['order_status'] ?? null;
+        if(!$orderStatus || $orderStatus != 4) {
+            return ['success' => false, 'msg' => 'You can not review current order!'];
+        }
+        $items = array_values(array_column($order['items'], null, 'item_id'));
+        foreach ($items as $key => $item) {
+            $review = [
+                'order_id' => $order_id,
+                'product_id' => $item['item_id'],
+                'user_id' => getUserId(),
+                'rates' => $post->rating,
+                'comments' => $post->review,
+                'created_at' => date('Y-m-d H:i:s'),
+            ];
+            $ReviewModel->insert($review);
+        }
+        return ['success' => true, 'msg' => 'Review submitted successfully!', 'review' => $ReviewModel->where('order_id', $order_id)->get()->getResult()];
     }
 
 }

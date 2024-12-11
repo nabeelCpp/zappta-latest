@@ -110,4 +110,32 @@ class Home extends BaseController
         $response = ZapptaHelper::response('Address successfully deleted!', null, 200);
         return response()->setJSON($response);
     }
+
+    /**
+     * Add review
+     * @return json
+     * @author M Nabeel Arshad
+     */
+    public function giveReview() {
+        $rules = [
+            'order_id' => 'required',
+            'rating' => 'required',
+            'review' => 'required'
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = ZapptaHelper::response("Validation errors!", $this->validator->getErrors(), 400);
+            return response()->setJSON($response, 400);
+        }
+        $post = $this->request->getVar();
+        $order_id = $post->order_id;
+        $data = CustomerTrait::giveReviewTrait($order_id, $post);
+        if($data['success']) {
+            $response = ZapptaHelper::response($data['msg'], $data['review']);
+            return response()->setJSON($response);
+        }else {
+            $response = ZapptaHelper::response($data['msg'], [], 400);
+            return response()->setJSON($response, $response['code']);
+        }
+    }
 }
