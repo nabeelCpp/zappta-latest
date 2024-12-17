@@ -56,7 +56,7 @@ class Register extends BaseController
                     'password' => $vPassword,
                     'referred_by' => $user_refer_token
                 ];
-                return response()->setJSON(UserTrait::customerRegisterTrait($arr));
+                return response()->setJSON($this->customerRegisterTrait($arr));
             }
         } else {
             return redirect()->to('/');
