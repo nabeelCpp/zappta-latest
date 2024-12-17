@@ -69,8 +69,10 @@ trait UserTrait
 
     public function giveBalanceToReferredByUser($id)
     {
-        $total_zap = (new Setting())->insertDollorFriend($id, 'ZAPPTA_INVITE_FRIEND');
-        $link = base_url() . 'dashboard/wallet';
-        (new UsersModel())->saveNotification("You won {$total_zap} Zappta dollars bonus via your Referal link signup", $id, $link, 'referral');
+        if($id) {
+            $total_zap = (new Setting())->insertDollorFriend($id, 'ZAPPTA_INVITE_FRIEND');
+            $link = base_url() . 'dashboard/wallet';
+            (new UsersModel())->saveNotification("You won {$total_zap} Zappta dollars bonus via your Referal link signup", $id, $link, 'referral');
+        }
     }
 }
