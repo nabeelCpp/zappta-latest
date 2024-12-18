@@ -892,3 +892,18 @@ function is_client_api() {
     return session()->get('is_api') ?? false;
 }
 
+/**
+ * Count characters in a password.
+ *
+ * @param string $password The password string.
+ * @param bool $includeSpaces Whether to include spaces in the count. Default is true.
+ * @return int The character count.
+ */
+function countPasswordCharacters(string $password, bool $includeSpaces = true): int
+{
+    if (!$includeSpaces) {
+        $password = str_replace(' ', '', $password); // Remove spaces
+    }
+
+    return mb_strlen($password); // Use mb_strlen for multibyte support
+}

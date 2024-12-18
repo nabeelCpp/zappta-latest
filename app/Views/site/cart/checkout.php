@@ -419,6 +419,12 @@
 	const useAddress = (_this) => {
 		let json = $(_this).data('json');
 		let id = $(_this).data('id');
+		$(_this).text('Used');
+		$(_this).attr('disabled', true);
+		setTimeout(() => {
+			$(_this).text('Use');
+			$(_this).attr('disabled', false);
+		}, 5000);
 		$.each(json, function(key, value) {
 			$('[name="address[billing][' + key + ']"]').val(value);
 		});

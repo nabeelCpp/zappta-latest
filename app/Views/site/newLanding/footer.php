@@ -101,6 +101,9 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
 
   <div class="modal-dialog modal-md">
     <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
 
       <div class="modalLogo">
         <a href="<?php print base_url(); ?>">
@@ -138,7 +141,7 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
                 <div class="fieldSection">
                   <div class="formIcon"><img src="<?= $assets_url ?>/img/lock.svg" alt="" /></div>
                   <input class="full-width has-padding has-border password-field" name="password" id="userPassword" type="password" placeholder="........">
-                  <a type="button" class="hide-password"><img src="<?= $assets_url ?>/img/eye-slash.svg" alt="" /></a>
+                  <a type="button" class="hide-password" data-url="<?= $assets_url ?>/img/"><img src="<?= $assets_url ?>/img/eye-slash.svg" alt="" /></a>
                   <!-- <span class="cd-error-message">Error message here!</span> -->
                 </div>
 
@@ -197,7 +200,7 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
                 <div class="fieldSection">
                   <div class="formIcon"><img src="assets/img/lock.svg" alt="" /></div>
                   <input class="full-width has-padding has-border password-field" name="userSignPassword" id="userSignPassword" type="password" placeholder="........">
-                  <a type="button" class="hide-password"><img src="<?= $assets_url ?>/img/eye-slash.svg" alt="" /></a>
+                  <a type="button" class="hide-password" data-url="<?= $assets_url ?>/img/"><img src="<?= $assets_url ?>/img/eye-slash.svg" alt="" /></a>
                 </div>
 
               </div>
@@ -359,7 +362,7 @@ $playgive = isset($_GET['playgive']) ? $_GET['playgive'] : 0; ?>
 <!--scrollup-->
 </div>
 <!-- JS here -->
- <script src="<?= base_url('minified/js/scripts-1.0.37.min.js')?>"></script>
+ <script src="<?= base_url('minified/js/scripts-1.0.38.min.js')?>"></script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
@@ -817,12 +820,18 @@ if ($playgive !== 0) {
   });
 
   $('.hide-password').click(function() {
+    let url = $(this).data('url');
     let parent = $(this).parent();
     const types = ['password', 'text'];
+    const svgs = ['eye-slash.svg', 'eye.svg'];
     let passwordField = parent.find('.password-field');
     let type = passwordField.attr('type');
+    let img = $(this).find('img').attr('src').split('/').pop();
+    let newImg = svgs.filter(s => s !== img)[0];
+    console.log(url + newImg);
     let newType = types.filter(t => t !== type);
     passwordField.attr('type', newType[0] ?? types[0]);
+    $(this).find('img').attr('src', url + newImg);
   })
 </script>
 </body>

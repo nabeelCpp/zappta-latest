@@ -51,7 +51,7 @@ class Login extends BaseController
         $rules = [
             'username' => 'required|min_length[3]',
             'email' => 'required|valid_email|is_unique[register.email]',
-            'password' => 'required|min_length[6]',
+            'password' => 'required|min_length[8]',
             'fname' => 'required|min_length[3]',
             'phone' => 'required|min_length[10]|is_unique[register.phone]',
             'phone_code' => 'required',

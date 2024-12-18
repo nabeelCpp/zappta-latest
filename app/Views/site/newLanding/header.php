@@ -22,7 +22,7 @@ $total_list = (new App\Models\WishlistModel)->getUserTotalList();
 
     <!-- CSS here -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
-    <link rel="stylesheet" href="<?= base_url('minified/css/styles-1.0.37.min.css')?>" />
+    <link rel="stylesheet" href="<?= base_url('minified/css/styles-1.0.38.min.css')?>" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
     <?= $css ?? null ?>
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
@@ -155,7 +155,7 @@ $total_list = (new App\Models\WishlistModel)->getUserTotalList();
                     </div>
                 </div>
                 <div class="greenBar py-2">
-                    <p class="me-1  text-nowrap" onclick="<?= getUserId() == 0 ? "showLogin('login');" : "showReferLogin('login');" ?>">Refer-a-friend & Get Z <?= (new \App\Models\Setting())->where('var_name', 'ZAPPTA_INVITE_FRIEND')->first()['var_detail'] ?> Coins</p>
+                    <button class="me-1  text-nowrap" onclick="<?= getUserId() == 0 ? "showLogin('login');" : "showReferLogin('login');" ?>">Refer-a-friend & Get Z <?= (new \App\Models\Setting())->where('var_name', 'ZAPPTA_INVITE_FRIEND')->first()['var_detail'] ?> Coins</button>
                             
                 </div>
         </header>

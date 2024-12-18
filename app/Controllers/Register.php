@@ -49,6 +49,9 @@ class Register extends BaseController
             } elseif (!valid_email($vEmail)) {
                 $data = ['code' => (int)1, 'msg' => 'Please enter valid email.', 'token' => csrf_hash()];
                 return json_encode($data);
+            } else if(countPasswordCharacters($vPassword) < 8){
+                $data = ['code' => (int)1, 'msg' => 'Password must be at least 8 characters.', 'token' => csrf_hash()];
+                return json_encode($data);
             } else {
                 $arr = [
                     'email' => $vEmail,
@@ -272,6 +275,9 @@ class Register extends BaseController
                 return json_encode($data);
             } elseif (!valid_email($vEmail)) {
                 $data = ['code' => (int)1, 'msg' => 'Please enter valid email.'];
+                return json_encode($data);
+            } else if(countPasswordCharacters($vPassword) < 8){
+                $data = ['code' => (int)1, 'msg' => 'Password must be at least 8 characters.', 'token' => csrf_hash()];
                 return json_encode($data);
             } else {
                 $ids = (new RegisterModel())->add(['email' => $vEmail, 'username' => $userSignusername, 'password' => $vPassword, 'referred_by' => $referred_by]);
