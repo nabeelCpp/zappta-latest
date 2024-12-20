@@ -46,14 +46,7 @@
 								<div class="list-row d-flex flex-column flex-lg-row align-items-center justify-content-around">
                                <div class="d-flex ">
 								<div class="image">
-									<?php 
-					    				if( ! empty( $list['cover'] ) ) { 
-					    					$ext_name = explode('.',$list['cover']);
-					    			?>
-					    				<img src="<?php print base_url().'/images/product/'.$ext_name[0].'/'.$ext_name[1].'/100';?>" alt="">
-					    			<?php } else { ?>
-					    				<img src="<?php print base_url().'/images/product/img-not-found/jpg/100';?>" alt="">
-					    			<?php }?>
+									<img src="<?=$list['cover']?>" alt="">
 								</div>
 
 									<div class="listname">

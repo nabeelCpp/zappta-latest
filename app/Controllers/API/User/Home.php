@@ -32,6 +32,7 @@ class Home extends BaseController
     public function wishList() {
         $customer = CustomerTrait::getLoggedInApiCustomer();
         $data = CustomerTrait::wishlist();
+        return response()->setJSON($data);
         $pager = service('pager');
         $pager->makeLinks($data['page'], $data['per_page'], $data['total_list'],'front_full'); // this will intialize current page, per page and total list
         $meta = ['prev_page' => $pager->getPreviousPageURI(),'next_page' => $pager->getNextPageURI()];
