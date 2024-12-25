@@ -39,6 +39,7 @@
 			<div class="cartSection ">
 				<form method="POST" action="<?php print base_url() . 'cart/address'; ?>" id="checkoutform">
 					<input type="hidden" name="<?php print csrf_token() ?>" id="_cc" value="<?php print csrf_hash() ?>">
+					<input type="hidden" name="address_id" value="" id="address_id">
 					<div class="row no-gutters mt-5">
 						<div class="col-lg-8">
 							<!-- Cart Items -->
@@ -418,6 +419,7 @@
 
 	const useAddress = (_this) => {
 		let json = $(_this).data('json');
+		$('#address_id').val(json.id);
 		let id = $(_this).data('id');
 		$(_this).text('Used');
 		$(_this).attr('disabled', true);

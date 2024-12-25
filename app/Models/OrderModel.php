@@ -224,6 +224,18 @@ class OrderModel extends Model
            return $query->getResultArray();
     }
 
+	/**
+	 * Edit order address with updated data
+	 * @param array $data
+	 * @param integer $address_id
+	 * @return void
+	 * @author M Nabeel Arshad
+	 * @since 2024-12-24
+	 */
+	public function editOrderAddress($data, $address_id) : void {
+		(new Address())->update($address_id, $data);
+	}
+
    	public function addOrderAddress($data = [],$type=1)
    	{
    		$post = [
@@ -231,7 +243,7 @@ class OrderModel extends Model
    					'first_name' => filtreData($data['first_name']),
    					'last_name' => filtreData($data['last_name']),
    					'company_name' => filtreData($data['company_name']),
-   					'country' => filtreData(my_decrypt($data['country'])),
+   					'country' => filtreData($data['country']),
    					'stree_address' => filtreData($data['stree_address']),
    					'stree_address_optional' => filtreData($data['stree_address_optional']??null),
    					'town_city' => filtreData($data['town_city']),
@@ -711,12 +723,22 @@ class OrderModel extends Model
         $shipping_address = isset($data['address']['billing']['same_shipping']) ? $data['address']['billing']['same_shipping'] : 1;
 
         if ( $shipping_address == 2 ) {
-            $address_id = $this->addOrderAddress($data['address']['billing']);
+			if($data['address_id'] ) {
+				$address_id = $data['address_id'];
+				$this->editOrderAddress($data['address']['billing'],$address_id);
+			}else{
+				$address_id = $this->addOrderAddress($data['address']['billing']);
+			}
             $this->assignAddress($order_id,$address_id);
             $address_shipping_id = $this->addOrderAddress($data['address']['shipping'],2);
             $this->assignAddress($order_id,$address_shipping_id);
         } else {
-            $address_id = $this->addOrderAddress($data['address']['billing']);
+			if($data['address_id'] ) {
+				$address_id = $data['address_id'];
+				$this->editOrderAddress($data['address']['billing'],$address_id);
+			}else{
+				$address_id = $this->addOrderAddress($data['address']['billing']);
+			}
             $this->assignAddress($order_id,$address_id);
             $address_shipping_id = $this->addOrderAddress($data['address']['billing'],2);
             $this->assignAddress($order_id,$address_shipping_id);

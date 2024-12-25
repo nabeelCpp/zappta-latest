@@ -13,6 +13,11 @@ use App\Models\ProductsModel;
 class Home extends BaseController
 {
     use UserTrait, ResponseTrait, CustomerTrait;
+    protected $addressModel, $orderModel;
+    public function __construct() {
+        $this->addressModel = new Address();
+        $this->orderModel = new \App\Models\OrderModel();
+    }
 
     /**
      * User login
@@ -96,8 +101,53 @@ class Home extends BaseController
      * @return json
      */
     public function addresses() {
-        $data = (new Address())->getAllResultByUser(getUserId(),20,2);
+        $data =  $this->addressModel->getAllResultByUser(getUserId(),5, $this->addressModel::ADDRESS_TYPE_BILLING);
         $response = ZapptaHelper::response('Addresses fetched successfully!', $data, 200);
+        return response()->setJSON($response);
+    }
+
+    /** 
+     * Save delivery address
+     * @return json
+     */
+    public function saveAddresse() {
+        $request = $this->request;
+        $rules = [
+            'first_name' => 'required',
+            'phone' => 'required',
+            'stree_address' => 'required',
+            'town_city' => 'required',
+            'country' => 'required',
+            // 'zip' => 'required',
+            // 'type' => 'required'
+        ];
+        if (!$this->validate($rules)) {
+            $response = ZapptaHelper::response("Validation errors!", $this->validator->getErrors(), 400);
+            return response()->setJSON($response);
+            // return $this->fail($this->validator->getErrors(), 400);
+        }
+        $data = (array)$request->getVar();
+        $res = $this->orderModel->addOrderAddress($data, $data['type']??$this->addressModel::ADDRESS_TYPE_BILLING);
+        $response = ZapptaHelper::response('Address successfully saved!', ['id' => $res], 200);
+        return response()->setJSON($response);
+
+    }
+
+    /**
+     * Update address
+     * @param string|integer $id
+     * @return json
+     */
+    public function editAddress($id) {
+        $request = $this->request;
+        $address = $this->addressModel->find($id);
+        if(!$address) {
+            $response = ZapptaHelper::response('Address not found!', [], 404);
+            return response()->setJSON($response, 404);
+        }
+        $data = (array)$request->getVar();
+        $this->orderModel->editOrderAddress($data, $id);
+        $response = ZapptaHelper::response('Address successfully updated!', null, 200);
         return response()->setJSON($response);
     }
 

@@ -46,7 +46,9 @@ $routes->group('api', ['namespace' => 'App\Controllers\API', 'filter' => 'api.cl
             $routes->get('notifications', 'Profile::notifications');
             $routes->get('referral', 'Profile::referral');
             $routes->get('addresses', 'Home::addresses');
+            $routes->post('addresses', 'Home::saveAddresse');
             $routes->delete('addresses/(:num)', 'Home::removeAddress/$1');
+            $routes->patch('addresses/(:num)', 'Home::editAddress/$1');
             $routes->group('profile', function($routes) {
                 $routes->get('', 'Profile::index');
                 $routes->patch('', 'Profile::update');

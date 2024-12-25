@@ -58,6 +58,9 @@ class Address extends Model
 	protected $beforeDelete         = [];
 	protected $afterDelete          = [];
 
+	const ADDRESS_TYPE_BILLING = 1;
+	const ADDRESS_TYPE_SHIPPING = 2;
+
     public function getAllResultByUser($user_id,$limit=20,$type=1)
     {
         return $this->where('deleteStatus',0)->where('user_id',$user_id)->where('type',$type)->orderBy('id DESC')->paginate($limit);
