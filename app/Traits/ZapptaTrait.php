@@ -76,6 +76,9 @@ trait ZapptaTrait
         $data['product_limit'] = $_GET['limit'] ?? ProductsModel::LIMIT;
 
         $data['products'] = $this->wishlistStatusOnProducts((new ProductsModel())->getProductByCategory((int)$data['category_id']['id'], $data['page'], $data['filter']));
+        foreach ($data['products'] as $key => $value) {
+            $data['products'][$key]['pcover'] = getImageThumg('products', $data['products'][$key]['pcover'], 350);
+        }
         $data['total_products'] = (new ProductsModel())->getTotalProductByCategory((int)$data['category_id']['id'], $data['filter']);
         if ($data['total_products'] >  $data['product_limit']) {
             $data['pager'] = service('pager');
@@ -158,6 +161,9 @@ trait ZapptaTrait
             } else {
                 $data['products'] = [];
             }
+        }
+        foreach ($data['products'] as $key => $value) {
+            $data['products'][$key]['pcover'] = getImageThumg('products', $data['products'][$key]['pcover'], 350);
         }
 
         return $data;

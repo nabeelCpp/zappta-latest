@@ -71,7 +71,7 @@ class WishlistModel extends Model
             $result_limit = $limit * ( $page - 1 );
         }
         $result = [];
-        $sql = $this->db->query('SELECT cms_wishlist.product_id,cms_wishlist.id as wid,cms_products.name,cms_products.url,cms_products.sd_row,cms_products.pds,cms_products.pc,cms_products.cover,cms_products.short, cms_product_detail.deal_enable, cms_product_detail.final_price,cms_product_detail.deal_final_price, cms_vendor.earn_zappta, cms_vendor.per_dollar FROM (SELECT * FROM cms_wishlist WHERE user_id='.getUserId().'  LIMIT '.$limit.' OFFSET '.$result_limit.' ) `cms_wishlist` INNER JOIN cms_products on cms_products.id=cms_wishlist.product_id LEFT JOIN cms_product_detail ON cms_product_detail.product_id=cms_products.id LEFT JOIN cms_vendor ON cms_vendor.id=cms_products.store_id ORDER BY cms_wishlist.id DESC')
+        $sql = $this->db->query('SELECT cms_wishlist.product_id as pid,cms_wishlist.id as wishlist_id,cms_products.name as pname,cms_products.short as pshort, cms_products.url as purl, cms_products.cover as pcover,cms_products.sd_row ,cms_products.pds,cms_products.pc, cms_product_detail.retail_price_tax,cms_product_detail.retail_price_notax, cms_product_detail.deal_enable, cms_product_detail.final_price,cms_product_detail.zappta_commission,cms_product_detail.deal_final_price, cms_product_detail.outofstockorder, cms_shipping_preference.freeshipat, cms_shipping_preference.freeshipatweight,  cms_vendor.earn_zappta, cms_vendor.per_dollar FROM (SELECT * FROM cms_wishlist WHERE user_id='.getUserId().'  LIMIT '.$limit.' OFFSET '.$result_limit.' ) `cms_wishlist` INNER JOIN cms_products on cms_products.id=cms_wishlist.product_id LEFT JOIN cms_product_detail ON cms_product_detail.product_id=cms_products.id LEFT JOIN cms_vendor ON cms_vendor.id=cms_products.store_id LEFT JOIN cms_shipping_preference ON cms_shipping_preference.store_id=cms_products.store_id ORDER BY cms_wishlist.id DESC')
                         ->getResultArray();
         if ( is_array($sql) && count($sql) > 0 ) {
             foreach ( $sql as $q => $val ) {
@@ -87,8 +87,9 @@ class WishlistModel extends Model
                 //                                     'item_name' => $val['item_name'],
                 //                                     'item_image' => $val['item_image'],
                 //                                 ];
-                $val['short'] = html_entity_decode($val['short']);
-                $val['cover'] = getImageThumg('products', $val['cover'], 100);
+                $val['pshort'] = html_entity_decode($val['pshort']);
+                $val['pcover'] = getImageThumg('products', $val['pcover'], 100);
+                $val['is_wishlist'] = true;
                 $result[] = $val;
             }
         }
