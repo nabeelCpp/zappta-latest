@@ -46,21 +46,21 @@
 								<div class="list-row d-flex flex-column flex-lg-row align-items-center justify-content-around">
                                <div class="d-flex ">
 								<div class="image">
-									<img src="<?=$list['cover']?>" alt="">
+									<img src="<?=$list['pcover']?>" alt="">
 								</div>
 
 									<div class="listname">
-										<h6><?php print short($list['name'],50);?></h6>
-										<p><?php print short($list['short'],100);?></p>
+										<h6><?php print short($list['pname'],50);?></h6>
+										<p><?php print short($list['pshort'],100);?></p>
 									</div>
                              </div>
 							 <div class="d-flex">
 									<div class="listlink">
-										<a href="<?php print base_url().'/dashboard/wishlist/remove/'.my_encrypt($list['wid']);?>" onclick="return confirm('Are you sure to delete this?');">Remove</a>
+										<a href="<?php print base_url().'/dashboard/wishlist/remove/'.my_encrypt($list['wishlist_id']);?>" onclick="return confirm('Are you sure to delete this?');">Remove</a>
 									</div>
 
 									<div class="listbtn">
-										<a href="<?php print base_url().'/products/'.$list['url'].'/p/'.$list['pc'].'/'.'?sd_row='.$list['sd_row'].'&pds='.$list['pds'];?>" target="_blank">View Product</a>
+										<a href="<?php print base_url().'/products/'.$list['purl'].'/p/'.$list['pc'].'/'.'?sd_row='.$list['sd_row'].'&pds='.$list['pds'];?>" target="_blank">View Product</a>
 									</div>
 									</div>
 								</div>
