@@ -483,7 +483,7 @@ class ProductsModel extends Model
 
     public function getStoreListing($store_id)
     {
-        return $this->db->table('products')
+        $sql = $this->db->table('products')
             ->select('products.id as pid,products.name as pname,products.short as pshort,products.url as purl,products.cover as pcover,products.sd_row as sd_row,products.pds as pds,products.pc as pc,product_detail.retail_price_tax,product_detail.retail_price_notax,product_detail.deal_enable,product_detail.final_price,product_detail.zappta_commission,product_detail.deal_final_price,product_detail.outofstockorder,shipping_preference.handlingcharges,shipping_preference.freeshipat,shipping_preference.freeshipatweight, vendor.earn_zappta, vendor.per_dollar')
             ->join('product_detail', 'product_detail.product_id=products.id', 'LEFT')
             ->join('shipping_preference', 'shipping_preference.store_id=products.store_id', 'LEFT')
@@ -493,11 +493,15 @@ class ProductsModel extends Model
             ->where('products.status', 1)
             ->get()
             ->getResultArray();
+        foreach ($sql as $key => $value) {
+            $sql[$key]['pshort'] = html_entity_decode($sql[$key]['pshort']);
+        }
+        return $sql;
     }
 
     public function getStoreListingBySearch($store_id, $search)
     {
-        return $this->db->table('products')
+        $sql = $this->db->table('products')
             ->select('products.id as pid,products.name as pname,products.short as pshort,products.url as purl,products.cover as pcover,products.sd_row as sd_row,products.pds as pds,products.pc as pc,product_detail.retail_price_tax,product_detail.retail_price_notax,product_detail.deal_enable,product_detail.final_price,product_detail.zappta_commission,product_detail.deal_final_price,product_detail.outofstockorder,shipping_preference.handlingcharges,shipping_preference.freeshipat,shipping_preference.freeshipatweight, vendor.earn_zappta, vendor.per_dollar')
             ->join('product_detail', 'product_detail.product_id=products.id', 'LEFT')
             ->join('shipping_preference', 'shipping_preference.store_id=products.store_id', 'LEFT')
@@ -508,11 +512,15 @@ class ProductsModel extends Model
             ->like('products.name', $search)
             ->get()
             ->getResultArray();
+        foreach ($sql as $key => $value) {
+            $sql[$key]['pshort'] = html_entity_decode($sql[$key]['pshort']);
+        }
+        return $sql;
     }
 
     public function getStoreListingByPro($store_id, $proid = [])
     {
-        return $this->db->table('products')
+        $sql = $this->db->table('products')
             ->select('products.id as pid,products.name as pname,products.short as pshort,products.url as purl,products.cover as pcover,products.sd_row as sd_row,products.pds as pds,products.pc as pc,product_detail.retail_price_tax,product_detail.retail_price_notax,product_detail.deal_enable,product_detail.final_price,product_detail.zappta_commission,product_detail.deal_final_price,product_detail.outofstockorder,shipping_preference.handlingcharges,shipping_preference.freeshipat,shipping_preference.freeshipatweight, vendor.earn_zappta, vendor.per_dollar')
             ->join('product_detail', 'product_detail.product_id=products.id', 'LEFT')
             ->join('shipping_preference', 'shipping_preference.store_id=products.store_id', 'LEFT')
@@ -523,11 +531,15 @@ class ProductsModel extends Model
             ->where('products.status', 1)
             ->get()
             ->getResultArray();
+        foreach ($sql as $key => $value) {
+            $sql[$key]['pshort'] = html_entity_decode($sql[$key]['pshort']);
+        }
+        return $sql;
     }
 
     public function getStoreListingByProBySearch($store_id, $search, $proid = [])
     {
-        return $this->db->table('products')
+        $sql = $this->db->table('products')
             ->select('products.id as pid,products.name as pname,products.short as pshort,products.url as purl,products.cover as pcover,products.sd_row as sd_row,products.pds as pds,products.pc as pc,product_detail.retail_price_tax,product_detail.retail_price_notax,product_detail.deal_enable,product_detail.final_price,product_detail.zappta_commission,product_detail.deal_final_price,product_detail.outofstockorder,shipping_preference.handlingcharges,shipping_preference.freeshipat,shipping_preference.freeshipatweight, vendor.earn_zappta, vendor.per_dollar')
             ->join('product_detail', 'product_detail.product_id=products.id', 'LEFT')
             ->join('shipping_preference', 'shipping_preference.store_id=products.store_id', 'LEFT')
@@ -539,6 +551,10 @@ class ProductsModel extends Model
             ->like('products.name', $search)
             ->get()
             ->getResultArray();
+        foreach ($sql as $key => $value) {
+            $sql[$key]['pshort'] = html_entity_decode($sql[$key]['pshort']);
+        }
+        return $sql;
     }
 
     public function getProductByUrl($url, $pc, $sd_row, $pds)
