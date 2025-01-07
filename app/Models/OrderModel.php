@@ -720,36 +720,20 @@ class OrderModel extends Model
 
         $this->updateOrderPrice($order_id,array_sum($grand_sub_total),$final_total,array_sum($grand_shipp_total),$order_serial, $tax);
 
-        $shipping_address = isset($data['address']['billing']['same_shipping']) ? $data['address']['billing']['same_shipping'] : 1;
+		$this->assignAddress($order_id,$data['billing_address_id']);
+		$this->assignAddress($order_id,$data['shipping_address_id']);
 
-        if ( $shipping_address == 2 ) {
-			if($data['address_id'] ) {
-				$address_id = $data['address_id'];
-				$this->editOrderAddress($data['address']['billing'],$address_id);
-			}else{
-				$address_id = $this->addOrderAddress($data['address']['billing']);
-			}
-            $this->assignAddress($order_id,$address_id);
-            $address_shipping_id = $this->addOrderAddress($data['address']['shipping'],2);
-            $this->assignAddress($order_id,$address_shipping_id);
-        } else {
-			if($data['address_id'] ) {
-				$address_id = $data['address_id'];
-				$this->editOrderAddress($data['address']['billing'],$address_id);
-			}else{
-				$address_id = $this->addOrderAddress($data['address']['billing']);
-			}
-            $this->assignAddress($order_id,$address_id);
-            $address_shipping_id = $this->addOrderAddress($data['address']['billing'],2);
-            $this->assignAddress($order_id,$address_shipping_id);
-        }
+
+
         (new \App\Models\Setting())->insertDollor('ZAPPTA_BUYING','Buy Item',4,$final_total);
 		// Notification to user!
 		if($order_status == 1){
 			$link = '/dashboard/history/status?order_id='.my_encrypt($order_id).'&key='.csrf_hash();
 			(new UsersModel())->saveNotification("Your Order <b style='color: {$this->bgColor};'>{$order_serial}</b> has been placed!", getUserId(), $link, 'order-placed');
 			$link = '/dashboard/wallet';
-			(new UsersModel())->saveNotification("You won {$total_zapptas} Zappta dollars bonus via your Order <b style='color: {$this->bgColor};'>{$order_serial}</b>", getUserId(), $link, 'order-bonus');
+			if($total_zapptas > 0) {
+				(new UsersModel())->saveNotification("You won {$total_zapptas} Zappta dollars bonus via your Order <b style='color: {$this->bgColor};'>{$order_serial}</b>", getUserId(), $link, 'order-bonus');
+			}
 		}
         return ['order_id' => $order_id, 'zapptas' => $earnedZapptas, 'order_serial' => $order_serial];
     }

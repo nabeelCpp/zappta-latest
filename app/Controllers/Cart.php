@@ -17,6 +17,12 @@ use Stripe\Stripe;
 class Cart extends BaseController
 {
     use CartTrait;
+    protected $orderModel;
+    
+    public function __construct()
+    {
+        $this->orderModel = new OrderModel();
+    }
     
     public function index()
     {
@@ -87,48 +93,36 @@ class Cart extends BaseController
     public function address()
     {
         session()->remove('order_metadata');
-        if ( is_array(get_cart_contents()) && count(get_cart_contents()) > 0 ) {
-            $postdata = $this->request->getPost();
-            $ip = $this->request->getIPAddress();
-            $orderCart = get_cart_contents();
-            if($postdata['gateway'] == 'coupon_code'){
-                $db = \Config\Database::connect();
-                $coupon_data = $db->table("coupons")->where(['coupon_code' => $postdata['coupon_code'], 'user_id' => getUserId(), 'is_used' => 0])->get()->getResultArray();
-                if( count($coupon_data) > 0){
-                   foreach ($orderCart as $key => $order) {
-                        $p = $db->table("products")->where(['id'=>$order['id']])->get()->getRowArray();
-                        if($p['store_id'] != $coupon_data[0]['vendor_id']){
-                            echo "<script>alert('Invalid Coupon code.')</script>";
-                            return redirect()->back();        
-                        }
-                   }
-                   
-                }else{
-                    echo "<script>alert('Invalid Coupon code.')</script>";
-                    return redirect()->back();
-                }
-            }
-            $response = (new OrderModel())->insertOrder($ip,$postdata,$orderCart);
-            $ord = $response['order_id'];
-            session()->set('order_metadata', $response);
-            if($postdata['gateway'] == 'coupon_code'){
-                $db = \Config\Database::connect();
-                $db->table("coupons")->set('is_used', 1)->set('used_at', date('Y-m-d H:i:s'))->where('coupon_code', $postdata['coupon_code'])->update();
-                $db->table("spree")->where(['com_id' => $coupon_data[0]['com_id'], 'store_id' => $coupon_data[0]['vendor_id'] ])->delete();
-            }
-            if ( $postdata['gateway'] == 'creditcard') {
-                get_cart_destroy();
-                return redirect()->to('/cart/payments/'.my_encrypt($ord));        
-            } else {
-                echo "<script> alert('Invalid Request.'); </script>"; // COD disabled from now on.
-                return redirect()->back();      
-                // get_cart_destroy();
-                // $this->setCheckoutSession();
-                // return redirect()->to('/cart/thankyou');
-            }
-            // return redirect()->to('/dashboard');
+        $postdata = $this->request->getPost();
+        $shipping_address = isset($postdata['address']['billing']['same_shipping']) ? $postdata['address']['billing']['same_shipping'] : 1;
+
+        if ( $shipping_address == 2 ) {
+			if($postdata['address_id'] ) {
+				$address_id = $postdata['address_id'];
+				$this->orderModel->editOrderAddress($postdata['address']['billing'],$address_id);
+			}else{
+				$address_id = $this->orderModel->addOrderAddress($postdata['address']['billing']);
+			}
+            $postdata['billing_address_id'] = $address_id;
+            $address_shipping_id = $this->orderModel->addOrderAddress($postdata['address']['shipping'],2);
+            $postdata['shipping_address_id'] = $address_shipping_id;
         } else {
-            return redirect()->to('/');
+			if($postdata['address_id'] ) {
+				$address_id = $postdata['address_id'];
+				$this->orderModel->editOrderAddress($postdata['address']['billing'],$address_id);
+			}else{
+				$address_id = $this->orderModel->addOrderAddress($postdata['address']['billing']);
+			}
+            $postdata['billing_address_id'] = $address_id;
+            $address_shipping_id = $this->orderModel->addOrderAddress($postdata['address']['billing'],2);
+            $postdata['shipping_address_id'] = $address_shipping_id;
+        }
+        $response = CartTrait::checkoutTrait($postdata);
+        if(!$response['success']) {
+            echo "<script>{$response['message']}</script>";
+            return redirect()->back();
+        }else{
+            return redirect()->to('/cart/payments/'.my_encrypt($response['order_id']));
         }
     }
 

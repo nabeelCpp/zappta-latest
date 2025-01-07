@@ -1,5 +1,9 @@
 <?php
 namespace App\Traits;
+
+use App\Models\OrderModel;
+use App\Models\RegisterModel;
+
 trait CartTrait
 {
     /**
@@ -133,5 +137,150 @@ trait CartTrait
                 insert_cart_contents($datacart);
             }
             return get_cart_contents();
+    }
+
+
+    /**
+     * Checkout trait
+     * @param array $postData
+     * @return array
+     * @author 
+     */
+    public static function checkoutTrait($postdata) : array {
+        $db = \Config\Database::connect();
+        if ( is_array(get_cart_contents()) && count(get_cart_contents()) > 0 ) {
+            $ip = request()->getIPAddress();
+            $orderCart = get_cart_contents();
+            if($postdata['gateway'] == 'coupon_code'){
+                $coupon_data = $db->table("coupons")->where(['coupon_code' => $postdata['coupon_code'], 'user_id' => getUserId(), 'is_used' => 0])->get()->getResultArray();
+                if( count($coupon_data) > 0){
+                   foreach ($orderCart as $key => $order) {
+                        $p = $db->table("products")->where(['id'=>$order['id']])->get()->getRowArray();
+                        if($p['store_id'] != $coupon_data[0]['vendor_id']){
+                            return ['success' => false, 'message' => 'Invalid Coupon code', 'order_id' => null];
+                        }
+                   }
+                }else{
+                    return ['success' => false, 'message' => 'Invalid Coupon code', 'order_id' => null];
+                }
+            }
+            $response = (new OrderModel())->insertOrder($ip,$postdata,$orderCart);
+            $ord = $response['order_id'];
+            session()->set('order_metadata', $response);
+            if($postdata['gateway'] == 'coupon_code'){
+                $db->table("coupons")->set('is_used', 1)->set('used_at', date('Y-m-d H:i:s'))->where('coupon_code', $postdata['coupon_code'])->update();
+                $db->table("spree")->where(['com_id' => $coupon_data[0]['com_id'], 'store_id' => $coupon_data[0]['vendor_id'] ])->delete();
+            }
+            if ( $postdata['gateway'] == 'creditcard') {
+                get_cart_destroy();
+                return ['success' => true, 'message' => 'Proceed to payment!', 'order_id' => $ord];        
+            } else {
+                return ['success' => false, 'message' => 'Invalid Request.', 'order_id' => null]; // COD disabled from now on.
+                      
+                // get_cart_destroy();
+                // $this->setCheckoutSession();
+                // return redirect()->to('/cart/thankyou');
+            }
+            // return redirect()->to('/dashboard');
+        } else {
+            return ['success' => false, 'message' => 'Cart is empty!'];
+        }
+    }
+
+    /**
+     * create intent for stripe payment
+     * need to compelte
+     */
+    
+     public function createPaymentIntent($order_id)
+    {
+        $user_email = (new RegisterModel())->getByIdResult(getUserId());
+        $ord = (new OrderModel())->getCheckoutUserSingleOrder($order_id);
+        $product = [];
+
+        if ( is_array($ord) && count($ord) > 0 ) {
+            foreach ( $ord['items'] as $od ) {
+                $price = explode('.',$od['price']);
+                if ( is_array($price) && count($price) > 0 ) {
+                    $stripe_price = $price[0];
+                    $second_price = isset($price[1]) ? $price[1] : 0;
+                    $len = strlen($second_price);
+                    if ( $len == 2 ) {
+                        $stripe_price .= $second_price;
+                    } else {
+                        $stripe_price .= $second_price.'0';
+                    }
+                } else {
+                    $stripe_price = $price[0].'00';
+                }
+                $product[] = [
+                        'price_data' => [
+                            'currency' => 'usd',
+                            'product_data' => [
+                                'name' => $od['item_name'],
+                                'images' => [ $od['item_image'] ],
+                            ],
+                            'unit_amount' => $stripe_price,
+                        ],
+                        'quantity' => $od['qty'],
+                    ];
+            }
+        }
+
+        $shipping = explode('.',$ord['order']['shipping']);
+        if ( is_array($shipping) && count($shipping) > 0 ) {
+            $stripe_shipping = $shipping[0];
+            $second_shipping = isset($shipping[1]) ? $shipping[1] : 0;
+            $len_shipping = strlen($second_shipping);
+            if ( $len_shipping == 2 ) {
+                $stripe_shipping .= $second_shipping;
+            } else {
+                $stripe_shipping .= $second_shipping.'0';
+            }
+        } else {
+            $stripe_shipping = $shipping[0].'00';
+        }
+
+        // print '<pre>';
+        // print_r($ord);
+        // print '</pre>';
+
+        // die();
+        \Stripe\Stripe::setApiKey( getenv('STRIPE_TEST_SERVER') );
+        $session = \Stripe\Checkout\Session::create([
+            'customer_email' => $user_email['email'],
+            'payment_method_types' => ['card'],
+            'shipping_options' => [
+                [
+                    'shipping_rate_data' => [
+                      'type' => 'fixed_amount',
+                      'fixed_amount' => [
+                        'amount' => $stripe_shipping,
+                        'currency' => 'usd',
+                      ],
+                      'display_name' => 'Shipping',
+                      // Delivers between 5-7 business days
+                      'delivery_estimate' => [
+                        'minimum' => [
+                          'unit' => 'business_day',
+                          'value' => 5,
+                        ],
+                        'maximum' => [
+                          'unit' => 'business_day',
+                          'value' => 7,
+                        ],
+                      ]
+                    ]
+                ],
+            ],
+            'line_items' => [$product],
+            'mode' => 'payment',
+            'success_url' => base_url().'payments/success?order='.$this->request->getUri()->getSegment(3).'&session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => base_url().'payments/cancel?order='.$this->request->getUri()->getSegment(3).'&session_id={CHECKOUT_SESSION_ID}',
+            'metadata' => [
+                'order' => json_encode(session()->get('order_metadata'))
+            ],
+        ]);
+        return redirect()->to( $session->url );
     }
 }
