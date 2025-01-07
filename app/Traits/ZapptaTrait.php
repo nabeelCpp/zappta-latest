@@ -14,6 +14,7 @@ use App\Models\ProductsModel;
 use App\Models\ReviewModel;
 use App\Models\VendorDesignModel;
 use App\Models\WishlistModel;
+use Carbon\Carbon;
 use Config\Pager;
 
 trait ZapptaTrait
@@ -255,6 +256,75 @@ trait ZapptaTrait
         $data['compaign'] = (new VendorModel())->getSpreesToDisplayOngoing(10);
         $data['compaign_upcoming'] = (new VendorModel())->getSpreesToDisplayUpcoming(10);
         return $data;
+    }
+
+    /**
+     * Get spree data
+     */
+    public static function spreeData($com_id, $store_id) {
+        $checkSpree = (new VendorModel())->checkVendorSPreeEnabled($store_id, $com_id);
+        if(!$checkSpree || !getUserId()) {
+            return ['spree' => [], 'spreeDetail' => []];
+        }
+        $sprees = (new ProductsModel())->fetchSprees($com_id, $store_id);
+        $spreeDetail = (new ProductsModel())->fetchSpreesDetails($com_id, $store_id);
+        $spreeDetail->compain_s_date = Carbon::parse($spreeDetail->compain_s_date)->startOfDay()->toDateTimeString();
+        $spreeDetail->compain_e_date = Carbon::parse($spreeDetail->compain_e_date)->endOfDay()->toDateTimeString();
+        return $response = ['spree' => $sprees, 'spreeDetail' => $spreeDetail];
+    }
+
+    /**
+     * Add to spree
+     * @param array $post
+     * @return array
+     * @author M Nabeel Arshad
+     */
+    public static function addToSpreeTrait($post) : array {
+        $data = [
+            'com_id' => $post['com_id'],
+            'store_id' => $post['store_id'],
+            'pid' => $post['pid'],
+            'user_id' => getUserId()
+        ];
+        if($post['status'] == 'remove') {
+            $spree = (new ProductsModel())->addRemoveSpreeProduct($data);
+            return ['status' => true, 'spree' => $spree, 'msg' => ($spree ? 'Item Removed from spree cart successfully!' : 'Item not found in spree cart!')];
+        }else if($post['status'] == 'add' && (new ProductsModel())->checkIfProductAlreadyAddedToSpreeCart($post['com_id'], $post['store_id'], $post['pid'])) {
+            return ['status' => false, 'spree' => [], 'msg' => 'Item already added to spree cart!'];
+        }
+        $spree_detail = (new VendorModel())->getSpreeByVendorComId( $post['store_id'], $post['com_id']);
+        $product_detail = (new ProductsModel())->getProductDetail($post['pid']);
+        $count_total_spreed = (new ProductsModel())->prevSpreeCount($post['com_id'], $post['store_id']);
+        if($product_detail['deal_enable'] > 0) {
+            $total = $post['status'] == 'add'?$count_total_spreed + $product_detail['deal_final_price']:$count_total_spreed - $product_detail['deal_final_price'];
+        }else{
+            $total = $post['status'] == 'add'?$count_total_spreed + $product_detail['final_price']:$count_total_spreed - $product_detail['final_price'];
+        }
+        if($total > $spree_detail->price){
+            return ['status' => false,'spree' => [], 'msg'=>"You have exceeded the spree price limit of $$spree_detail->price. Please review your selection. Adjust your cart to ensure the total price aligns with the spree limit."];
+        }
+        $spree = (new ProductsModel())->addRemoveSpreeProduct($data);
+        return $response = ['status' => true, 'spree' => $spree, 'msg' => ($spree ? 'Item added to spree cart successfully!' : 'Item Removed from spree cart successfully!')];
+    }
+
+    /**
+     * Display sprees of a logged in user
+     * @author M Nabeel Arshad
+     * @return array
+     * @since 2025-01-05
+     * @version 1.0.0
+     */
+    public static function getSpreeOfLoggedInUser($com_id = null, $store_id=null) : array {
+        $sprees = (new ProductsModel())->getUserSprees($com_id, $store_id);
+        $arr = [];
+        foreach ($sprees as $key => $value) {
+            $arr[$value['compain_name']]['compain_s_date'] = $value['compain_s_date'];
+            $arr[$value['compain_name']]['compain_e_date'] = $value['compain_e_date'];
+            $value['cover']  = getImageThumg('products', $value['cover'], 250);
+            unset($value['compain_s_date'], $value['compain_e_date']);
+            $arr[$value['compain_name']]['stores'][$value['store_name']][] = $value;
+        }
+        return $arr;
     }
 
 }

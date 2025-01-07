@@ -57,6 +57,12 @@ $routes->group('api', ['namespace' => 'App\Controllers\API', 'filter' => 'api.cl
             $routes->group('checkout', function($routes) {
                 $routes->post('paymentIntent/create', 'Checkout::createPaymentIntent');
             });
+            $routes->group('spin_cart', function($routes) {
+                $routes->get('sprees', 'SpinCart::getSprees'); // sprees / sprees?com_id=?&store_id=?
+                $routes->post('spree', 'SpinCart::addRemove');
+                $routes->delete('spree', 'SpinCart::addRemove');
+                
+            });
         });
     });
 });

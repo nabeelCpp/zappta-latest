@@ -91,15 +91,8 @@
                                                                 <?php foreach ($st as $key => $value) { ?>
                                                                     <tr>
                                                                         <td><?=$key+1?></td>
-                                                                        <td>
-                                                                            <?php 
-                                                                                if( ! empty( $value['cover'] ) ) { 
-                                                                                    $ext_cover = explode('.',$value['cover']);
-                                                                            ?>
-                                                                                <img src="<?php print base_url().'/images/product/'.$ext_cover[0].'/'.$ext_cover[1].'/250';?>" class="img img-thumbnail" style="height: 50px; width: 50px;" alt="">
-                                                                            <?php } else { ?>
-                                                                                <img src="<?php print base_url().'/images/media/img-not-found/jpg/100';?>" class="img img-thumbnail" style="height: 50px; width: 50px;" alt="">
-                                                                            <?php }?>    
+                                                                        <td>   
+                                                                            <img src="<?=$value['cover']?>" class="img img-thumbnail" style="height: 50px; width: 50px;" alt="">
                                                                             <?=$value['name']?></td>
                                                                         <td>$<?=$value['deal_enable'] > 0?number_format($value['deal_final_price'], 2):number_format($value['final_price'], 2)?></td>
                                                                         <td><button type="button" class="btn btn-link btn-sm" data-toggle="modal" data-target="#exampleModal" data-id="<?=my_encrypt($value['id'])?>" data-name="<?=$value['name']?>" onclick="removeSpree(this)">Remove From Spree</button></td>

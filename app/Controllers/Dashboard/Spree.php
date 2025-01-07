@@ -4,21 +4,17 @@ namespace App\Controllers\Dashboard;
 
 use App\Controllers\BaseController;
 use App\Models\ProductsModel;
+use App\Traits\ZapptaTrait;
+
 class Spree extends BaseController
 {
+    use ZapptaTrait;
     
     public function index()
     {
         $db = \Config\Database::connect();
         $data['pagetitle'] = 'Spree';
-        $sprees = (new ProductsModel())->getUserSprees();
-        $arr = [];
-        foreach ($sprees as $key => $value) {
-            $arr[$value['compain_name']]['compain_s_date'] = $value['compain_s_date'];
-            $arr[$value['compain_name']]['compain_e_date'] = $value['compain_e_date'];
-            $arr[$value['compain_name']]['stores'][$value['store_name']][] = $value;
-        }
-        $data['sprees'] = $arr;
+        $data['sprees'] = ZapptaTrait::getSpreeOfLoggedInUser();
         $data['coupons'] = $db->table("coupons")->where(['user_id' => getUserId()])->get()->getResult();
         // dd($data);
         return view('dashboard/giveaway/spree',$data);

@@ -29,11 +29,22 @@ class Store extends BaseController
      * 
      */
     public function single($slug) {
+        $post = request()->getVar();
         ZapptaHelper::makeSelectedGetParamsEncrypt($this::GET_VARIABLES_ENCRYPT);
         $data = $this->storesTrait($slug);
         if(!$data) {
             $response = ZapptaHelper::response('Store not found!', $data, 404);
             return $this->response->setJSON($response);
+        }
+        // check if store require spree data
+        if(isset($post->enable_spin_cart) && $post->enable_spin_cart) {
+            $spree_data = ZapptaTrait::spreeData($post->com_id, $data['store']['id']);
+            $sprees = [];
+            foreach ($spree_data['spree'] as $key => $sp) {
+                $sprees[] = $sp['pid'];
+            }
+            $spree_data['spree'] = $sprees;
+            $data['spin_cart'] = $spree_data;
         }
         // $meta = $data['meta'] ?? null;
         // if(isset($data['meta'])) {

@@ -44,31 +44,12 @@ class Home extends BaseController
     }
     public function spree()
     {
-        // $data = $_POST;
-        // foreach ($data as $key => $value) {
-        //     $data[$key] = my_decrypt($value);
-        // }
-        $data['com_id'] = my_decrypt($_POST['com_id']);
-        $data['store_id'] = my_decrypt($_POST['store_id']);
-        $data['pid'] = $_POST['pid'];
-        $data['user_id'] = getUserId();
-        // get spree details 
-        $spree_detail = (new VendorModel())->getSpreeByVendorComId( my_decrypt($_POST['store_id']), my_decrypt($_POST['com_id']));
-        $product_detail = (new ProductsModel())->getProductDetail($_POST['pid']);
-        // return json_encode($product_detail);
-        $count_total_spreed = (new ProductsModel())->prevSpreeCount(my_decrypt($_POST['com_id']), my_decrypt($_POST['store_id']));
-        if($product_detail['deal_enable'] > 0) {
-            $total = $_POST['status'] == 'add'?$count_total_spreed + $product_detail['deal_final_price']:$count_total_spreed - $product_detail['deal_final_price'];
-        }else{
-            $total = $_POST['status'] == 'add'?$count_total_spreed + $product_detail['final_price']:$count_total_spreed - $product_detail['final_price'];
-        }
-        if($total > $spree_detail->price){
-            $response = ['status' => false,'spree' => [], 'msg'=>'Products selected cost is higher than spree price ($'.$spree_detail->price.')', 'token' => csrf_hash()];
-            return $this->response->setJSON($response);
-        }
-        $spree = (new ProductsModel())->addRemoveSpreeProduct($data);
-        $response = ['status' => true, 'spree' => $spree, 'token' => csrf_hash()];
-        // return json_encode($response);
+        $post = request()->getPost();
+        $post['com_id'] = my_decrypt($post['com_id']);
+        $post['store_id'] = my_decrypt($post['store_id']);
+
+        $response = ZapptaTrait::addToSpreeTrait($post);
+        $response['token'] = csrf_hash();
         return $this->response->setJSON($response);
     }
 
@@ -76,10 +57,8 @@ class Home extends BaseController
     {
         $com_id = my_decrypt($_POST['com_id']);
         $store_id = my_decrypt($_POST['store_id']);
-        $sprees = (new ProductsModel())->fetchSprees($com_id, $store_id);
-        $spreeDetail = (new ProductsModel())->fetchSpreesDetails($com_id, $store_id);
-        $spreeDetail[0]['compain_s_date'] = date('Y/m/d', strtotime($spreeDetail[0]['compain_s_date'])).' 23:59:59';
-        $response = ['spree' => $sprees, 'spreeDetail' => $spreeDetail[0], 'token' => csrf_hash()];
+        $response = ZapptaTrait::spreeData($com_id, $store_id);
+        $response['token'] = csrf_hash();
         return $this->response->setJSON($response);
     }
 

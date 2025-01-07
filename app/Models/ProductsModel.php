@@ -1585,11 +1585,31 @@ class ProductsModel extends Model
             ])->get()->getResultArray();
         if ($spree) {
             $this->db->table('spree')->where(['id' => $spree[0]['id']])->delete();
-            return false;
+            return true;
         } else {
             $this->db->table('spree')->insert($post);
             return true;
         }
+    }
+
+    /**
+     * Check if the product is in spree
+     * @param $com_id
+     * @param $store_id
+     * @param $pid
+     * @return bool
+     * @author M Nabeel Arshad
+     * @since 2025-01-03
+     */
+    public function checkIfProductAlreadyAddedToSpreeCart($com_id, $store_id, $pid) : bool {
+        $spree = $this->db->table('spree')
+            ->where([
+                'com_id' => $com_id,
+                'pid' => $pid,
+                'store_id' => $store_id,
+                'user_id' => getUserId()
+            ])->countAllResults();
+        return $spree > 0;
     }
 
     public function fetchSprees($com_id, $store_id)
@@ -1606,30 +1626,35 @@ class ProductsModel extends Model
     public function fetchSpreesDetails($com_id, $store_id)
     {
         return $this->db->table('vendor_sprees')
-            ->select('vendor_sprees.price, compain.compain_s_date, compain.compain_e_date')
+            ->select('vendor_sprees.price, compain.compain_s_date, compain.compain_e_date, com_id, vendor_id as store_id')
             ->join('compain', 'vendor_sprees.com_id  = compain.id')
             ->where([
                 'vendor_sprees.com_id' => $com_id,
                 'vendor_sprees.vendor_id' => $store_id,
-            ])->get()->getResultArray();
+            ])->get()->getFirstRow();
     }
 
-    public function getUserSprees()
+    public function getUserSprees($com_id = null, $store_id)
     {
         $this->db->table('spree')
             ->set('is_read', 1)
             ->where('is_read', 0)
             ->update();
-        return $this->db->table('spree')
+        $query = $this->db->table('spree')
             ->select('products.name, vendor.store_name, vendor.store_slug, compain.compain_name, compain.compain_s_date, compain.compain_e_date, spree.id, product_detail.deal_enable,product_detail.deal_final_price, product_detail.final_price, products.cover, vendor.id as store_id, compain.id AS compain_id')
             ->join('vendor', 'spree.store_id = vendor.id')
             ->join('compain', 'spree.com_id = compain.id')
             ->join('products', 'spree.pid = products.id')
             ->join('product_detail', 'products.id = product_detail.product_id')
             ->where('spree.user_id', getUserId())
-            ->where('compain.compain_e_date > ', date('Y-m-d'))
-            ->get()
-            ->getResultArray();
+            ->where('compain.compain_e_date > ', date('Y-m-d'));
+        if($com_id) {
+            $query->where('compain.id', $com_id);
+        }
+        if($store_id) {
+            $query->where('vendor.id', $store_id);
+        }
+        return $query->get()->getResultArray();
     }
 
     public function removeProductFromSpree($id)
@@ -1657,7 +1682,7 @@ class ProductsModel extends Model
             ->where('cms_spree.com_id', $com_id)
             ->where('cms_spree.store_id', $store_id)
             ->where('cms_products.deleteStatus', 0)
-            ->groupBy('cms_spree.com_id')
+            // ->groupBy('cms_spree.com_id')
             ->get()
             ->getResultArray();
         $add = 0;

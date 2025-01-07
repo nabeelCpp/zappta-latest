@@ -518,6 +518,21 @@ class VendorModel extends Model
         
         return $sql?$sql[0]:[];
     }
+
+    /**
+     * 
+     */
+    public function checkVendorSPreeEnabled($store_id, $com_id) {
+        $sql = $this->db->table('vendor_sprees')
+                        ->where('vendor_id', $store_id)
+                        ->where('com_id', $com_id)
+                        ->where('status', 1)
+                        ->get()
+                        ->getResult();
+        return $sql?true:[];
+    }
+
+
     public function getSpreeByVendorComId($vendor_id, $com_id)
     {
         $sql = $this->db->table('vendor_sprees')
