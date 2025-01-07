@@ -1536,6 +1536,9 @@ class ProductsModel extends Model
             ->limit($limit, $offset)
             ->get()
             ->getResultArray();
+        foreach ($products as $key => $value) {
+            $products[$key]['pcover'] = getImageThumg('products', $products[$key]['pcover'], 250);
+        }
         // Check if there are more products after this batch
         $totalCount = $this->relatedProductsQuery($proid)->countAllResults();
         $moreProductsAvailable = $totalCount > $offset + $limit;
