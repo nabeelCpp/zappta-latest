@@ -38,8 +38,8 @@ $routes->group('api', ['namespace' => 'App\Controllers\API', 'filter' => 'api.cl
             });
             $routes->group('wishlist', function($routes) {
                 $routes->get('', 'Home::wishList');
-                $routes->delete('remove/(:any)', 'Home::removeWishlist/$1');
-                $routes->post('add', 'Home::addToWishlist');
+                $routes->delete('', 'Home::removeWishlist');
+                $routes->post('', 'Home::addToWishlist');
             });
             $routes->get('wallet', 'Home::wallet');
             $routes->post('review', 'Home::giveReview');

@@ -60,6 +60,7 @@ class Address extends Model
 
 	const ADDRESS_TYPE_BILLING = 1;
 	const ADDRESS_TYPE_SHIPPING = 2;
+	const ADDRESS_DISPLAY_LIMIT = 5;
 
     public function getAllResultByUser($user_id,$limit=20,$type=1)
     {

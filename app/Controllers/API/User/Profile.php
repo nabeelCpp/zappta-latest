@@ -116,6 +116,9 @@ class Profile extends BaseController
      */
     public function notifications() {
         $notifications = (new \App\Models\UsersNotification())->where('user_id', getUserId())->orderBy('id', 'DESC')->findAll(20);
+        foreach ($notifications as $key => $value) {
+            $notifications[$key]['notification'] = strip_tags($notifications[$key]['notification']);
+        }
         $response = ZapptaHelper::response('Notifications fetched successfully!', $notifications);
         return response()->setJSON($response);
     }

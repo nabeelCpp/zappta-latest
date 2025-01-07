@@ -9,6 +9,7 @@ use App\Traits\CustomerTrait;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\Address;
 use App\Models\ProductsModel;
+use App\Models\WishlistModel;
 
 class Home extends BaseController
 {
@@ -51,8 +52,22 @@ class Home extends BaseController
      * @param string|integer $id
      * @return object
      */
-    public function removeWishlist($id) {
-        $data = CustomerTrait::removeWishlist($id);
+    public function removeWishlist() {
+        $post = request()->getVar();
+        $rules = [
+            'product_id' => 'required'
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = ZapptaHelper::response("Validation errors!", $this->validator->getErrors(), 400);
+            return response()->setJSON($response);
+            // return $this->fail($this->validator->getErrors(), 400);
+        }
+        $checkWishlist = (new WishlistModel())->where('product_id', $post->product_id)->where('user_id', getUserId())->first();
+        if(!$checkWishlist) {
+            return response()->setJSON(ZapptaHelper::response('Product not found in wishlist!', [], 400));
+        }
+        $data = CustomerTrait::removeWishlist($checkWishlist['id']);
         $response = ZapptaHelper::response($data['msg']);
         return response()->setJSON($response);
     }
@@ -101,7 +116,13 @@ class Home extends BaseController
      * @return json
      */
     public function addresses() {
-        $data =  $this->addressModel->getAllResultByUser(getUserId(),5, $this->addressModel::ADDRESS_TYPE_BILLING);
+        $param = null;
+        $get = request()->getGet();
+        if(isset($get['type']) && $get['type'] == 'billing') {
+            $data =  $this->addressModel->getAllResultByUser(getUserId(),Address::ADDRESS_DISPLAY_LIMIT, $this->addressModel::ADDRESS_TYPE_BILLING);
+        }else {
+            $data =  $this->addressModel->getAllResultByUser(getUserId(),Address::ADDRESS_DISPLAY_LIMIT, $this->addressModel::ADDRESS_TYPE_SHIPPING);
+        }
         $response = ZapptaHelper::response('Addresses fetched successfully!', $data, 200);
         return response()->setJSON($response);
     }

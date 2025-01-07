@@ -143,7 +143,7 @@ class ZapptaHelper {
     public static function generateJwtToken($user) : string {
         $jwtPayload = [
             'iat' => time(), // Issued at
-            'exp' => time() + 360000, // Token expiration time (1 hour)
+            'exp' => time() + 60*60*24*30, // Token expiration time (1 hour)
             'customer' => $user
         ];
         $jwtToken = self::encodeJwtToken($jwtPayload);
