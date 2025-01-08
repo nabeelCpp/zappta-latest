@@ -55,9 +55,9 @@ class Cart extends BaseController
             $single['attr'] = $validateAttr['attr'];
         }
         $cart = create_cart_for_api($single, $qty);
-        $data = (array)$this->addToCart($cart);
+        $data = $this->addToCart($cart);
         
-        $response = ZapptaHelper::response('Product added to cart successfully.', $data);
+        $response = ZapptaHelper::response('Product added to cart successfully.', array_values($data));
         return $this->response->setJSON($response);
     }
 }
