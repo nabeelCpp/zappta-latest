@@ -174,7 +174,7 @@ class Compain extends BaseController
     public function invite()
     {
         $data['perm'] = perm('compain');
-        if ( $data['perm']->allview == 0 ) {
+        if ( isset($data['perm']->allview) && $data['perm']->allview == 0 ) {
             if ( $data['perm']->editp == 0 ) {
                 return redirect()->to('/admincp/'); 
             }
