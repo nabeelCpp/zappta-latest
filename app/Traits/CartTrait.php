@@ -183,7 +183,7 @@ trait CartTrait
             }
             // return redirect()->to('/dashboard');
         } else {
-            return ['success' => false, 'message' => 'Cart is empty!'];
+            return ['success' => false, 'message' => 'Cart is empty!', 'order_id' => null];
         }
     }
 

@@ -11,7 +11,9 @@ class History extends BaseController
     use HistoryTrait;
     public function index()
     {
-        $data = HistoryTrait::historyTrait();
+        $order_id = request()->getGet('order_id') ?? null;
+        $data = HistoryTrait::historyTrait($order_id);
+
         return response()->setJSON($data);
     }
 }

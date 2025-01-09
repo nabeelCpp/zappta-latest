@@ -425,14 +425,15 @@ class OrderModel extends Model
     					->countAllResults();
     }
 
-    public function getUserOrderList($limit=1)
+    public function getUserOrderList($limit = 1, $order_id)
     {
         $limits = 10;
         $result_limit = 0;
-        if ( $limit > 1 ) {
+		if ( $limit > 1 ) {
             $result_limit = $limits * ( $limit - 1 );
         }
         $result = [];
+		$where = $order_id ? ' AND cms_order.id = '.$order_id.' ' : null ;
     	$sql = $this->db->query('SELECT cms_order.id,
 	    							cms_order.order_serial as order_serial,
 	    							cms_order_items.id as item_row,
@@ -442,10 +443,10 @@ class OrderModel extends Model
 	    							cms_order_items.item_image,
 	    							cms_order_timeline.status,
 	    							cms_order_timeline.created_at as status_date 
-    							FROM (SELECT * FROM cms_order WHERE user_id='.getUserId().' AND cms_order.status > 0 ORDER BY id DESC  LIMIT '.$limits.' OFFSET '.$result_limit.' ) `cms_order` 
+    							FROM (SELECT * FROM cms_order WHERE user_id='.getUserId().' AND cms_order.status > 0 '.$where.' ORDER BY id DESC  LIMIT '.$limits.' OFFSET '.$result_limit.' ) `cms_order` 
     							LEFT JOIN cms_order_items on cms_order_items.order_id=cms_order.id 
     							LEFT JOIN cms_order_timeline on cms_order_timeline.order_id=cms_order.id
-    							WHERE cms_order.status > 0
+    							WHERE cms_order.status > 0 '.$where.'
     							ORDER BY cms_order_items.order_id DESC')
     					->getResultArray();
     	if ( is_array($sql) && count($sql) > 0 ) {
@@ -607,8 +608,8 @@ class OrderModel extends Model
                         'user_id' => getUserId(),
                         'payment_method' => $data['gateway'],
                         'ip_address' => $ip,
-                        'platform' => 'Website',
-                        'order_message' => $data['address']['billing']['order_notes'],
+                        'platform' => $data['platform'],
+                        'order_message' => $data['address']['billing']['order_notes'] ?? ($data['order_message'] ?? null),
                         'status' => $order_status,
                     ];
         $order_id = $this->add($orderData);

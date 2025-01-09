@@ -117,6 +117,7 @@ class Cart extends BaseController
             $address_shipping_id = $this->orderModel->addOrderAddress($postdata['address']['billing'],2);
             $postdata['shipping_address_id'] = $address_shipping_id;
         }
+        $postdata['platform'] = 'Website';
         $response = CartTrait::checkoutTrait($postdata);
         if(!$response['success']) {
             echo "<script>{$response['message']}</script>";

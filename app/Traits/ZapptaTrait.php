@@ -8,10 +8,12 @@ use App\Models\BrandModel;
 use App\Models\CarriersPreferenceModel;
 use App\Models\CategoriesModel;
 use App\Models\CompainModel;
+use App\Models\OrderModel;
 use App\Models\VendorModel;
 use App\Models\Setting;
 use App\Models\ProductsModel;
 use App\Models\ReviewModel;
+use App\Models\UsersModel;
 use App\Models\VendorDesignModel;
 use App\Models\WishlistModel;
 use Carbon\Carbon;
@@ -326,5 +328,40 @@ trait ZapptaTrait
         }
         return $arr;
     }
+
+
+    /**
+     * Process Zappta Coins and save notification for user
+     * @param array $zapptas
+     * @param string $order_serial
+     * @return void
+     * @author M Nabeel Arshad
+     * @since 2025-01-09
+     * @version 1.0.0
+     */
+    public static function processZapptaCoins($zapptas, $order_serial)
+    {
+        $total_zapptas = 0;
+        if (isset($zapptas)) {
+            foreach ($zapptas as $zappta) {
+                (new OrderModel())->zapptaEarned($zappta, $order_serial);
+                $total_zapptas += $zappta;
+            }
+        }
+
+        if ($total_zapptas > 0) {
+            $link = [
+                'web' => '/dashboard/wallet',
+                'api' => '/customer/wallet'
+            ];
+            (new UsersModel())->saveNotification(
+                "You won {$total_zapptas} Zappta dollars bonus via your Order <b>{$order_serial}</b>",
+                getUserId(),
+                json_encode($link),
+                'order-bonus'
+            );
+        }
+    }
+
 
 }

@@ -39,6 +39,7 @@ class RegisterModel extends Model
                                     'log_status',
                                     'email_verify',
                                     'phone_verify',
+                                    'stripe_customer_id'
                                 ];
 
     protected $useTimestamps = true;
@@ -261,5 +262,32 @@ class RegisterModel extends Model
             return $sql['wands']??0;
         // }        
         // return 0;
+    }
+
+    /**
+     * Update User details
+     * @author M Nabeel Arshad
+     * @param string $key
+     * @param mixed $value
+     * @return void
+     * @since 2025-09-01
+     */
+    public function updateCustomer($data, $id) {
+        $this->update($id, $data);
+    }
+
+    /**
+     * Save notification for a user
+     * 
+     */
+    public static function notifyUser($order_id, $message, $type, $user_id = null)
+    {
+        if($user_id) {
+            $link = [
+                'web' => '/dashboard/history/status?order_id=' . my_encrypt($order_id) . '&key=' . csrf_hash(),
+                'api' => '/customer/history?order_id='.$order_id
+            ];
+            (new UsersModel())->saveNotification($message, $user_id ?? getUserId(), json_encode($link), $type);
+        }
     }
 }

@@ -1,5 +1,6 @@
 <?php
 $routes->group('api', ['namespace' => 'App\Controllers\API', 'filter' => 'api.client'], function($routes) {
+    $routes->post('stripe_webhook', 'App\Controllers\API\User\Checkout::stripeWebhook');
     $routes->get('image_dimensions', 'Home::imageDimensions');
     $routes->get('home', 'Home::index');
     $routes->get('search', 'Home::search');
