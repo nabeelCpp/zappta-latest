@@ -21,7 +21,7 @@ class Cart extends BaseController
     public function index()
     {
         $data = get_cart_contents();
-        $response = ZapptaHelper::response('Cart contents fetched successfully.', $data);
+        $response = ZapptaHelper::response('Cart contents fetched successfully.', array_values($data));
         return response()->setJSON($response);
     }
 
