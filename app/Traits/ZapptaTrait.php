@@ -354,15 +354,14 @@ trait ZapptaTrait
         }
 
         if ($total_zapptas > 0) {
-            $link = [
-                'web' => '/dashboard/wallet',
-                'api' => '/customer/wallet'
-            ];
+            $link = '/dashboard/wallet';
+            $api_link = '/customer/wallet';
             (new UsersModel())->saveNotification(
                 "You won {$total_zapptas} Zappta dollars bonus via your Order <b>{$order_serial}</b>",
                 getUserId(),
-                json_encode($link),
-                'order-bonus'
+                $link,
+                'order-bonus',
+                $api_link
             );
         }
     }

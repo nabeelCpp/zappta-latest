@@ -148,9 +148,9 @@ class UsersModel extends Model
 						->getResultArray();
     }
 
-    public function saveNotification($notification, $user_id, $link='', $category = '')
+    public function saveNotification($notification, $user_id, $link='', $category = '', $api_link = '')
     {
-        $insert = ['user_id' => $user_id, 'notification' => $notification, 'link' => $link, 'category' => $category, 'created_at' => date('Y-m-d H:i:s')];
+        $insert = ['user_id' => $user_id, 'notification' => $notification, 'link' => $link, 'api_link' => $api_link, 'category' => $category, 'created_at' => date('Y-m-d H:i:s')];
         $this->db->table('user_notification')->insert($insert);
     }
 

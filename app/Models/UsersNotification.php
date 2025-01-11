@@ -16,6 +16,7 @@ class UsersNotification extends Model
         'notification',
         'user_id',
         'link',
+        'api_link',
         'category',
         'is_read'
     ];
