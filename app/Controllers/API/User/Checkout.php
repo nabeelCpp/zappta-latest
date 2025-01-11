@@ -65,7 +65,7 @@ class Checkout extends BaseController
     }
 
     public function stripeWebhook() {
-        $this->stripe->
+        $this->stripe->webhook();
     }
 
 
