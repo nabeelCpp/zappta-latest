@@ -69,4 +69,16 @@ class Cart extends Model
             return $this->insert($data);
         }
     }
+
+    /**
+     * Destroy cart
+     * @param int $user_id
+     * @return bool
+     * @since 2025-01-11
+     * @version 1.0.0
+     * @author M Nabeel Arshad
+     */
+    public function removeCart($user_id) : bool {
+        return $this->where('user_id', $user_id)->delete();
+    }
 }

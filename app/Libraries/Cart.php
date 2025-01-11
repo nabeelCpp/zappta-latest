@@ -484,11 +484,18 @@ class Cart
      * Destroy the cart
      *
      * Empties the cart and kills the session
+     * @version 1.0.1
+     * @author M Nabeel Arshad
      */
     public function destroy(): void
     {
         $this->cartContents = [ 'cart_total' => 0, 'total_items' => 0 ];
-        $this->session->remove('cart_contents');
-        $this->session->remove('cart_discount');
+        if(is_client_api()){
+            // If we're an API client, we'll destroy cart contents on Cart table in db
+            $this->cartModel->removeCart(getUserId());
+        }else{
+            $this->session->remove('cart_contents');
+            $this->session->remove('cart_discount');
+        }
     }
 }
