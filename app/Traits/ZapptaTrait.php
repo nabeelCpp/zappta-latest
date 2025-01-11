@@ -295,6 +295,9 @@ trait ZapptaTrait
             return ['status' => false, 'spree' => [], 'msg' => 'Item already added to spree cart!'];
         }
         $spree_detail = (new VendorModel())->getSpreeByVendorComId( $post['store_id'], $post['com_id']);
+        if(!$spree_detail) {
+            return ZapptaHelper::response('Spree not found!', null, 404);
+        }
         $product_detail = (new ProductsModel())->getProductDetail($post['pid']);
         $count_total_spreed = (new ProductsModel())->prevSpreeCount($post['com_id'], $post['store_id']);
         if($product_detail['deal_enable'] > 0) {

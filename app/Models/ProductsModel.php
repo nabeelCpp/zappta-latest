@@ -1644,7 +1644,7 @@ class ProductsModel extends Model
             ->where('is_read', 0)
             ->update();
         $query = $this->db->table('spree')
-            ->select('products.name, vendor.store_name, vendor.store_slug, compain.compain_name, compain.compain_s_date, compain.compain_e_date, spree.id, product_detail.deal_enable,product_detail.deal_final_price, product_detail.final_price, products.cover, vendor.id as store_id, compain.id AS compain_id')
+            ->select('products.name, vendor.store_name, vendor.store_slug, compain.compain_name, compain.compain_s_date, compain.compain_e_date, spree.id, product_detail.deal_enable,product_detail.deal_final_price, product_detail.final_price, products.cover, vendor.id as store_id, compain.id AS compain_id, spree.pid')
             ->join('vendor', 'spree.store_id = vendor.id')
             ->join('compain', 'spree.com_id = compain.id')
             ->join('products', 'spree.pid = products.id')
