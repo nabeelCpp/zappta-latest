@@ -322,6 +322,7 @@ trait ZapptaTrait
         foreach ($sprees as $key => $value) {
             $arr[$value['compain_name']]['compain_s_date'] = $value['compain_s_date'];
             $arr[$value['compain_name']]['compain_e_date'] = $value['compain_e_date'];
+            $arr[$value['compain_name']]['compain_name'] = $value['compain_name'];
             $value['cover']  = getImageThumg('products', $value['cover'], 250);
             unset($value['compain_s_date'], $value['compain_e_date']);
             $arr[$value['compain_name']]['stores'][$value['store_name']][] = $value;
