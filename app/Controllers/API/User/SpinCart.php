@@ -53,9 +53,9 @@ class SpinCart extends BaseController
         } 
         $data['sprees'] = ZapptaTrait::getSpreeOfLoggedInUser();
         $data['sprees'] = count($data['sprees']) ?  array_values($data['sprees']) : [];
-        foreach ($data['sprees'] as $key => $value) {
-            $data['sprees'][$key]['stores'] = array_values($data['sprees'][$key]['stores']);
-        }
+        // foreach ($data['sprees'] as $key => $value) {
+        //     $data['sprees'][$key]['stores'] = array_values($data['sprees'][$key]['stores']);
+        // }
         // $data['coupons'] = $db->table("coupons")->where(['user_id' => getUserId()])->get()->getResult();
         $response = ZapptaHelper::response('Sprees fetched successfully!', $data);
         return response()->setJSON($response);
