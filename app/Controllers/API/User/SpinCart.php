@@ -53,6 +53,11 @@ class SpinCart extends BaseController
         } 
         $data['sprees'] = ZapptaTrait::getSpreeOfLoggedInUser();
         $data['sprees'] = count($data['sprees']) ?  array_values($data['sprees']) : [];
+        foreach ($data['sprees'] as $key => $spree) {
+            if (isset($spree['stores'])) {
+                $data['sprees'][$key]['stores'] = array_values($spree['stores']);
+            }
+        }
         // foreach ($data['sprees'] as $key => $value) {
         //     $data['sprees'][$key]['stores'] = array_values($data['sprees'][$key]['stores']);
         // }

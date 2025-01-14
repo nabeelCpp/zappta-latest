@@ -329,7 +329,8 @@ trait ZapptaTrait
             $value['cover']  = getImageThumg('products', $value['cover'], 250);
             unset($value['compain_s_date'], $value['compain_e_date']);
             if(is_client_api()) {
-                $arr[$value['compain_name']]['stores'][$value['store_id']][] = $value;
+                $arr[$value['compain_name']]['stores'][$value['store_id']]['store_id'] = $value['store_id'];
+                $arr[$value['compain_name']]['stores'][$value['store_id']]['list'][] = $value;
             }else{
 
                 $arr[$value['compain_name']]['stores'][$value['store_name']][] = $value;
