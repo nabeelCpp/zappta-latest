@@ -21,6 +21,7 @@ class ProductsAttributeModel extends Model
 										'value_id',
 										'name',
 										'price',
+										'qty',
 										'category_id',
 										'sizes',
 										'colors',
@@ -102,7 +103,7 @@ class ProductsAttributeModel extends Model
     	}
     }
 
-    public function insertAttr($product_id,$attr_id,$value_id,$name,$price,$category_id=0)
+    public function insertAttr($product_id,$attr_id,$value_id,$name,$price,$category_id=0, $qty = 0)
     {
     	$type = explode('_', $name);
     	$this->add( [ 
@@ -111,6 +112,7 @@ class ProductsAttributeModel extends Model
     					'value_id' => $value_id,
     					'name' => $name, 
     					'price' => $price,
+    					'qty' => $qty,
     					'category_id' => $category_id,
     					'type' => end($type)
     				] );

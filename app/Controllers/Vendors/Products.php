@@ -207,12 +207,13 @@ class Products extends BaseController
                                <div class="check"></div>
                                <div class="name">Name</div>
                                <div class="price">Price Increament</div>
+                               <div class="price mx-1">Quantity</div>
                           </div>';
             foreach ( $result as $rr ) {
                 if ( $rr['value_opt'] == 2 ) {
                     if($rr['value_img']) {
-                        $img_ext = explode('.', $rr['value_img']);
-                        $img = '<span class="color"><img src="'.base_url().'images/product/'.$img_ext[0].'/'.$img_ext[1].'/100" alt="" class="rounded"></span>';
+                        $img = getImageThumg('products',$rr['value_img'],100);
+                        $img = '<span class="color"><img src="'.$img.'" alt="" class="rounded"></span>';
                     }else{
                         $img = '<span class="color" style="background-color: #'.$rr['color_code'].';"></span>';
                     }
@@ -220,12 +221,14 @@ class Products extends BaseController
                                    <div class="check"><input type="checkbox" name="product_attribute[value]['.$rr['attr_id'].']['.$rr['id'].'][name]" class="valuecheck" value="'.my_encrypt($catid.'_'.$rr['attr_id'].'_'.$rr['id'].'_'.$rr['value_opt']).'" id="vbv_'.$rr['id'].'" onclick="enablepriceblock('.$rr['id'].');"></div>
                                    <div class="name">'.$img.'<span>'.$rr['name_en'].'</span></div>
                                    <div class="price"><input type="number" id="vsvs_'.$rr['id'].'" name="product_attribute[value]['.$rr['attr_id'].']['.$rr['id'].'][price]" value="0" disabled></div>
+                                    <div class="price mx-1"><input type="number" id="vq_'.$rr['id'].'" name="product_attribute[value]['.$rr['attr_id'].']['.$rr['id'].'][qty]" value="0" disabled></div>
                               </div>';
                 } else {
                     $html .= '<div class="value_row d-flex">
                                    <div class="check"><input type="checkbox" name="product_attribute[value]['.$rr['attr_id'].']['.$rr['id'].'][name]" class="valuecheck" value="'.my_encrypt($catid.'_'.$rr['attr_id'].'_'.$rr['id'].'_'.$rr['value_opt']).'" id="vbv_'.$rr['id'].'" onclick="enablepriceblock('.$rr['id'].');"></div>
                                    <div class="name">'.$rr['name_en'].'</div>
                                    <div class="price"><input type="number" id="vsvs_'.$rr['id'].'" name="product_attribute[value]['.$rr['attr_id'].']['.$rr['id'].'][price]" value="0" disabled></div>
+                                    <div class="price mx-1"><input type="number" id="vq_'.$rr['id'].'" name="product_attribute[value]['.$rr['attr_id'].']['.$rr['id'].'][qty]" value="0" disabled></div>
                               </div>';
                 }
             }

@@ -71,6 +71,7 @@
 	                               <div class="check"></div>
 	                               <div class="name">Name</div>
 	                               <div class="price">Price Increament</div>
+	                               <div class="price">Quantity</div>
 	                          </div>';
 	    				$result = (new \App\Models\AttributeValueModel())->getValueByAttrbuteForProduct($old_attr);
 	    				if ( is_array($result) && count($result) > 0 ) {
@@ -92,7 +93,7 @@
 						                        } else {
 						                        	$html .= ' value="0" disabled';
 						                        }
-						                        $html .= '></div>
+						                        $html .= '></div><div class="price mx-1"><input type="number" name="product_attribute[value]['.$rr['attr_id'].']['.$rr['id'].'][qty]" id="vq_'.$rr['id'].'" min="0" value="'.($selected_value[$rr['attr_id']][$rr['id']]['qty'] ?? 0).'" '.(( !empty($selected_value[$old_attr]) && array_key_exists($rr['id'], $selected_value[$rr['attr_id']] ) ) ? '' : 'disabled').'></div>
 						                              </div>';
 						                } else {
 						                    $html .= '<div class="value_row d-flex">
@@ -109,7 +110,7 @@
 						                        	$html .= ' value="0" disabled';
 						                        }
 						                        $html .= '></div>
-						                              </div>';
+												<div class="price mx-1"><input type="number" name="product_attribute[value]['.$rr['attr_id'].']['.$rr['id'].'][qty]" id="vq_'.$rr['id'].'" min="0"  value="'.($selected_value[$rr['attr_id']][$rr['id']]['qty'] ?? 0).'" '.(( !empty($selected_value[$old_attr]) && array_key_exists($rr['id'], $selected_value[$rr['attr_id']] ) ) ? '' : 'disabled').'></div></div>';
 						                }
 						            }
 					            }
@@ -210,8 +211,10 @@
 	{
 		if ( $('#vbv_'+ids).is(':checked') ) {
 			$('#vsvs_'+ids).attr('disabled',false);
+			$('#vq_'+ids).attr('disabled',false);
 		} else {
 			$('#vsvs_'+ids).attr('disabled',true);
+			$('#vq_'+ids).attr('disabled',true);
 		}
 	}
 

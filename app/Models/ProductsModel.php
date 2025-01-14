@@ -413,7 +413,7 @@ class ProductsModel extends Model
             (new \App\Models\ProductsAttributeModel())->deleteAllAttr($product_id);
             foreach ($post['product_attribute']['value'] as $attr => $va) {
                 foreach ($va as $v => $k) {
-                    (new \App\Models\ProductsAttributeModel())->insertAttr($product_id, $attr, $v, my_decrypt($k['name']), $k['price']);
+                    (new \App\Models\ProductsAttributeModel())->insertAttr($product_id, $attr, $v, my_decrypt($k['name']), $k['price'], 0, $k['qty']);
                 }
             }
             $this->updateproattr($product_id);
@@ -651,7 +651,7 @@ class ProductsModel extends Model
     {
         $result = [];
         $sql = $this->db->table('product_attribute')
-            ->select('product_attribute.product_id as pidattr,product_attribute.type as pattrtype,product_attribute.attr_id as pattr_id,product_attribute.value_id as pattr_value_id,attributes_value.store_id as sid,attributes_value.name_en as value_name,attributes_value.color_code as color_code,product_attribute.price as price_value,attributes_value.value_img as value_img')
+            ->select('product_attribute.product_id as pidattr,product_attribute.type as pattrtype,product_attribute.attr_id as pattr_id,product_attribute.value_id as pattr_value_id,attributes_value.store_id as sid,attributes_value.name_en as value_name,attributes_value.color_code as color_code,product_attribute.price as price_value,attributes_value.value_img as value_img, product_attribute.qty as qty')
             ->join('attributes_value', 'attributes_value.id=product_attribute.value_id')
             ->where('product_attribute.attr_id', $attr_id)
             ->where('product_attribute.product_id', $product_id)
