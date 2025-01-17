@@ -702,7 +702,7 @@ class OrderModel extends Model
                             'created_at' => date('Y-m-d H:i:s')
                         ];
             $this->AddOrderItems($order_items);
-            (new  \App\Models\ProductsDetailModel())->updateItemQty($cart['id'], (int)$cart['qty']);
+            (new  \App\Models\ProductsDetailModel())->updateItemQty($cart['id'], (int)$cart['qty'], $cart['options']);
 			// Add zapta coins after successfull order placed!
             $store = (new \App\Models\VendorModel())->findStoreById($single_item['store_id']);
 			if(isset($store['earn_zappta'])){

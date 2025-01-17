@@ -7,6 +7,7 @@ use App\Models\CountryModel;
 use App\Models\ProductsDetailModel;
 use App\Models\ProductsModel;
 use App\Models\OrderModel;
+use App\Models\ProductsAttributeModel;
 use App\Models\Setting;
 use App\Models\RegisterModel;
 use App\Models\UsersModel;
@@ -325,6 +326,16 @@ class Cart extends BaseController
     public function update_cart()
     {
         $post = $this->request->getPost();
+        $contents = get_cart_contents();
+        $row = $contents[$post['rowid']];
+        // check if quantity exists.
+        foreach ($row['options'] as $key => $op) {
+            $opt = (new ProductsAttributeModel())->where('product_id', $row['id'])->where('attr_id', $op['attribute_id'])->where('value_id', $op['value_id'])->first();
+            if($opt['qty'] < $post['qty']){
+                print json_encode(['error' => 'Quantity not available']);
+                die();
+            }
+        }
         $datacart = [
                     'rowid' => filtreData($post['rowid']),
                     'qty' => filtreData($post['qty']),

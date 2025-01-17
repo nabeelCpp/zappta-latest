@@ -101,8 +101,16 @@ class ProductsDetailModel extends Model
     }
 
 
-    public function updateItemQty($item_id,$qty)
+    public function updateItemQty($item_id,$qty, $options = [])
     {
+		$ProductsAttributeModel = new ProductsAttributeModel;
+		if(count($options) > 0) {
+			foreach ($options as $key => $op) {
+				$opt = $ProductsAttributeModel->where('product_id', $item_id)->where('attr_id', $op['attribute_id'])->where('value_id', $op['value_id'])->first();
+				$opt['qty'] = $opt['qty'] - $qty;
+				$ProductsAttributeModel->update($opt['id'], ['qty' => $opt['qty']]);
+			}
+		}
         $sql = $this->find($item_id);
         if(!empty($sql)) {
             $oldqty = (int) $sql['quantity'];
