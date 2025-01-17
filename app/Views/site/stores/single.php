@@ -130,8 +130,8 @@
                                                     $data_price_enable = !empty($val['price_enable']) ? $val['price_enable'] : 0;
                                                     $data_price_value = !empty($val['price_value']) ? $val['price_value'] : 0; ?>
                                                     <div class="form-check">
-                                                        <label class="checkbox">
-                                                            <input type="radio" name="<?=my_encrypt($attrkeys['attr_id'])?>" data-attr-setprice="<?=$data_price_enable?>" data-attr-price="<?=$data_price_value?>" class="proattr" data-name="<?=$val['value_name']?>" data-price="<?=$item_price?>" data-id="<?= my_encrypt($attrkeys['attr_id']) ?>" value="<?=my_encrypt($val['pattr_value_id']) ?>">
+                                                        <label class="checkbox" <?= (int)$val['qty'] > 0 ? '' : 'data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Sold out!"'?>>
+                                                            <input type="radio" name="<?=my_encrypt($attrkeys['attr_id'])?>" data-attr-setprice="<?=$data_price_enable?>" data-attr-price="<?=$data_price_value?>" class="proattr" data-name="<?=$val['value_name']?>" data-price="<?=$item_price?>" data-id="<?= my_encrypt($attrkeys['attr_id']) ?>" value="<?=my_encrypt($val['pattr_value_id']) ?>" <?= $val['qty'] == 0 ? 'disabled' : ''?>>
                                                             <span class="red"><?php print $val['value_name']; ?></span>
                                                         </label>
                                                     </div><?php 
