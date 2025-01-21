@@ -266,13 +266,13 @@ trait ZapptaTrait
     public static function spreeData($com_id, $store_id) {
         $checkSpree = (new VendorModel())->checkVendorSPreeEnabled($store_id, $com_id);
         if(!$checkSpree || !getUserId()) {
-            return ['spree' => [], 'spreeDetail' => []];
+            return ['spree' => [], 'spreeDetail' => [], 'code' => 404];
         }
         $sprees = (new ProductsModel())->fetchSprees($com_id, $store_id);
         $spreeDetail = (new ProductsModel())->fetchSpreesDetails($com_id, $store_id);
         $spreeDetail->compain_s_date = Carbon::parse($spreeDetail->compain_s_date)->startOfDay()->toDateTimeString();
         $spreeDetail->compain_e_date = Carbon::parse($spreeDetail->compain_e_date)->endOfDay()->toDateTimeString();
-        return $response = ['spree' => $sprees, 'spreeDetail' => $spreeDetail];
+        return $response = ['spree' => $sprees, 'spreeDetail' => $spreeDetail, 'code' => 200];
     }
 
     /**
@@ -370,6 +370,19 @@ trait ZapptaTrait
                 $api_link
             );
         }
+    }
+
+    /**
+     * Generate Game url
+     * @author M Nabeel Arshad
+     * @param object $post
+     * @return string
+     * @since 2025-01-22
+     * @version 1.0.0
+     */
+    public static function generateGameUrl($post) : string {
+        $url = base_url() . 'game?__com_id=' . my_encrypt($post->com_id) . '&__store_id=' .my_encrypt( $post->store_id). '&__token=' . my_encrypt(getUserId());
+        return $url;
     }
 
 

@@ -63,8 +63,8 @@ $routes->group('api', ['namespace' => 'App\Controllers\API', 'filter' => 'api.cl
                 $routes->get('sprees', 'SpinCart::getSprees'); // sprees / sprees?com_id=?&store_id=?
                 $routes->post('spree', 'SpinCart::addRemove');
                 $routes->delete('spree', 'SpinCart::addRemove');
-                
             });
+            $routes->post('spree/validate', 'SpinCart::fetchSpree');
         });
     });
 });

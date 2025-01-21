@@ -69,4 +69,32 @@ class SpinCart extends BaseController
     public function getSpree() {
         
     }
+
+    public function fetchSpree() {
+        $post = request()->getVar();
+        $rules = [
+            'com_id' => 'required',
+            'store_id' => 'required',
+        ];
+        $messages = [
+            'com_id' => [
+                'required' => 'Compaign id is required!',
+            ]
+        ];
+        if (!$this->validate($rules, $messages)) {
+            $response = ZapptaHelper::response("Validation errors!", $this->validator->getErrors(), 400);
+            return response()->setJSON($response);
+        }
+        $resp = ZapptaTrait::spreeData($post->com_id, $post->store_id);
+        if(count($resp['spree']) == 0) {
+            if($resp['code'] == 200) {
+                $msg = 'You have no items selected for spree.';
+            }else if($resp['code'] == 404) {
+                $msg = 'Spree not found!';
+            }
+            $response = ZapptaHelper::response($msg, [], $resp['code']);
+            return response()->setJSON($response)->setStatusCode($resp['code']);
+        }
+        return response()->setJSON(ZapptaHelper::response('Spree fetched successfully!', ['game_url' => ZapptaTrait::generateGameUrl($post)]));
+    }
 }
