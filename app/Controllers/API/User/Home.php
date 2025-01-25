@@ -118,12 +118,16 @@ class Home extends BaseController
     public function addresses() {
         $param = null;
         $get = request()->getGet();
+        $limit = $get['limit'] ?? Address::ADDRESS_DISPLAY_LIMIT;
         if(isset($get['type']) && $get['type'] == 'billing') {
-            $data =  $this->addressModel->getAllResultByUser(getUserId(),Address::ADDRESS_DISPLAY_LIMIT, $this->addressModel::ADDRESS_TYPE_BILLING);
+            $data =  $this->addressModel->getAllResultByUser(getUserId(),$limit, $this->addressModel::ADDRESS_TYPE_BILLING);
         }else {
-            $data =  $this->addressModel->getAllResultByUser(getUserId(),Address::ADDRESS_DISPLAY_LIMIT, $this->addressModel::ADDRESS_TYPE_SHIPPING);
+            $data =  $this->addressModel->getAllResultByUser(getUserId(),$limit, $this->addressModel::ADDRESS_TYPE_SHIPPING);
         }
-        $response = ZapptaHelper::response('Addresses fetched successfully!', $data, 200);
+        $pager = service('pager');
+        $resp['addresses'] = $data;
+        $resp['total'] = $pager->getTotal();
+        $response = ZapptaHelper::response('Addresses fetched successfully!', $resp, 200);
         return response()->setJSON($response);
     }
 
