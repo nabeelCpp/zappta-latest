@@ -332,31 +332,31 @@ function orderCartOnAdminStatus($status)
 {
     switch ($status) {
         case 1:
-                return '<span class="badge bg-primary">Pending</span>';
+                return is_client_api()?'Pending':'<span class="badge bg-primary">Pending</span>';
             break;
 
         case 2:
-                return '<span class="badge bg-secondary">Inprocessing</span>';
+                return is_client_api()?'Inprocessing':'<span class="badge bg-secondary">Inprocessing</span>';
             break;
         
         case 3:
-                return '<span class="badge bg-warning text-dark">Shipped</span>';
+                return is_client_api()?'Shipped':'<span class="badge bg-warning text-dark">Shipped</span>';
             break;
 
         case 4:
-                return '<span class="badge bg-success">Delivered</span>';
+                return is_client_api()?'Delivered':'<span class="badge bg-success">Delivered</span>';
             break;
 
         case 5:
-                return '<span class="badge bg-info text-dark">Returned</span>';
+                return is_client_api()?'Returned':'<span class="badge bg-info text-dark">Returned</span>';
             break;
 
         case 6:
-                return '<span class="badge bg-danger">Canceled</span>';
+                return is_client_api()?'Canceled':'<span class="badge bg-danger">Canceled</span>';
             break;
             
         default:
-                return '<span class="badge bg-primary">Pending</span>';
+                return is_client_api()?'Pending':'<span class="badge bg-primary">Pending</span>';
             break;
     }
 }

@@ -427,7 +427,7 @@ class OrderModel extends Model
 
     public function getUserOrderList($limit = 1, $order_id)
     {
-        $limits = 10;
+        $limits = $_GET['limit'] ?? 10;
         $result_limit = 0;
 		if ( $limit > 1 ) {
             $result_limit = $limits * ( $limit - 1 );
@@ -442,7 +442,16 @@ class OrderModel extends Model
 	    							cms_order_items.item_name,
 	    							cms_order_items.item_image,
 	    							cms_order_timeline.status,
-	    							cms_order_timeline.created_at as status_date 
+	    							cms_order_timeline.created_at as status_date,
+									cms_order.created_at as ordered_at,
+									cms_order.final_subtotal,
+									cms_order.total_amount,
+									cms_order.discount,
+									cms_order.shipping,
+									cms_order.payment_method,
+									cms_order.shipping,
+									cms_order.order_serial,
+									cms_order.tax
     							FROM (SELECT * FROM cms_order WHERE user_id='.getUserId().' AND cms_order.status > 0 '.$where.' ORDER BY id DESC  LIMIT '.$limits.' OFFSET '.$result_limit.' ) `cms_order` 
     							LEFT JOIN cms_order_items on cms_order_items.order_id=cms_order.id 
     							LEFT JOIN cms_order_timeline on cms_order_timeline.order_id=cms_order.id
@@ -455,6 +464,14 @@ class OrderModel extends Model
     								'id' => $val['id'],
     								'status' => $val['status'],
 									'status_date' => $val['status_date'],
+									'order_date' => $val['ordered_at'],
+									'final_subtotal' => $val['final_subtotal'],
+									'total_amount' => $val['total_amount'],
+									'discount' => $val['discount'],
+									'shipping' => $val['shipping'],
+									'payment_method' => $val['payment_method'],
+									'order_serial' => $val['order_serial'],
+									'tax' => $val['tax'],
     							];
     			$result['items'][$val['id']][] = [
 													'item_row' => $val['item_row'],
