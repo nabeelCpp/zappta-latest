@@ -54,10 +54,62 @@ class Cart extends BaseController
         }else{
             $single['attr'] = $validateAttr['attr'];
         }
+        $options = CartTrait::gatherAttributes($single['attr']);
+        
+        if(!CartTrait::checkIfQtyInOptAvailable($options, ['product_id' => $id, 'qty' => $qty])) {
+            return response()->setJSON(ZapptaHelper::response('Quantity not available', null, 400));
+        }
         $cart = create_cart_for_api($single, $qty);
         $data = $this->addToCart($cart);
         
         $response = ZapptaHelper::response('Product added to cart successfully.', array_values($data));
         return $this->response->setJSON($response);
+    }
+
+    public function update() {
+        $rules = [
+            'pid'    => 'required|numeric',
+            'qty' => 'required|numeric',
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = ZapptaHelper::response("Validation errors!", $this->validator->getErrors(), 400);
+            return response()->setJSON($response);
+        }
+        $post = (array) $this->request->getVar();
+        $contents = get_cart_contents();
+        foreach ($contents as $key => $value) {
+            if($value['id'] == $post['pid']) {
+                $post['rowid'] = $value['rowid'];
+            }
+        }
+        $post['rowid'] = CartTrait::getRowIdFromContents((int)$post['pid']);
+        if(!$post['rowid']) {
+            return response()->setJSON(ZapptaHelper::response('Product not found in cart!', null, 404));
+        }
+        $data = CartTrait::updateCart($post);
+        if(!$data['success']) {
+            $response = ZapptaHelper::response($data['message'], null, 400);
+        }else{
+            $response = ZapptaHelper::response($data['message'], array_values(get_cart_contents()));
+        }
+        return response()->setJSON($response)->setStatusCode($response['code']);
+    }
+
+    public function remove() {
+        $rules = [
+            'pid'    => 'required|numeric',
+        ];
+        if(!$this->validate($rules)) {
+            $response = ZapptaHelper::response("Validation errors!", $this->validator->getErrors(), 400);
+            return response()->setJSON($response);
+        }
+        $post = (array) $this->request->getVar();
+        $post['rowid'] = CartTrait::getRowIdFromContents((int)$post['pid']);
+        if(!$post['rowid']) {
+            return response()->setJSON(ZapptaHelper::response('Product not found in cart!', null, 404));
+        }
+        $data = CartTrait::removeFromCart($post);
+        return response()->setJSON(ZapptaHelper::response($data['message'], get_cart_contents()));
     }
 }
