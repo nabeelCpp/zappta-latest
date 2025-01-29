@@ -8,10 +8,20 @@ use App\Models\RegisterModel;
 use App\Models\Setting;
 use App\Models\UsersModel;
 use App\Traits\UserTrait;
+use Carbon\Carbon;
 
 class Register extends BaseController
 {
     use UserTrait;
+    public function __construct() {
+        if(session()->get('userIsLoggedIn')) {
+            header('Location: /dashboard');exit;
+        }
+
+        if(session()->get('vendorIsLoggedIn')) {
+            header('Location: /vendor');exit;
+        }
+    }
     public function index()
     {
         return redirect()->to(base_url());
@@ -310,7 +320,69 @@ class Register extends BaseController
     
 
     public function forgot() {
+        $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
         $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
         return view('site/register/forgot-password', $data);
+    }
+
+    public function reset() {
+        $rules = [
+            'email' => 'required|valid_email',
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = ZapptaHelper::response("Validation errors!", $this->validator->getErrors(), 400);
+            $response['token'] = csrf_hash();
+            return response()->setJSON($response);
+        }
+        $request = request()->getPost();
+        $email = $request['email'];
+        $data = UserTrait::forgotPasswordTrait($email);
+        $response = ZapptaHelper::response($data['message'], [], $data['code']);
+        $response['token'] = csrf_hash();
+        return response()->setJSON($response);
+    }
+
+    public function verifyOtp() {
+        $rules = [
+            'email' => 'required|valid_email',
+            'otp' => 'required|min_length[6]',
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = ZapptaHelper::response("Validation errors!", $this->validator->getErrors(), 400);
+            $response['token'] = csrf_hash();
+            return response()->setJSON($response);
+        }
+        $request = request()->getPost();
+        $email = $request['email'];
+        $otp = $request['otp'];
+        $data = UserTrait::checkOtp($email, $otp);
+        $response = ZapptaHelper::response($data['message'], [], $data['code']);
+        $response['token'] = csrf_hash();
+        return response()->setJSON($response);
+    }
+
+    public function changePassword() {
+        $rules = [
+            'email' => 'required|valid_email',
+            'password' => 'required|min_length[8]',
+            'confirm_password' => 'required|matches[password]',
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = ZapptaHelper::response("Validation errors!", $this->validator->getErrors(), 400);
+            $response['token'] = csrf_hash();
+            return response()->setJSON($response);
+        }
+        $request = request()->getPost();
+        $email = $request['email'];
+        $password = $request['password'];
+        $confirm_password = $request['confirm_password'];
+
+        $data = UserTrait::resetPassword($email, $password, $confirm_password);
+        $response = ZapptaHelper::response($data['message'], [], $data['code']);
+        $response['token'] = csrf_hash();
+        return response()->setJSON($response);
     }
 }

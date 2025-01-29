@@ -428,10 +428,20 @@ const fetchFreshCsrfToken = () => {
         url: baseUrl+'csrf_token',
         type: 'GET',
         success: function(data) {
-            $('#_tt_cc').val(data.token);
-            $('#_cc').val(data.token);
+            updateCsrfTokenInDom(data.token);
         }
     })
+}
+
+function updateCsrfTokenInDom(token) {
+    $('#_tt_cc').val(token);
+    $('#_cc').val(token);
+    $('meta[name="X-CSRF-TOKEN"]').attr('content', token);
+    $('input[name="secure"]').val(token);
+    $('#_user_login_token').val(token);
+    $('#_user_register_token').val(token);
+    $('#_user_ask_question').val(token);
+    localStorage.setItem('csrf', token);
 }
 
 /**

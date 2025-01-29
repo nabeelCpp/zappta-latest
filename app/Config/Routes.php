@@ -124,6 +124,9 @@ $routes->group('api', function($routes)
 $routes->get('signup/(:any)', 'Register::loginViaReferral/$1');
 $routes->post('register/save', 'Register::save');
 $routes->get('forgot-password', 'Register::forgot');
+$routes->post('forgot-password', 'Register::reset', ['as' => 'forgot.password.post']);
+$routes->post('verify-otp', 'Register::verifyOtp', ['as' => 'forgot.password.otp']);
+$routes->post('reset', 'Register::changePassword', ['as' => 'forgot.password.reset']);
 $routes->get('register?ref=(:any)', 'Register::loginViaReferral/$1');
 $routes->get('compaigns', 'Home::compaigns', ['as' => 'compaigns.all']);
 $routes->get('csrf_token', 'Home::generateCsrfToken');

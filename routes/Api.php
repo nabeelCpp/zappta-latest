@@ -69,6 +69,12 @@ $routes->group('api', ['namespace' => 'App\Controllers\API', 'filter' => 'api.cl
             $routes->post('spree/validate', 'SpinCart::fetchSpree');
         });
     });
+
+    $routes->group('', ['namespace' => 'App\Controllers\API\User'], function($routes) {
+        $routes->post('forgot-password', 'Login::forgotPassword');
+        $routes->post('verify-otp', 'Login::verifyOtp');
+        $routes->post('reset-password', 'Login::resetPassword');
+    });
 });
 
 ?>
