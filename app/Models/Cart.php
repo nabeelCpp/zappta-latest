@@ -57,6 +57,9 @@ class Cart extends Model
 
     public function updateCart($user_id, $data)
     {
+        if(!$user_id) {
+            return false;
+        }
         // Check if the cart already exists for the user
         $existingCart = $this->where('user_id', $user_id)->get()->getRow();
 
@@ -64,9 +67,9 @@ class Cart extends Model
             // Update the cart if it exists
             return $this->where('user_id', $user_id)->set('cart_contents', json_encode($data))->update();
         } else {
-            // Create a new cart if it doesn't exist
-            $data['user_id'] = $user_id; // Ensure user_id is included
-            return $this->insert($data);
+            $cart['user_id'] = $user_id;
+            $cart['cart_contents'] = json_encode($data);
+            return $this->insert($cart);
         }
     }
 

@@ -326,29 +326,17 @@ class Cart extends BaseController
     public function update_cart()
     {
         $post = $this->request->getPost();
-        $contents = get_cart_contents();
-        $row = $contents[$post['rowid']];
-        // check if quantity exists.
-        foreach ($row['options'] as $key => $op) {
-            $opt = (new ProductsAttributeModel())->where('product_id', $row['id'])->where('attr_id', $op['attribute_id'])->where('value_id', $op['value_id'])->first();
-            if($opt['qty'] < $post['qty']){
-                print json_encode(['error' => 'Quantity not available']);
-                die();
-            }
+        $update = CartTrait::updateCart($post);
+        if(!$update['success']) {
+            return response()->setJSON(['error' => $update['message']]);
         }
-        $datacart = [
-                    'rowid' => filtreData($post['rowid']),
-                    'qty' => filtreData($post['qty']),
-                ];
-        update_cart_contents($datacart);
         print json_encode(count(get_cart_contents()));
     }
     
     public function delete_item_cart()
     {
         $post = $this->request->getPost();
-        $datacart = filtreData($post['rowid']);
-        get_cart_remove_item($datacart);
+        CartTrait::removeFromCart($post);
         print json_encode(count(get_cart_contents()));
     }
 

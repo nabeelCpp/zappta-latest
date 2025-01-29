@@ -331,6 +331,9 @@ class Cart
         if ( count($this->cartContents) <= 2 ) {
             $this->session->remove('cart_contents');
             $this->session->remove('cart_discount');
+            if(is_client_api()) {
+                $this->cartModel->removeCart(getUserId());
+            }
 
             // Nothing more to do... coffee time!
             return false;
@@ -338,11 +341,10 @@ class Cart
 
         // If we made it this far it means that our cart has data.
         // Let's pass it to the Session class so it can be stored
+        $this->session->set('cart_contents', $this->cartContents);
         if(is_client_api()){
             // If we're an API client, we'll save cart contents to Cart table in db
             $this->cartModel->updateCart(getUserId(), $this->cartContents);
-        }else{
-            $this->session->set('cart_contents', $this->cartContents);
         }
 
         // Woot!

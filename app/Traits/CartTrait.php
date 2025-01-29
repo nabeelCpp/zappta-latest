@@ -2,6 +2,7 @@
 namespace App\Traits;
 
 use App\Models\OrderModel;
+use App\Models\ProductsAttributeModel;
 use App\Models\RegisterModel;
 
 trait CartTrait
@@ -21,9 +22,8 @@ trait CartTrait
             $item_handle = filtreData($cart['item_handle']);
             $item_transfer = filtreData($cart['item_transfer']);
             $givewaytags = filtreData($cart['givewaytags']);
-            $attr = $cart['attr'];
+            $result = self::gatherAttributes($cart['attr']);
             $datacart = [];
-            $result = [];
             if ( $single == 1 ) {
                 $datacart['id'] = $id;
                 $datacart['qty'] = $qtycart;
@@ -34,46 +34,6 @@ trait CartTrait
                 $datacart['item_handle'] = $item_handle;
                 $datacart['item_transfer'] = $item_transfer;
                 $datacart['givewaytags'] = $givewaytags;
-                if ( !empty($attr) && is_array($attr) && count($attr) > 0 ) {
-                    foreach( $attr as $rattribute ) {
-                        $explode_attr = explode('_',$rattribute);
-                        if ( is_array($explode_attr) && count($explode_attr) > 0 ) {
-                            if ( count($explode_attr) > 0 ) {
-                                if ( !is_numeric($explode_attr[0]) ) {
-                                    $new_attr = my_decrypt($explode_attr[0]);
-                                } else {
-                                    $new_attr = $explode_attr[0];
-                                }
-                            } else {
-                                $new_attr = '';
-                            }
-                            if ( count($explode_attr) > 1 ) {
-                                if ( !is_numeric($explode_attr[1]) ) {
-                                    $new_value_id = my_decrypt($explode_attr[1]);
-                                } else {
-                                    $new_value_id = $explode_attr[1];
-                                }
-                            } else {
-                                $new_value_id = '';
-                            }
-                            if ( count($explode_attr) > 2 ) {
-                                $atte_price_new = $explode_attr[2];
-                            } else {
-                                $atte_price_new = 0;
-                            }
-                        } else {
-                            $atte_price_new = 0;
-                            $new_value_id = '';
-                            $new_attr = '';
-                        }
-                        $result[] = [
-                                        'attribute_id' => $new_attr,
-                                        'value_id' => $new_value_id,
-                                        'attr_price' => $atte_price_new,
-                                        'value_name' => (new \App\Models\AttributeValueModel())->getValueNameWithAttr($new_value_id)
-                                    ];
-                    }
-                }
             } else {
                 $datacart['id'] = $id;
                 $datacart['qty'] = $qtycart;
@@ -84,46 +44,6 @@ trait CartTrait
                 $datacart['item_handle'] = $item_handle;
                 $datacart['item_transfer'] = $item_transfer;
                 $datacart['givewaytags'] = $givewaytags;
-                if ( !empty($attr) && is_array($attr) && count($attr) > 0 ) {
-                    foreach( $attr as $rattribute ) {
-                        $explode_attr = explode('_',$rattribute);
-                        if ( is_array($explode_attr) && count($explode_attr) > 0 ) {
-                            if ( count($explode_attr) > 0 ) {
-                                if ( !is_numeric($explode_attr[0]) ) {
-                                    $new_attr = my_decrypt($explode_attr[0]);
-                                } else {
-                                    $new_attr = $explode_attr[0];
-                                }
-                            } else {
-                                $new_attr = '';
-                            }
-                            if ( count($explode_attr) > 1 ) {
-                                if ( !is_numeric($explode_attr[1]) ) {
-                                    $new_value_id = my_decrypt($explode_attr[1]);
-                                } else {
-                                    $new_value_id = $explode_attr[1];
-                                }
-                            } else {
-                                $new_value_id = '';
-                            }
-                            if ( count($explode_attr) > 2 ) {
-                                $atte_price_new = $explode_attr[2];
-                            } else {
-                                $atte_price_new = 0;
-                            }
-                        } else {
-                            $atte_price_new = 0;
-                            $new_value_id = '';
-                            $new_attr = '';
-                        }
-                        $result[] = [
-                                        'attribute_id' => $new_attr,
-                                        'value_id' => $new_value_id,
-                                        'attr_price' => $atte_price_new,
-                                        'value_name' => (new \App\Models\AttributeValueModel())->getValueNameWithAttr($new_value_id)
-                                    ];
-                    }
-                }
             }
             $datacart['options'] = $result;
             if ( in_array($datacart['id'],checkItemCart()) ) {
@@ -137,6 +57,59 @@ trait CartTrait
                 insert_cart_contents($datacart);
             }
             return get_cart_contents();
+    }
+
+    /**
+     * Gather Attributes from array
+     * @param array $attr
+     * @return array
+     * @since 2025-01-28
+     * @version 1.0.0
+     * @author M Nabeel Arshad
+     */
+    public static function gatherAttributes(array $attr) : array {
+        $result = [];
+        if ( !empty($attr) && is_array($attr) && count($attr) > 0 ) {
+            foreach( $attr as $rattribute ) {
+                $explode_attr = explode('_',$rattribute);
+                if ( is_array($explode_attr) && count($explode_attr) > 0 ) {
+                    if ( count($explode_attr) > 0 ) {
+                        if ( !is_numeric($explode_attr[0]) ) {
+                            $new_attr = my_decrypt($explode_attr[0]);
+                        } else {
+                            $new_attr = $explode_attr[0];
+                        }
+                    } else {
+                        $new_attr = '';
+                    }
+                    if ( count($explode_attr) > 1 ) {
+                        if ( !is_numeric($explode_attr[1]) ) {
+                            $new_value_id = my_decrypt($explode_attr[1]);
+                        } else {
+                            $new_value_id = $explode_attr[1];
+                        }
+                    } else {
+                        $new_value_id = '';
+                    }
+                    if ( count($explode_attr) > 2 ) {
+                        $atte_price_new = $explode_attr[2];
+                    } else {
+                        $atte_price_new = 0;
+                    }
+                } else {
+                    $atte_price_new = 0;
+                    $new_value_id = '';
+                    $new_attr = '';
+                }
+                $result[] = [
+                                'attribute_id' => $new_attr,
+                                'value_id' => $new_value_id,
+                                'attr_price' => $atte_price_new,
+                                'value_name' => (new \App\Models\AttributeValueModel())->getValueNameWithAttr($new_value_id)
+                            ];
+            }
+        }
+        return $result;
     }
 
 
@@ -282,5 +255,82 @@ trait CartTrait
             ],
         ]);
         return redirect()->to( $session->url );
+    }
+
+    /**
+     * Update Cart
+     * @author M Nabeel Arshad
+     * @since 2025-01-28
+     * @version 1.0.0
+     * @param array $post
+     * @return array {success: boolean, message: string}
+     */
+    public static function updateCart(array $post) : array {
+        $contents = get_cart_contents();
+        $row = $contents[$post['rowid']];
+        // check if quantity exists.
+        if(!self::checkIfQtyInOptAvailable($row['options'], ['product_id' => $row['id'], 'qty' => $post['qty']])) {
+            return ['success' => false, 'message' => 'Quantity not available'];
+        }
+        $datacart = [
+            'rowid' => filtreData($post['rowid']),
+            'qty' => filtreData($post['qty']),
+        ];
+        update_cart_contents($datacart);
+        return ['success' => true, 'message' => 'Cart updated successfully'];
+    }
+
+
+    /**
+     * Check if quantity in options available
+     * @param array $options
+     * @param array $props
+     * @return bool
+     * @since 2025-01-28
+     * @version 1.0.0
+     * @author M Nabeel Arshad
+     */
+    public static function checkIfQtyInOptAvailable(array $options, array $props) : bool {
+        $return = true;
+        foreach ($options as $key => $op) {
+            $opt = (new ProductsAttributeModel())->where('product_id', $props['product_id'])->where('attr_id', $op['attribute_id'])->where('value_id', $op['value_id'])->first();
+            if($opt['qty'] < $props['qty']){
+                $return = false;
+            }
+        }
+        return $return;
+    }
+
+    /**
+     * Remove Cart Item
+     * @param array $post
+     * @return array {success: boolean, message: string}
+     * @since 2025-01-28
+     * @version 1.0.0
+     * @author M Nabeel Arshad
+     */
+    public static function removeFromCart(array $post) : array {
+        $datacart = filtreData($post['rowid']);
+        get_cart_remove_item($datacart);
+        return ['success' => true, 'message' => 'Cart removed successfully'];
+    }
+
+    /**
+     * Get Row Id from Contents
+     * @param int $id
+     * @return string
+     * @since 2025-01-28
+     * @version 1.0.0
+     * @author M Nabeel Arshad
+     */
+    public static function getRowIdFromContents(int $id) : string {
+        $rowId =  '';
+        $contents = get_cart_contents();
+        foreach ($contents as $key => $value) {
+            if($value['id'] == $id) {
+                $rowId = $value['rowid'];
+            }
+        }
+        return $rowId;
     }
 }
