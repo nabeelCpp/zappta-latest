@@ -13,6 +13,15 @@ use Carbon\Carbon;
 class Register extends BaseController
 {
     use UserTrait;
+    public function __construct() {
+        if(session()->get('userIsLoggedIn')) {
+            header('Location: /dashboard');exit;
+        }
+
+        if(session()->get('vendorIsLoggedIn')) {
+            header('Location: /vendor');exit;
+        }
+    }
     public function index()
     {
         return redirect()->to(base_url());
@@ -328,24 +337,8 @@ class Register extends BaseController
         }
         $request = request()->getPost();
         $email = $request['email'];
-        $user = (new RegisterModel())->findByEmailId($email);
-        if(!$user) {
-            $response = ZapptaHelper::response("Email not found!", [], 400);
-            $response['token'] = csrf_hash();
-            return response()->setJSON($response);
-        }
-        $otp = generateOtp();
-        $data = [
-            'otp' => $otp,
-            'otp_time' => Carbon::now()->toDateTimeString(),
-        ];
-        (new RegisterModel())->update($user['id'], $data);
-        $data['user'] = [
-            ...$user,
-            'otp' => $otp,
-        ];
-        (new \App\Models\EmailModel())->sendMail($email, 'Reset Password', 'resetpassword', $data);
-        $response = ZapptaHelper::response("OTP sent to your email!");
+        $data = UserTrait::forgotPasswordTrait($email);
+        $response = ZapptaHelper::response($data['message'], [], $data['code']);
         $response['token'] = csrf_hash();
         return response()->setJSON($response);
     }
@@ -364,31 +357,8 @@ class Register extends BaseController
         $request = request()->getPost();
         $email = $request['email'];
         $otp = $request['otp'];
-        $user = (new RegisterModel())->findByEmailId($email);
-        if(!$user) {
-            $response = ZapptaHelper::response("Email not found!", [], 400);
-            $response['token'] = csrf_hash();
-            return response()->setJSON($response);
-        }
-        if($user['otp'] != $otp) {
-            $response = ZapptaHelper::response("Invalid OTP!", [], 400);
-            $response['token'] = csrf_hash();
-            return response()->setJSON($response);
-        }
-        $otp_time = Carbon::parse($user['otp_time']);
-        $now = Carbon::now();
-        $diff = $now->diffInMinutes($otp_time);
-        if($diff > 5) {
-            $response = ZapptaHelper::response("OTP expired!", [], 400);
-            $response['token'] = csrf_hash();
-            return response()->setJSON($response);
-        }
-        $data = [
-            'otp' => null,
-            'otp_time' => null,
-        ];
-        (new RegisterModel())->update($user['id'], $data);
-        $response = ZapptaHelper::response("OTP verified!");
+        $data = UserTrait::checkOtp($email, $otp);
+        $response = ZapptaHelper::response($data['message'], [], $data['code']);
         $response['token'] = csrf_hash();
         return response()->setJSON($response);
     }
@@ -408,17 +378,10 @@ class Register extends BaseController
         $request = request()->getPost();
         $email = $request['email'];
         $password = $request['password'];
-        $user = (new RegisterModel())->findByEmailId($email);
-        if(!$user) {
-            $response = ZapptaHelper::response("Email not found!", [], 400);
-            $response['token'] = csrf_hash();
-            return response()->setJSON($response);
-        }
-        $data = [
-            'password' => $password,
-        ];
-        (new RegisterModel())->update($user['id'], $data);
-        $response = ZapptaHelper::response("Password changed successfully!");
+        $confirm_password = $request['confirm_password'];
+
+        $data = UserTrait::resetPassword($email, $password, $confirm_password);
+        $response = ZapptaHelper::response($data['message'], [], $data['code']);
         $response['token'] = csrf_hash();
         return response()->setJSON($response);
     }

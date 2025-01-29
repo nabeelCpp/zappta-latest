@@ -189,4 +189,82 @@ class Login extends BaseController
         }
         return $response;
     }
+
+    /**
+     * Forgot password
+     * @return json
+     * @method forgotPassword
+     * @access public
+     * @param Request $request
+     * @return json
+     * @access public
+     * @method forgotPassword
+     * @access public
+     * @param Request $request
+     * @return json
+     */
+    public function forgotPassword() : object {
+        $rules = [
+            'email'    => 'required|valid_email',
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = ZapptaHelper::response("Validation errors!", $this->validator->getErrors(), 400);
+            return response()->setJSON($response);
+        }
+        $post = request()->getVar();
+        $data = UserTrait::forgotPasswordTrait($post->email);
+        $response = ZapptaHelper::response($data['message'], [], $data['code']);
+        return response()->setJSON($response)->setStatusCode($data['code']);
+    }
+
+    /**
+     * Verify OTP
+     * @return json
+     * @method verifyOtp
+     * @access public
+     * @param Request $request
+     * @return json
+     */
+    public function verifyOtp() : object {
+        $rules = [
+            'email' => 'required|valid_email',
+            'otp' => 'required|min_length[6]',
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = ZapptaHelper::response("Validation errors!", $this->validator->getErrors(), 400);
+            return response()->setJSON($response);
+        }
+        $request = request()->getVar();
+        $email = $request->email;
+        $otp = $request->otp;
+        $data = UserTrait::checkOtp($email, $otp);
+        $response = ZapptaHelper::response($data['message'], [], $data['code']);
+        return response()->setJSON($response);
+    }
+
+    /**
+     * Reset password
+     * @return json
+     * @method resetPassword
+     * @access public
+     * @param Request $request
+     */
+    public function resetPassword() : object {
+        $rules = [
+            'email' => 'required|valid_email',
+            'password' => 'required|min_length[8]',
+            'confirm_password' => 'required|matches[password]',
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = ZapptaHelper::response("Validation errors!", $this->validator->getErrors(), 400);
+            return response()->setJSON($response);
+        }
+        $post = request()->getVar();
+        $data = UserTrait::resetPassword($post->email, $post->password, $post->confirm_password);
+        $response = ZapptaHelper::response($data['message'], [], $data['code']);
+        return response()->setJSON($response);
+    }
 }
