@@ -8,6 +8,7 @@ use App\Models\RegisterModel;
 use App\Models\Setting;
 use App\Models\UsersModel;
 use App\Traits\UserTrait;
+use Carbon\Carbon;
 
 class Register extends BaseController
 {
@@ -310,7 +311,115 @@ class Register extends BaseController
     
 
     public function forgot() {
+        $data['assets_url'] = ZapptaHelper::loadAssetsUrl();
         $data['globalSettings'] = ZapptaHelper::getGlobalSettings(['company_name', 'frontend_logo']);
         return view('site/register/forgot-password', $data);
+    }
+
+    public function reset() {
+        $rules = [
+            'email' => 'required|valid_email',
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = ZapptaHelper::response("Validation errors!", $this->validator->getErrors(), 400);
+            $response['token'] = csrf_hash();
+            return response()->setJSON($response);
+        }
+        $request = request()->getPost();
+        $email = $request['email'];
+        $user = (new RegisterModel())->findByEmailId($email);
+        if(!$user) {
+            $response = ZapptaHelper::response("Email not found!", [], 400);
+            $response['token'] = csrf_hash();
+            return response()->setJSON($response);
+        }
+        $otp = generateOtp();
+        $data = [
+            'otp' => $otp,
+            'otp_time' => Carbon::now()->toDateTimeString(),
+        ];
+        (new RegisterModel())->update($user['id'], $data);
+        $data['user'] = [
+            ...$user,
+            'otp' => $otp,
+        ];
+        (new \App\Models\EmailModel())->sendMail($email, 'Reset Password', 'resetpassword', $data);
+        $response = ZapptaHelper::response("OTP sent to your email!");
+        $response['token'] = csrf_hash();
+        return response()->setJSON($response);
+    }
+
+    public function verifyOtp() {
+        $rules = [
+            'email' => 'required|valid_email',
+            'otp' => 'required|min_length[6]',
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = ZapptaHelper::response("Validation errors!", $this->validator->getErrors(), 400);
+            $response['token'] = csrf_hash();
+            return response()->setJSON($response);
+        }
+        $request = request()->getPost();
+        $email = $request['email'];
+        $otp = $request['otp'];
+        $user = (new RegisterModel())->findByEmailId($email);
+        if(!$user) {
+            $response = ZapptaHelper::response("Email not found!", [], 400);
+            $response['token'] = csrf_hash();
+            return response()->setJSON($response);
+        }
+        if($user['otp'] != $otp) {
+            $response = ZapptaHelper::response("Invalid OTP!", [], 400);
+            $response['token'] = csrf_hash();
+            return response()->setJSON($response);
+        }
+        $otp_time = Carbon::parse($user['otp_time']);
+        $now = Carbon::now();
+        $diff = $now->diffInMinutes($otp_time);
+        if($diff > 5) {
+            $response = ZapptaHelper::response("OTP expired!", [], 400);
+            $response['token'] = csrf_hash();
+            return response()->setJSON($response);
+        }
+        $data = [
+            'otp' => null,
+            'otp_time' => null,
+        ];
+        (new RegisterModel())->update($user['id'], $data);
+        $response = ZapptaHelper::response("OTP verified!");
+        $response['token'] = csrf_hash();
+        return response()->setJSON($response);
+    }
+
+    public function changePassword() {
+        $rules = [
+            'email' => 'required|valid_email',
+            'password' => 'required|min_length[8]',
+            'confirm_password' => 'required|matches[password]',
+        ];
+
+        if (!$this->validate($rules)) {
+            $response = ZapptaHelper::response("Validation errors!", $this->validator->getErrors(), 400);
+            $response['token'] = csrf_hash();
+            return response()->setJSON($response);
+        }
+        $request = request()->getPost();
+        $email = $request['email'];
+        $password = $request['password'];
+        $user = (new RegisterModel())->findByEmailId($email);
+        if(!$user) {
+            $response = ZapptaHelper::response("Email not found!", [], 400);
+            $response['token'] = csrf_hash();
+            return response()->setJSON($response);
+        }
+        $data = [
+            'password' => $password,
+        ];
+        (new RegisterModel())->update($user['id'], $data);
+        $response = ZapptaHelper::response("Password changed successfully!");
+        $response['token'] = csrf_hash();
+        return response()->setJSON($response);
     }
 }
