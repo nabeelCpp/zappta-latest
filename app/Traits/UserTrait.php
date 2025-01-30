@@ -91,7 +91,7 @@ trait UserTrait
         if(!$user) {
             return ['success' => false, 'message' => 'Email not found!', 'code' => 400];
         }
-        $otp = generateOtp();
+        $otp = generateOtp(4);
         $data = [
             'otp' => $otp,
             'otp_time' => Carbon::now()->toDateTimeString(),
