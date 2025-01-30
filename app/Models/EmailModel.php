@@ -98,6 +98,7 @@ class EmailModel extends Model
         $config['mailType']  = 'html';
         $config['SMTPCrypto']  = $this->smptCrypto();
         $config['wordWrap'] = true;
+        var_dump($config);
         $email->initialize($config);
     }
 
@@ -112,7 +113,7 @@ class EmailModel extends Model
         $email->setMessage($message);
         $email->send();
         $email->clear(true);
-        // print_r($email->printDebugger());
+        print_r($email->printDebugger());
     }
 public function SendEmailByAdmin($to,$subject,$data){
         $email = \Config\Services::email();
