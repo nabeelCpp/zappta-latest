@@ -346,7 +346,7 @@ class Register extends BaseController
     public function verifyOtp() {
         $rules = [
             'email' => 'required|valid_email',
-            'otp' => 'required|min_length[6]',
+            'otp' => 'required|min_length[4]',
         ];
 
         if (!$this->validate($rules)) {

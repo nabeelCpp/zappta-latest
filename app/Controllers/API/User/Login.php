@@ -229,7 +229,7 @@ class Login extends BaseController
     public function verifyOtp() : object {
         $rules = [
             'email' => 'required|valid_email',
-            'otp' => 'required|min_length[6]',
+            'otp' => 'required|min_length[4]',
         ];
 
         if (!$this->validate($rules)) {
