@@ -93,7 +93,7 @@ class EmailModel extends Model
         $config['SMTPHost'] = $this->smptHost();
         $config['SMTPUser'] = $this->smptUser();
         $config['SMTPPass'] = $this->smptPass();
-        $config['SMTPPort'] = $this->smptPort();
+        $config['SMTPPort'] = (int) $this->smptPort();
         $config['charset']  = 'iso-8859-1';
         $config['mailType']  = 'html';
         $config['SMTPCrypto']  = $this->smptCrypto();
