@@ -31,6 +31,7 @@ trait CustomerTrait {
         $data['total_list'] = (new WishlistModel())->getUserTotalList();
         $data['page'] = isset($_GET['page']) ? $_GET['page'] : 1;
         $data['per_page'] = $_GET['limit'] ?? PER_PAGE;
+        $data['total_pages'] = ceil($data['total_list'] / $data['per_page']);
         $data['wishlist'] = (new WishlistModel())->getUserOrderList($data['page'], $data['per_page']);
         return $data;
     }
