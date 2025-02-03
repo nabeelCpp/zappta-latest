@@ -7,9 +7,11 @@ use App\Models\PagesModel;
 use App\Models\ContactModel;
 use App\Models\pagesfeedback;
 use App\Models\EmailModel;
+use App\Traits\ZapptaTrait;
 
 class Pages extends BaseController
 {
+	use ZapptaTrait;
 	protected $data ;
 	protected $ContactModel;
 	protected $pagesfeedback;
@@ -59,9 +61,8 @@ class Pages extends BaseController
 	public function PrivacyPolicy()
 	{
 		$data = $this->data;
-		$pages = new PagesModel();
 		$data['url'] = $this->request->getUri()->getSegment(1);
-		$data['page'] = $pages->getPageByUrl($data['url']);
+		$data['page'] = ZapptaTrait::privacyPolicy();
 		// print_r($data);
 		return view('site/pages/privacypolicy', $data);
 	}

@@ -9,6 +9,7 @@ use App\Models\CarriersPreferenceModel;
 use App\Models\CategoriesModel;
 use App\Models\CompainModel;
 use App\Models\OrderModel;
+use App\Models\PagesModel;
 use App\Models\VendorModel;
 use App\Models\Setting;
 use App\Models\ProductsModel;
@@ -443,6 +444,17 @@ trait ZapptaTrait
             ]
         ];
         return $faqs;
+    }
+
+    /**
+     * Privacy Policy page content
+     * @return array
+     * @since 2025-02-03
+     * @version 1.0.0
+     * @author M Nabeel Arshad
+     */
+    public static function privacyPolicy() : array {
+        return (new PagesModel())->getPageByUrl('privacy-policy');
     }
 
 

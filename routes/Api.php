@@ -5,6 +5,7 @@ $routes->group('api', ['namespace' => 'App\Controllers\API', 'filter' => 'api.cl
     $routes->get('home', 'Home::index');
     $routes->get('search', 'Home::search');
     $routes->get('faqs', 'Home::faqs');
+    $routes->get('privacy-policy', 'Home::privacyPolicy');
     /**
      * Category API
      */
