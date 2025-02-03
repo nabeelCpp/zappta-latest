@@ -560,7 +560,7 @@ class ProductsModel extends Model
     public function getProductByUrl($url, $pc, $sd_row, $pds)
     {
         $sql = $this->db->table('products')
-            ->select('products.*, product_detail.*,shipping_preference.handlingcharges,shipping_preference.freeshipat,shipping_preference.freeshipatweight,vendor.store_name as store_name, vendor.store_slug as store_slug,product_category.catid as product_category')
+            ->select('products.*, product_detail.*,shipping_preference.handlingcharges,shipping_preference.freeshipat,shipping_preference.freeshipatweight,vendor.store_name as store_name, vendor.store_slug as store_slug,product_category.catid as product_category, vendor.earn_zappta')
             ->join('product_detail', 'product_detail.product_id=products.id', 'LEFT')
             ->join('shipping_preference', 'shipping_preference.store_id=products.store_id', 'LEFT')
             ->join('vendor', 'vendor.id=products.store_id', 'LEFT')
