@@ -385,5 +385,65 @@ trait ZapptaTrait
         return $url;
     }
 
+    /**
+     * Get Faqs list. We can save them to db in future
+     * @return array
+     * @since 2025-02-03
+     * @version 1.0.0
+     * @author M Nabeel Arshad
+     */
+    public static function getFaqs() : array {
+        $faqs = [
+            [
+                "question" => "Where is my Order?",
+                "answer" => "You can find tracking information in your order details. If an order includes multiple items, each may have separate delivery dates and tracking information.",
+                "steps" => [
+                    "Go to Your Orders.",
+                    "Go to the order you want to track.",
+                    "Select Track order next to your order.",
+                    "Select see all updates to view delivery updates."
+                ]
+            ],
+            [
+                "question" => "How to refund?",
+                "answer" => "The appropriate tax amount by item will be included with your refund. Original shipping and handling fees (if applicable) may be deducted from the value of your refund unless the return is a result of our error. Refunds will be issued in the form of purchase gift cards."
+            ],
+            [
+                "question" => "How To change order information?",
+                "answer" => "You can update the shipping address, payment method, and more, on orders that haven't entered the shipping process by visiting Your Orders in Your Account.",
+                "steps" => [
+                    "Go to Your Orders.",
+                    "Select Order Details link for the order you want to change.",
+                    "To edit orders shipping address select Change next to the details you want to modify (shipping address, payment method, gift options, etc.).",
+                    "Follow the on-screen instructions to change the desired information."
+                ]
+            ],
+            [
+                "question" => "How long will it take to receive a credit or refund for returned items?",
+                "answer" => "Returns are processed in 10-14 business days and refunds can be expected 5-7 business days after processing."
+            ],
+            [
+                "question" => "How To cancel order?",
+                "answer" => "You can cancel orders that haven't entered the shipping process yet. Go to Your Orders and select the order you want to cancel.",
+                "steps" => [
+                    "Select Cancel items.",
+                    "Select the check box of the item you want to remove from the order. To cancel the entire order, select all of the items.",
+                    "Select Cancel selected items in this order when finished."
+                ]
+            ],
+            [
+                "question" => "How to replace a Damaged, Defective, or Broken item?",
+                "answer" => "If you received a damaged, defective, or incorrect item sold by Amazon, you can request a replacement for eligible items through Your Orders.",
+                "steps" => [
+                    "Go to Your Orders and select beside the item you want to replace.",
+                    "Select the item that you want to replace and select a reason from the Reason for return menu.",
+                    "If your item is ineligible for replacement, you will be asked to return it."
+                ],
+                "additional_info" => "A replacement order, with the same shipping speed that was used on your original item, will be created. Use the return label provided to you to send your original item back. You'll need to return the original item within 30 days."
+            ]
+        ];
+        return $faqs;
+    }
+
 
 }

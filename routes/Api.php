@@ -4,6 +4,7 @@ $routes->group('api', ['namespace' => 'App\Controllers\API', 'filter' => 'api.cl
     $routes->get('image_dimensions', 'Home::imageDimensions');
     $routes->get('home', 'Home::index');
     $routes->get('search', 'Home::search');
+    $routes->get('faqs', 'Home::faqs');
     /**
      * Category API
      */

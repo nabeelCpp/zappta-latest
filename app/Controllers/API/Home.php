@@ -72,6 +72,17 @@ class Home extends BaseController {
         $response = ZapptaHelper::response('Search data fetched successfully!', $data);
         return response()->setJSON($response);
     }
+
+    /**
+     * FAQs 
+     * @return json
+     * @author M Nabeel Arshad
+     */
+    public function faqs() {
+        $data = ZapptaTrait::getFaqs();
+        $response = ZapptaHelper::response('FAQs fetched successfully!', $data);
+        return response()->setJSON($response);
+    }
 }
 
 ?>
