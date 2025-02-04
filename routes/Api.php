@@ -26,6 +26,7 @@ $routes->group('api', ['namespace' => 'App\Controllers\API', 'filter' => 'api.cl
     $routes->group('cart', ['filter' => 'api.customer'], function($routes) {
         $routes->get('', 'Cart::index');
         $routes->post('', 'Cart::add');
+        $routes->post('buy', 'Cart::buy');
         $routes->delete('', 'Cart::remove');
         $routes->post('update', 'Cart::update');
     });
