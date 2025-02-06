@@ -28,7 +28,9 @@ class Stripe {
         $ord = (new OrderModel())->getCheckoutUserSingleOrder($order_id);
         $product_total = 0;
         $stripe_customer_id = $user_email['stripe_customer_id'];
-        if(!$user_email['stripe_customer_id']) {
+        // check if stripe customer id is valid or not
+        $stripe_customer_id = self::checkIfStripeCustomerIdIsValid($stripe_customer_id);
+        if(!$stripe_customer_id) {
             $user = [
                 'email' => $user_email['email'],
                 'name' => $user_email['fname'].' '.$user_email['lname'], // Optional
@@ -231,6 +233,26 @@ class Stripe {
             error_log('Webhook Error: Order ID not found');
             return response()->setJSON(ZapptaHelper::response('Order ID not found!', null, 200));
         }
+    }
+
+    /**
+     * Check if stripe customer id is valid or not
+     * @param string|null $stripe_customer_id
+     * @return bool 
+     * @since 2025-02-06
+     * @version 1.0.0
+     * @author M Nabeel Arshad
+     */
+    public static function checkIfStripeCustomerIdIsValid(?string $stripe_customer_id) : bool {
+        try {
+            if(!$stripe_customer_id) {
+                return false;
+            }
+            \Stripe\Customer::retrieve($stripe_customer_id);
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }  
     }
 
 }
