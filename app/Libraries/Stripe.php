@@ -169,7 +169,7 @@ class Stripe {
             }
 
             // Notify the user
-            RegisterModel::notifyUser($order_id, 'Order placed successfully!', 'order-placed', $$paymentIntent->metadata->user_id);
+            RegisterModel::notifyUser($order_id, 'Order placed successfully!', 'order-placed', $paymentIntent->metadata->user_id);
         }else {
             // Log the error for debugging
             error_log('Webhook Error: Order ID not found');
