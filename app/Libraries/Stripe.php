@@ -164,7 +164,7 @@ class Stripe {
 
             // Optional: Handle metadata (e.g., Zappta coins)
             if (isset($order_metadata['zapptas'])) {
-                ZapptaTrait::processZapptaCoins($order_metadata, $order_id);
+                ZapptaTrait::processZapptaCoins($order_metadata['zapptas'], $order_id);
             }
 
             // Notify the user
