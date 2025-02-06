@@ -355,6 +355,7 @@ trait ZapptaTrait
         $total_zapptas = 0;
         if (isset($zapptas)) {
             foreach ($zapptas as $zappta) {
+                var_dump($zappta);exit;
                 (new OrderModel())->zapptaEarned($zappta, $order_serial);
                 $total_zapptas += $zappta;
             }
