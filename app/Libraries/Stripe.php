@@ -130,7 +130,7 @@ class Stripe {
 
             http_response_code(200); // Acknowledge the event was handled successfully
         } catch (\Exception $e) {
-            throw $e;
+            // throw $e;
             // Log the error for debugging
             error_log('Webhook Error: ' . $e->getMessage());
             http_response_code(400);
