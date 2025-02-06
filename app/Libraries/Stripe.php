@@ -98,7 +98,7 @@ class Stripe {
      */
     public function webhook() {
         $endpoint_secret = getenv('STRIPE_WEBHOOK_SECRET');
-        $payload = request()->getVar();
+        $payload = file_get_contents('php://input');
         $sig_header = $_SERVER['HTTP_STRIPE_SIGNATURE'];
 
         try {
