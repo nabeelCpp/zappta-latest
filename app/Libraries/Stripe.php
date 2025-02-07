@@ -29,8 +29,8 @@ class Stripe {
         $product_total = 0;
         $stripe_customer_id = $user_email['stripe_customer_id'];
         // check if stripe customer id is valid or not
-        $stripe_customer_id = self::checkIfStripeCustomerIdIsValid($stripe_customer_id);
-        if(!$stripe_customer_id) {
+        $check = self::checkIfStripeCustomerIdIsValid($stripe_customer_id);
+        if(!$check) {
             $user = [
                 'email' => $user_email['email'],
                 'name' => $user_email['fname'].' '.$user_email['lname'], // Optional
