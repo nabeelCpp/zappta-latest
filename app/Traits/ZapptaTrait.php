@@ -382,7 +382,11 @@ trait ZapptaTrait
      * @version 1.0.0
      */
     public static function generateGameUrl($post) : string {
-        $url = base_url() . 'game?__com_id=' . my_encrypt($post->com_id) . '&__store_id=' .my_encrypt( $post->store_id). '&__token=' . my_encrypt(getUserId());
+        $json = json_encode([
+            'user_id' => getUserId(),
+            'time' => time()+3600, // 1 hr enable time
+        ]);
+        $url = base_url(route_to('game.auth')) .'?__com_id=' . my_encrypt($post->com_id) . '&__store_id=' .my_encrypt( $post->store_id). '&__token=' . my_encrypt($json);
         return $url;
     }
 

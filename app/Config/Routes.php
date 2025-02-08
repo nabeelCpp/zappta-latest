@@ -131,3 +131,4 @@ $routes->get('register?ref=(:any)', 'Register::loginViaReferral/$1');
 $routes->get('compaigns', 'Home::compaigns', ['as' => 'compaigns.all']);
 $routes->get('csrf_token', 'Home::generateCsrfToken');
 $routes->post('cart/save_checkout_details', 'Cart::saveCheckoutDetails');
+$routes->get('game/auth', 'Home::loginThroughGame', ['as' => 'game.auth']);

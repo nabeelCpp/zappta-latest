@@ -1629,7 +1629,7 @@ class ProductsModel extends Model
     public function fetchSpreesDetails($com_id, $store_id)
     {
         return $this->db->table('vendor_sprees')
-            ->select('vendor_sprees.price, compain.compain_s_date, compain.compain_e_date, com_id, vendor_id as store_id')
+            ->select('vendor_sprees.id, vendor_sprees.price, compain.compain_s_date, compain.compain_e_date, com_id, vendor_id as store_id')
             ->join('compain', 'vendor_sprees.com_id  = compain.id')
             ->where([
                 'vendor_sprees.com_id' => $com_id,
