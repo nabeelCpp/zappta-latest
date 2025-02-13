@@ -55,10 +55,12 @@ class Stripe {
 
         // Total amount
         $total_amount = $product_total + $stripe_shipping;
+        $totalAmt = explode('.', $ord['order']['total_amount']);
+        $total_amt = $totalAmt[0] . (isset($totalAmt[1]) ? str_pad($totalAmt[1], 2, '0', STR_PAD_RIGHT) : '00');
 
         // Create PaymentIntent
         $paymentIntent = \Stripe\PaymentIntent::create([
-            'amount' => $total_amount,
+            'amount' => $total_amt,
             'currency' => 'usd',
             'customer' => $stripe_customer_id,
             'payment_method_types' => ['card'],
