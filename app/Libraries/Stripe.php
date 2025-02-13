@@ -75,7 +75,11 @@ class Stripe {
         return [
             'client_secret' => $paymentIntent->client_secret,
             'payment_intent_id' => $paymentIntent->id,
-            'stripe_publishable_key' => getenv('STRIPE_TEST_PUBLISH_KEY')
+            'stripe_publishable_key' => getenv('STRIPE_TEST_PUBLISH_KEY'),
+            'final_subtotal' => $ord['order']['final_subtotal'],
+            'tax' => $ord['order']['tax'],
+            'shipping' => $ord['order']['shipping'],
+            'total_amount' => $ord['order']['total_amount'],
         ];
     }
 
